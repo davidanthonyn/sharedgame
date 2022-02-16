@@ -9,5 +9,11 @@ class Product extends CI_Controller {
 
     function index() {
         $this->load->view('car-listing.php');
+
+
+    }
+
+    function detail(){
+        $this->load->view('detailproduk.php');
     }
 }

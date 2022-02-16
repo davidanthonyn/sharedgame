@@ -81,24 +81,9 @@ error_reporting(0);
           <div class="sorting-count">
 
 
-          <div class="box">
-          <img src="<?php echo base_url(); ?>assets/images/ps5.jpg" alt="">
-            <div class="content">
-                <div class=	"stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3> <a href="<?php echo base_url() . 'product/detail'?>"> Playstation 5 </a> </h3>
-                <div class="price"> Rp 300.000 <span> </span> </div>
-                <a> Available </a>
-            </div>
-        </div>
       
         <div class="box">
-            <img src="<?php echo base_url(); ?>assets/images/ps4.jpg" alt="">
+            <img src="images/rckit.png" alt="">
             <div class="content">
                 <div class=	"stars">
                     <i class="fas fa-star"></i>
@@ -107,42 +92,10 @@ error_reporting(0);
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <h3> <a href="<?php echo base_url() . 'product/detail'?>"> Playstation 4 </a> </h3> 
-                <div class="price"> Rp 100.000 <span> </span> </div>
+                <h3> Playstation 4 </h3> 
+                <div class="price"> Rp 65.000 <span> </span> </div>
                 <a> Available </a>
-            </div>
-        </div>
-
-
-        <div class="box">
-            <img src="<?php echo base_url(); ?>assets/images/g29.png" alt="">
-            <div class="content">
-                <div class=	"stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3> <a href="<?php echo base_url() . 'product/detail'?>"> Steering Wheel </a> </h3> 
-                <div class="price"> Rp 125.000 <span> </span> </div>
-                <a> Available </a>
-            </div>
-        </div>
-
-        <div class="box">
-            <img src="<?php echo base_url(); ?>assets/images/vr.jpg" alt="">
-            <div class="content">
-                <div class=	"stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3> <a href="<?php echo base_url() . 'product/detail'?>"> Oculus Quest 2 </a> </h3> 
-                <div class="price"> Rp 125.000 <span> </span> </div>
-                <a> Available </a>
+                <p> testing </p>
             </div>
         </div>
 
