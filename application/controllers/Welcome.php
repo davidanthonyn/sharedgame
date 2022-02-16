@@ -22,19 +22,4 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
-	
-	public function fungsi1()
-	{
-		$this->load->view('v_halaman_a');
-	}
-	
-	public function fungsi2()
-	{
-		$this->load->view('v_halaman_b');
-	}
-	
-	public function fungsi3()
-	{
-		$this->load->view('v_halaman_c');
-	}
 }
