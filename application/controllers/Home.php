@@ -1,21 +1,28 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends CI_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function index() {
+    function index()
+    {
         $this->load->view('index.php');
-        
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->load->view('logout.php');
         $this->session->sess_destroy();
         redirect(base_url());
     }
 
+    public function newsletter()
+    {
+        $this->load->view('newsletter.php');
+    }
 }

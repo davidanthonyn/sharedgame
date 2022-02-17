@@ -6,7 +6,7 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h4 class="text-dark mb-4">Create an Account!</h4>
+                                    <h4 class="text-dark mb-4">Registration Page</h4>
                                 </div>
                                 <form class="user">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="name" placeholder="Nama Lengkap" name="name"></div>
