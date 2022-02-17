@@ -1,65 +1,34 @@
-<?php
-if(isset($_POST['login']))
-{
-$email=$_POST['email'];
-$password=md5($_POST['password']);
-$sql ="SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:password";
-$query= $dbh -> prepare($sql);
-$query-> bindParam(':email', $email, PDO::PARAM_STR);
-$query-> bindParam(':password', $password, PDO::PARAM_STR);
-$query-> execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
-{
-$_SESSION['login']=$_POST['email'];
-$_SESSION['fname']=$results->FullName;
-$currentpage=$_SERVER['REQUEST_URI'];
-echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
-} else{
-  
-  echo "<script>alert('Invalid Details');</script>";
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-5">
 
-}
-
-}
-
-?>
-
-<div class="modal fade" id="loginform">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title">Login</h3>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="login_wrap">
-            <div class="col-md-12 col-sm-6">
-              <form method="post">
-                <div class="form-group">
-                  <input type="email" class="form-control" name="email" placeholder="Email address*">
+                        </div>
+                        <div class="col-lg-15">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h4 class="text-dark mb-4">Login Page</h4>
+                                </div>
+                                <form class="user">
+                                    <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email"></div>
+                                    <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" name="password"></div>
+                                    <div class="mb-3">
+                                    </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                    <hr>
+                                </form>
+                                <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+                                <div class="text-center"><a class="small" href="<?= base_url('auth/registration');
+                                                                                ?>">Create an Account!</a></div>
+                                <div class="text-center"><a class="small" href="<?= base_url('home');
+                                                                                ?>">Back to Home</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" name="password" placeholder="Password*">
-                </div>
-                <div class="form-group checkbox">
-                  <input type="checkbox" id="remember">
-               
-                </div>
-                <div class="form-group">
-                  <input type="submit" name="login" value="Login" class="btn btn-block">
-                </div>
-              </form>
             </div>
-           
-          </div>
         </div>
-      </div>
-      <div class="modal-footer text-center">
-        <p>Don't have an account? <a href="#signupform" data-toggle="modal" data-dismiss="modal">Signup Here</a></p>
-        <p><a href="#forgotpassword" data-toggle="modal" data-dismiss="modal">Forgot Password ?</a></p>
-      </div>
     </div>
-  </div>
 </div>

@@ -9,9 +9,11 @@ class Home extends CI_Controller {
 
     function index() {
         $this->load->view('index.php');
+        
     }
 
     public function logout() {
+        $this->load->view('logout.php');
         $this->session->sess_destroy();
         redirect(base_url());
     }
