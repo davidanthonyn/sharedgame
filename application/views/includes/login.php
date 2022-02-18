@@ -14,13 +14,14 @@
                                 </div>
 
 
-                                <?php //$this->session->flashdata('message'); 
+                                <?php $this->session->flashdata('message');
                                 ?>
 
-
-                                <form class="user">
-                                    <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email"></div>
-                                    <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" name="password"></div>
+                                <form class="user" method="POST" action="<?= base_url('auth'); ?>">
+                                    <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email" value="<?= set_value('email'); ?>">
+                                        <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?></div>
+                                    <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Enter Password" name="password">
+                                        <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?></div>
                                     <div class="mb-3">
                                     </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
                                     <hr>

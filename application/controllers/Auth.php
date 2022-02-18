@@ -12,10 +12,38 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Login Page | SharedGame';
-        $this->load->view('includes/auth_header', $data);
-        $this->load->view('includes/login');
-        $this->load->view('includes/auth_footer');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Login Page | SharedGame';
+            $this->load->view('includes/auth_header', $data);
+            $this->load->view('includes/login');
+            $this->load->view('includes/auth_footer');
+        } else {
+            //Validasi sukses
+            $this->_login();
+        }
+    }
+
+    private function _login()
+    {
+        $email = $this->input->post('email');
+        $password = $this->input->post('password');
+
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        if ($user) {
+            //Email ada
+
+        } else {
+            //Email tidak ada
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
+
+            //Redirect ke Login
+            redirect('auth');
+        }
     }
 
     public function registration()
@@ -50,7 +78,7 @@ class Auth extends CI_Controller
             //date_default_timezone_set('Asia/Manila');
             //Pengiriman data melalui array
             $data = [
-                'nama_lengkap' => $this->input->post('name'),
+                'nama_lengkap' => htmlspecialchars($this->input->post('name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'alamat_lengkap' => "empty",
@@ -70,7 +98,7 @@ class Auth extends CI_Controller
             $this->db->insert('user', $data);
 
             //Alert akun berhasil dibuat
-            //$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat! Silakan login.</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat! Silakan login.</div>');
 
             //Redirect ke Login
             redirect('auth');
