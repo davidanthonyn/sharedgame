@@ -9,7 +9,7 @@ class Faq extends CI_Controller {
 
     function index() {
         //$this->load->view('page.php?type=faqs');
-        $this->load->view('page.php');
+        $this->load->view('faq.php');
     }
 
 }
