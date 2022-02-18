@@ -1,15 +1,17 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Faq extends CI_Controller {
+class Faq extends CI_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function index() {
+    function index()
+    {
         //$this->load->view('page.php?type=faqs');
-        $this->load->view('page.php');
+        $this->load->view('faq.php');
     }
-
 }

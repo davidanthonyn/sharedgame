@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include('includes/config.php');
 error_reporting(0);
 ?>
@@ -93,15 +93,15 @@ error_reporting(0);
                     <i class="fas fa-star"></i>
                   </div>
                   <h3><?php echo $data[0]['nama_produk']; ?></h3>
-                  <div class="price"> jumlah : <?php echo $data[0]['jumlah_tersedia']; ?> <span> </span> </div> 
+                  <div class="price"> jumlah : <?php echo $data[0]['jumlah_tersedia']; ?> <span> </span> </div>
                   <div class="price"> Rp 300.000 <span> </span> </div>
                   <a> Available </a>
                 </div>
               </div>
 
-              
 
-               
+
+
             </div>
           </div>
   </section>

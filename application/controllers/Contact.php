@@ -11,7 +11,7 @@ class Contact extends CI_Controller
 
     function index()
     {
-        session_start();
+        //session_start();
         error_reporting(0);
 
         // DB credentials.
