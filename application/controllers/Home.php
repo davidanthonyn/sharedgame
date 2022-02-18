@@ -11,6 +11,7 @@ class Home extends CI_Controller
 
     function index()
     {
+        $data['title'] = 'SharedGame | The Best Rental Gaming Equipment';
         $this->load->view('index.php');
     }
 

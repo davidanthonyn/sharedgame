@@ -12,6 +12,12 @@
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
+
+
+                                <?php //$this->session->flashdata('message'); 
+                                ?>
+
+
                                 <form class="user">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email"></div>
                                     <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" name="password"></div>
