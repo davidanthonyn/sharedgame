@@ -12,6 +12,7 @@
               ?>
                 <div class="login_btn"> <a href="<?php echo base_url() . 'auth' ?>" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
               <?php } else {
+                echo "Selamat datang " . $user['nama_lengkap'];
               } ?>
             </div>
           </div>

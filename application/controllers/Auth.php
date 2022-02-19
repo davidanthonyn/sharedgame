@@ -8,6 +8,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->session->keep_flashdata('message');
     }
 
     public function index()
@@ -39,16 +40,32 @@ class Auth extends CI_Controller
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
 
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
         //Jika email user ada
         if ($user) {
             //Jika usernya aktif
             if ($user['is_active'] == 'yes') {
                 //Cek password
                 if (password_verify($password, $user['password'])) {
+                    //Pengiriman history login
+                    $loginhistory = [
+                        'email' => htmlspecialchars($this->input->post('email', true)),
+                        'time_login' => $now
+                    ];
+
+                    //Kirim ke tabel user
+                    $this->db->insert('loginhistory', $loginhistory);
+
+                    //Memasukkan data email dan userlevel ke session
                     $data = [
                         'email' => $user['email'],
                         'user_level' => $user['user_level']
                     ];
+
+                    //Set userdata email dan session
                     $this->session->set_userdata($data);
                     redirect('user');
                 } else {
@@ -145,10 +162,25 @@ class Auth extends CI_Controller
             $this->db->insert('user', $data);
 
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat! Silakan login.</div>');
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-success" role="alert">Akun berhasil dibuat! 
+            Silakan login.</div>');
 
             //Redirect ke Login
             redirect('auth');
         }
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('user_level');
+
+        //Alert akun berhasil dibuat
+        $this->session->set_flashdata('message', '<div class="alert 
+        alert-success" role="alert">Berhasil logout!</div>');
+
+        //Redirect ke Login
+        redirect('auth');
     }
 }

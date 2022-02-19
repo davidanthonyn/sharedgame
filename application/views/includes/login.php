@@ -13,8 +13,13 @@
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
 
+                                <?php
+                                $message = $this->session->flashdata('message');
+                                if (isset($message)) {
+                                    echo '<div class="alert alert-info">' . $message . '</div>';
+                                    $this->session->unset_userdata('message');
+                                }
 
-                                <?php $this->session->flashdata('message');
                                 ?>
 
                                 <form class="user" method="POST" action="<?= base_url('auth'); ?>">
