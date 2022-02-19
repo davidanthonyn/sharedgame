@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?= base_url('assetsloginregister/'); ?>fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="<?= base_url('assetsloginregister/'); ?>fonts/font-awesome.min.css">
     <link rel="stylesheet" href="<?= base_url('assetsloginregister/'); ?>fonts/fontawesome5-overrides.min.css">
+    <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
 </head>
 
 <body class="bg-gradient-primary">

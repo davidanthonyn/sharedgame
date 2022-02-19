@@ -11,7 +11,6 @@ class Home extends CI_Controller
 
     function index()
     {
-        $data['icon'] = '<?php echo base_url() . "assets/"; ?>images/SharedGameController.png';
         $data['title'] = 'SharedGame | The Best Rental Gaming Equipment';
         $data['bannerbig'] = 'FIND THE IDEAL GAME FOR YOU.';
         $data['bannersmall'] = 'We have more games for you to choose.';
