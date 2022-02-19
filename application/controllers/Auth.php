@@ -12,9 +12,14 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
+            'required' => 'Email harus diisi!',
+            'valid_email' => 'Mohon memasukkan email yang valid!'
+        ]);
 
+        $this->form_validation->set_rules('password', 'Password', 'trim|required', [
+            'required' => 'Password harus diisi!',
+        ]);
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Login Page | SharedGame';
@@ -34,9 +39,44 @@ class Auth extends CI_Controller
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
 
+        //Jika email user ada
         if ($user) {
-            //Email ada
+            //Jika usernya aktif
+            if ($user['is_active'] == 'yes') {
+                //Cek password
+                if (password_verify($password, $user['password'])) {
+                    $data = [
+                        'email' => $user['email'],
+                        'user_level' => $user['user_level']
+                    ];
+                    $this->session->set_userdata($data);
+                    redirect('user');
+                } else {
+                    //Password salah
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email atau password salah!</div>');
 
+                    //Redirect ke Login
+                    redirect('auth');
+                }
+            } else if ($user['is_active'] == 'not_yet_activated') {
+                //Akun belum diaktivasi
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun belum diaktivasi!</div>');
+
+                //Redirect ke Login
+                redirect('auth');
+            }
+        } else if ($user['is_active'] == 'off_by_admin') {
+            //Akun dimatikan oleh admin
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda dimatikan oleh admin. Mohon menghubungi pihak administrasi!</div>');
+
+            //Redirect ke Login
+            redirect('auth');
+        } else if ($user['is_active'] == 'off_by_user') {
+            //User menghapus akun sendiri
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun telah dihapus oleh Anda!</div>');
+
+            //Redirect ke Login
+            redirect('auth');
         } else {
             //Email tidak ada
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
@@ -56,17 +96,24 @@ class Auth extends CI_Controller
 
         //Validasi Email
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'required' => 'Email harus diisi!',
             'is_unique' => 'Email sudah terdaftar!'
         ]);
 
         //Validasi Password
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[8]|matches[password2]', [
+            'required' => 'Password harus diisi!',
             'matches' => 'Password tidak cocok!',
             'min_length' => 'Password terlalu pendek(min. 8 karakter)!'
         ]);
 
         //Validasi Repeat Password
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[8]|matches[password1]');
+
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
 
         //Validasi Email
         if ($this->form_validation->run() == false) {
@@ -80,7 +127,7 @@ class Auth extends CI_Controller
             $data = [
                 'nama_lengkap' => htmlspecialchars($this->input->post('name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'alamat_lengkap' => "empty",
                 'no_hp' => "empty",
                 'no_hp_dua' => "empty",
@@ -90,8 +137,8 @@ class Auth extends CI_Controller
                 'user_level' => "customer",
                 'status_ktp' => "belum",
                 'is_active' => "yes",
-                'created_at' => date('y-m-d h:i:s', now()),
-                'updated_at' => date('y-m-d h:i:s', now())
+                'created_at' => $now,
+                'updated_at' => $now
             ];
 
             //Kirim ke tabel user

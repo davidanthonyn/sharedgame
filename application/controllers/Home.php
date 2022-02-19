@@ -11,8 +11,15 @@ class Home extends CI_Controller
 
     function index()
     {
+        $data['icon'] = '<?php echo base_url() . "assets/"; ?>images/SharedGameController.png';
         $data['title'] = 'SharedGame | The Best Rental Gaming Equipment';
-        $this->load->view('index.php');
+        $data['bannerbig'] = 'FIND THE IDEAL GAME FOR YOU.';
+        $data['bannersmall'] = 'We have more games for you to choose.';
+        $data['boldfonttitle'] = 'Find the Best';
+        $data['unboldfonttitle'] = 'Gaming Gear to Rent';
+        $data['smallsentence'] = 'Apa yang kamu butuhkan untuk bermain game?
+                                Kami menyediakan berbagai macam game untuk kamu.';
+        $this->load->view('index.php', $data);
     }
 
     public function logout()

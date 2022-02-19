@@ -14,7 +14,9 @@ error_reporting(0);
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>SharedGame | The Best Rental Gaming Equipment</title>
+  <title>
+    <?= $title; ?>
+  </title>
   <!--Bootstrap -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>css/style.css" type="text/css">
@@ -34,7 +36,7 @@ error_reporting(0);
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url() . "assets/"; ?>images/favicon-icon/apple-touch-icon-114-precomposed.html">
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url() . "assets/"; ?>images/favicon-icon/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="<?php echo base_url() . "assets/"; ?>images/favicon-icon/apple-touch-icon-57-precomposed.png">
-  <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/sharedgame160.png">
+  <link rel="shortcut icon" href="<?= $icon; ?>">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 </head>
 
@@ -51,8 +53,12 @@ error_reporting(0);
         <div class="row">
           <div class="col-md-5 col-md-push-7">
             <div class="banner_content">
-              <h1>Find the ideal game for you.</h1>
-              <p>We have more games for you to choose. </p>
+              <h1>
+                <?= $bannerbig; ?>
+              </h1>
+              <p>
+                <?= $bannersmall; ?>
+              </p>
             </div>
           </div>
         </div>
@@ -65,8 +71,10 @@ error_reporting(0);
   <section class="section-padding gray-bg">
     <div class="container">
       <div class="section-header text-center">
-        <h2>Find the Best <span>Gaming Gear to Rent</span></h2>
-        <p>It is above all the uncompromising, performance-oriented aesthetic that unmistakeably reveals its ambitions. Not elegant but extravagant. Not conventional but individual.</p>
+        <h2><?= $boldfonttitle; ?> <span><?= $unboldfonttitle; ?></span></h2>
+        <p>
+          <?= $smallsentence; ?>
+        </p>
       </div>
       <div class="row">
 
