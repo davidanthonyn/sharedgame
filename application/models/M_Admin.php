@@ -38,7 +38,7 @@ class M_Admin extends CI_model
     //Fungsi Menghitung Row Brand
     public function getRowBrand()
     {
-        return $this->db->count_all('produk');
+        return $this->db->count_all('brand');
     }
 
     //Fungsi Menghitung Row Subscriber

@@ -5,6 +5,10 @@ class M_Brand extends CI_model
 {
     public function getAllBrand()
     {
+        $query = $this->db->query('SELECT * FROM brand');
+        return $query;
+
+
         return $this->db->get('brand')->result_array();
     }
 
@@ -29,5 +33,28 @@ class M_Brand extends CI_model
     public function getBrandById($id)
     {
         return $this->db->get_where('produk', ['id_produk' => $id])->row_array();
+    }
+
+    function insert_record($table, $data)
+    {
+        $this->db->insert($table, $data);
+    }
+
+    //Mengambil data dosen berdasarkan kriteria (where)
+    function edit_record($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
+
+    function update_record($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
+
+    function delete_record($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
     }
 }

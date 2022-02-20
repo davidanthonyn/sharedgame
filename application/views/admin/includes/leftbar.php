@@ -7,8 +7,10 @@
 
 			<li><a href="#"><i class="fa fa-files-o"></i> Brands</a>
 				<ul>
-					<li><a href="create-brand.php">Add Brand</a></li>
-					<li><a href="manage-brands.php">Manage Brands</a></li>
+					<li><a href="<?= base_url('brand/tambah');
+									?>">Add Brand</a></li>
+					<li><a href="<?= base_url('brand/kelola');
+									?>">Manage Brands</a></li>
 				</ul>
 			</li>
 

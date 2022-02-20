@@ -32,4 +32,46 @@ class Brand extends CI_Controller
             redirect('Brand/tambah');
         }
     }
+
+    public function kelola()
+    {
+        $data['title'] = 'Kelola Brand | SharedGame';
+        $data['brand'] = $this->M_Brand->getAllBrand()->result();
+        $this->load->view('admin/manage-brands', $data);
+    }
+
+    function edit_data($id_brand)
+    {
+        $data['title'] = 'Edit Brand | SharedGame';
+        $where = array('id_brand' => $id_brand);
+        $data['brandEdit'] = $this->M_Brand->edit_record('brand', $where)->result();
+        $data['status'] = $this->M_Brand->getAllBrand()->result();
+        $this->load->view('admin/edit-brand', $data);
+    }
+
+    function proses_edit_data()
+    {
+        $tangkapIdBrand = $this->input->post('id_brand');
+        $tangkapNamaBrand = $this->input->post('nama_brand');
+        $tangkapStatusBrand = $this->input->post('gambar_brand');
+
+        $data = array(
+            'nama_brand' => $tangkapNamaBrand,
+            'status' => $tangkapStatusBrand
+        );
+
+        $where = array(
+            'id_brand' => $tangkapIdBrand
+        );
+
+        $this->M_Brand->update_record($where, $data, 'dosen');
+        redirect('Brand/kelola');
+    }
+
+    function delete_data($id_brand)
+    {
+        $where = array('id_brand' => $id_brand);
+        $this->M_Brand->delete_record($where, 'brand');
+        redirect('Brand/kelola');
+    }
 }
