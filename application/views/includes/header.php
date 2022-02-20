@@ -8,12 +8,12 @@
         <div class="col-sm-9 col-md-10">
           <div class="header_info">
             <div class="header_widgets">
-              <?php if (strlen($_SESSION['login']) == 0) {
+              <?php /* if (strlen($_SESSION['login']) == 0) { */
               ?>
-                <div class="login_btn"> <a href="<?php echo base_url() . 'auth' ?>" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
-              <?php } else {
-                echo "Selamat datang " . $user['nama_lengkap'];
-              } ?>
+              <div class="login_btn"> <a href="<?php echo base_url() . 'auth' ?>" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
+              <?php
+              echo $this->session->userdata('email');
+              ?>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
             <ul>
               <li class="dropdown"> <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i>
                   <?php
-                  $email = $_SESSION['login'];
+                  /*$email = $_SESSION['login'];
                   $sql = "SELECT FullName FROM tblusers WHERE EmailId=:email ";
                   $query = $dbh->prepare($sql);
                   $query->bindParam(':email', $email, PDO::PARAM_STR);
@@ -42,7 +42,7 @@
 
                       echo htmlentities($result->FullName);
                     }
-                  } ?><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                  } */ ?><i class="fa fa-angle-down" aria-hidden="true"></i></a>
                 <ul class="dropdown-menu">
                   <?php if ($_SESSION['login']) { ?>
                     <li><a href="profile.php">Profile Settings</a></li>

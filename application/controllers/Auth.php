@@ -7,8 +7,8 @@ class Auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('M_User');
         $this->load->library('form_validation');
-        $this->session->keep_flashdata('message');
     }
 
     public function index()
@@ -62,11 +62,12 @@ class Auth extends CI_Controller
                     //Memasukkan data email dan userlevel ke session
                     $data = [
                         'email' => $user['email'],
+                        'nama_lengkap' => $user['nama_lengkap'],
                         'user_level' => $user['user_level']
                     ];
 
                     //Set userdata email dan session
-                    $this->session->set_userdata($data);
+                    $this->session->set_userdata('user', $data);
                     redirect('user');
                 } else {
                     //Password salah
@@ -138,33 +139,17 @@ class Auth extends CI_Controller
             $this->load->view('includes/auth_header', $data);
             $this->load->view('includes/registration');
             $this->load->view('includes/auth_footer');
-        } else {
-            //date_default_timezone_set('Asia/Manila');
-            //Pengiriman data melalui array
-            $data = [
-                'nama_lengkap' => htmlspecialchars($this->input->post('name', true)),
-                'email' => htmlspecialchars($this->input->post('email', true)),
-                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'alamat_lengkap' => "empty",
-                'no_hp' => "empty",
-                'no_hp_dua' => "empty",
-                'tgl_lahir' => "0000-00-00",
-                'foto_ktp' => "empty",
-                'foto_selfie_ktp' => "empty",
-                'user_level' => "customer",
-                'status_ktp' => "belum",
-                'is_active' => "yes",
-                'created_at' => $now,
-                'updated_at' => $now
-            ];
-
-            //Kirim ke tabel user
-            $this->db->insert('user', $data);
 
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('message', '<div class="alert 
-            alert-success" role="alert">Akun berhasil dibuat! 
-            Silakan login.</div>');
+            $this->session->set_flashdata('messagefailed', 'Login gagal!');
+        } else {
+
+            //Model M_User pada fungsi tambahDataCustomer
+            $this->M_User->tambahDataCustomer();
+
+            //Alert akun berhasil dibuat
+            $this->session->set_flashdata('messagesuccess', 'Akun berhasil dibuat! 
+             Silakan login.');
 
             //Redirect ke Login
             redirect('auth');
@@ -176,11 +161,13 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('user_level');
 
-        //Alert akun berhasil dibuat
-        $this->session->set_flashdata('message', '<div class="alert 
-        alert-success" role="alert">Berhasil logout!</div>');
+        $this->session->sess_destroy();
 
         //Redirect ke Login
         redirect('auth');
+
+        //Alert akun berhasil dibuat
+        $this->session->set_flashdata('messagesuccess', '<div class="alert 
+        alert-success" role="alert">Berhasil logout!</div>');
     }
 }

@@ -1,4 +1,5 @@
 <div class="container">
+
     <div class="row justify-content-center">
         <div class="col-lg-5">
             <div class="card shadow-lg o-hidden border-0 my-5">
@@ -13,14 +14,17 @@
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
 
-                                <?php
-                                $message = $this->session->flashdata('message');
-                                if (isset($message)) {
-                                    echo '<div class="alert alert-info">' . $message . '</div>';
-                                    $this->session->unset_userdata('message');
-                                }
+                                <?php if ($this->session->flashdata('messagesuccess')) : ?>
+                                    <div class="alert alert-success" role="alert">
+                                        <?= $this->session->flashdata('messagesuccess'); ?>
+                                    </div>
+                                <?php endif; ?>
 
-                                ?>
+                                <?php if ($this->session->flashdata('messagefailed')) : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?= $this->session->flashdata('messagefailed'); ?>
+                                    </div>
+                                <?php endif; ?>
 
                                 <form class="user" method="POST" action="<?= base_url('auth'); ?>">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email" value="<?= set_value('email'); ?>">

@@ -18,6 +18,7 @@ class Home extends CI_Controller
         $data['unboldfonttitle'] = 'Gaming Gear to Rent';
         $data['smallsentence'] = 'Apa yang kamu butuhkan untuk bermain game?
                                 Kami menyediakan berbagai macam game untuk kamu.';
+
         $this->load->view('index.php', $data);
     }
 

@@ -1,12 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Product extends CI_Controller
+class Productadmin extends CI_Controller
 {
 
     function __construct()
     {
         parent::__construct();
+        $this->load->model('M_Product');
+        if (empty($this->session->userdata('admin'))) {
+            redirect('auth');
+        }
     }
 
     function index()
