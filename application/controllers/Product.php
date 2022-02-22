@@ -8,9 +8,9 @@ class Product extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_Product');
-        if (empty($this->session->userdata('admin'))) {
+        /*if (empty($this->session->userdata('admin'))) {
             redirect('auth');
-        }
+        }*/
     }
 
     function index()
