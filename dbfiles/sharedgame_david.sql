@@ -37,10 +37,6 @@ SET time_zone = "+00:00";
 -- Dumping data for table `brand`
 --
 
-INSERT INTO `brand` (`id_brand`, `nama_brand`, `gambar_brand`, `status_brand`, `datetime_brand_added`) VALUES
-(2, 'Apple', 'empty', 'aktif', '2022-02-20 19:30:56'),
-(3, 'Acer', 'empty', 'aktif', '2022-02-20 19:32:46');
-
 -- --------------------------------------------------------
 
 --
