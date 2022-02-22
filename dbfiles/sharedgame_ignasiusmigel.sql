@@ -27,12 +27,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `booking`
 --
 
-CREATE TABLE `booking` (
-  `id_booking` int(11) NOT NULL,
-  `id_transaksi` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -40,13 +35,7 @@ CREATE TABLE `booking` (
 -- Struktur dari tabel `brand`
 --
 
-CREATE TABLE `brand` (
-  `id_brand` int(11) NOT NULL,
-  `nama_brand` varchar(100) NOT NULL,
-  `gambar_brand` varchar(100) NOT NULL,
-  `status_brand` enum('aktif','tidak_aktif','','') NOT NULL,
-  `datetime_brand_added` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Dumping data untuk tabel `brand`
@@ -62,13 +51,7 @@ INSERT INTO `brand` (`id_brand`, `nama_brand`, `gambar_brand`, `status_brand`, `
 -- Struktur dari tabel `cart`
 --
 
-CREATE TABLE `cart` (
-  `id_cart` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `jumlah_produk` int(11) NOT NULL,
-  `total_pembayaran` int(11) NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -76,14 +59,7 @@ CREATE TABLE `cart` (
 -- Struktur dari tabel `detailbooking`
 --
 
-CREATE TABLE `detailbooking` (
-  `id_detail_booking` int(11) NOT NULL,
-  `id_booking` int(11) NOT NULL,
-  `id_produk` int(11) NOT NULL,
-  `qty_produk` int(11) NOT NULL,
-  `tgl_jam_awal_sewa` datetime NOT NULL,
-  `tgl_jam_akhir_sewa` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -91,15 +67,7 @@ CREATE TABLE `detailbooking` (
 -- Struktur dari tabel `detailcart`
 --
 
-CREATE TABLE `detailcart` (
-  `id_detail_cart` int(11) NOT NULL,
-  `id_cart` int(11) NOT NULL,
-  `id_produk` int(11) NOT NULL,
-  `qty_produk` int(11) NOT NULL,
-  `total_harga_produk` int(11) NOT NULL,
-  `plan_sewa_awal` datetime NOT NULL,
-  `plan_sewa_akhir` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -107,11 +75,7 @@ CREATE TABLE `detailcart` (
 -- Struktur dari tabel `loginhistory`
 --
 
-CREATE TABLE `loginhistory` (
-  `id_login_history` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `time_login` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -119,12 +83,7 @@ CREATE TABLE `loginhistory` (
 -- Struktur dari tabel `nomorhphistory`
 --
 
-CREATE TABLE `nomorhphistory` (
-  `id_nomor_hp` int(11) NOT NULL,
-  `nomor_hp` varchar(100) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -132,17 +91,7 @@ CREATE TABLE `nomorhphistory` (
 -- Struktur dari tabel `produk`
 --
 
-CREATE TABLE `produk` (
-  `id_produk` int(11) NOT NULL,
-  `id_brand` int(11) NOT NULL,
-  `nama_produk` varchar(100) NOT NULL,
-  `kategori_produk` enum('console','game_physics','game_gear','') NOT NULL,
-  `warna_produk` varchar(100) NOT NULL,
-  `gambar_produk` varchar(500) NOT NULL,
-  `deskripsi_produk` varchar(100) NOT NULL,
-  `serial_produk` varchar(100) NOT NULL,
-  `jumlah_tersedia` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Dumping data untuk tabel `produk`
@@ -159,13 +108,7 @@ INSERT INTO `produk` (`id_produk`, `id_brand`, `nama_produk`, `kategori_produk`,
 -- Struktur dari tabel `rekeningtoko`
 --
 
-CREATE TABLE `rekeningtoko` (
-  `id_rekening_toko` int(11) NOT NULL,
-  `no_rekening_toko` varchar(100) NOT NULL,
-  `bank_rekening_toko` int(11) NOT NULL,
-  `status_rekening_toko` enum('aktif','tidak_aktif','','') NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -173,19 +116,7 @@ CREATE TABLE `rekeningtoko` (
 -- Struktur dari tabel `transaksi`
 --
 
-CREATE TABLE `transaksi` (
-  `id_transaksi` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `waktu_buat_transaksi` datetime NOT NULL,
-  `waktu_pembayaran` datetime NOT NULL,
-  `kode_unik_pembayaran` int(11) NOT NULL,
-  `jumlah_pembayaran` int(11) NOT NULL,
-  `total_pembayaran` int(11) NOT NULL,
-  `status_pembayaran` enum('pending','diverifikasi','ditolak','diterima','dibatalkan') NOT NULL,
-  `no_rekening_user` int(11) NOT NULL,
-  `bank_asal_user` varchar(100) NOT NULL,
-  `id_rekening_toko` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -193,23 +124,7 @@ CREATE TABLE `transaksi` (
 -- Struktur dari tabel `user`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
-  `nama_lengkap` varchar(100) NOT NULL,
-  `email_customer` varchar(100) NOT NULL,
-  `password_customer` varchar(60) NOT NULL,
-  `alamat_lengkap` varchar(100) NOT NULL,
-  `no_hp` varchar(12) NOT NULL,
-  `no_hp_dua` varchar(12) NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `foto_ktp` varchar(100) NOT NULL,
-  `foto_selfie_ktp` varchar(100) NOT NULL,
-  `user_level` enum('admin','karyawan','customer') NOT NULL,
-  `status_ktp` enum('belum','sedang_verifikasi','diterima','ditolak') NOT NULL,
-  `is_active` enum('yes','off_by_admin','off_by_user') NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Indexes for dumped tables
