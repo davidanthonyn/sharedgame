@@ -7,7 +7,7 @@
 
 			<li><a href="#"><i class="fa fa-files-o"></i> Brands</a>
 				<ul>
-					<li><a href="<?= base_url('brand/tambah');
+					<li><a href="<?= base_url('brand/tambahbrand');
 									?>">Add Brand</a></li>
 					<li><a href="<?= base_url('brand/kelola');
 									?>">Manage Brands</a></li>
@@ -17,7 +17,8 @@
 			<li><a href="#"><i class="fa fa-sitemap"></i> Products</a>
 				<ul>
 					<li><a href="post-avehical.php">Post a Product</a></li>
-					<li><a href="manage-vehicles.php">Manage Products</a></li>
+					<li><a href="<?= base_url('product/kelolaproduk');
+									?>">Manage Products</a></li>
 				</ul>
 			</li>
 			<li><a href="manage-bookings.php"><i class="fa fa-users"></i> Manage Booking</a></li>
@@ -33,7 +34,7 @@
 			<li><a href="manage-pages.php"><i class="fa fa-files-o"></i> Manage Pages</a></li>
 			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Update Contact Info</a></li>
 			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i> Manage Rekening Toko</a></li>
-			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i> Manage Subscribers</a></li>
+			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i> Manage Members</a></li>
 
 		</ul>
 	</nav>

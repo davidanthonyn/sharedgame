@@ -7,7 +7,7 @@ class Product extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->model('M_Product');
+        $this->load->library('form_validation');
         /*if (empty($this->session->userdata('admin'))) {
             redirect('auth');
         }*/
@@ -27,5 +27,13 @@ class Product extends CI_Controller
         $this->load->model('Modelproduk');
         $data["data"] = $this->Modelproduk->GetProdukById($id);
         $this->load->view('detailproduk.php', $data);
+    }
+
+    function kelolaproduk()
+    {
+        $this->load->model('Modelproduk');
+        $data['title'] = 'Kelola Produk | SharedGame';
+        $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
+        $this->load->view('admin/manage-products.php', $data);
     }
 }

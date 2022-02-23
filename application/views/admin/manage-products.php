@@ -27,7 +27,6 @@
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
-		<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -48,11 +47,11 @@
 			}
 		</style>
 
-
 	</head>
 
 	<body>
 		<?php include('includes/header.php'); ?>
+
 		<div class="ts-main-content">
 			<?php include('includes/leftbar.php'); ?>
 			<div class="content-wrapper">
@@ -61,47 +60,79 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Create Brand</h2>
+							<h2 class="page-title">Manage Brands</h2>
 
-							<div class="row">
-								<div class="col-md-10">
-									<div class="panel panel-default">
-										<div class="panel-heading">Form fields</div>
-										<div class="panel-body">
-											<form method="post" class="form-horizontal" action="<?= base_url('brand/tambahbrand'); ?>">
+							<!-- Zero Configuration Table -->
+							<div class="panel panel-default">
+								<div class="panel-heading">Listed Brands</div>
+								<div class="panel-body">
+									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Brand Name</th>
+												<th>Product Name</th>
+												<th>Product Category</th>
+												<th>Product Color</th>
+												<th>Product Picture</th>
+												<th>Product Description</th>
+												<th>Serial Product</th>
+												<th>Stock</th>
 
-												<div class="form-group">
-													<label class="col-sm-4 control-label">Brand Name</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control" name="brand" id="brand">
-														<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-												</div>
-												<div class="hr-dashed"></div>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>#</th>
+												<th>Brand Name</th>
+												<th>Product Name</th>
+												<th>Product Category</th>
+												<th>Product Color</th>
+												<th>Product Picture</th>
+												<th>Product Description</th>
+												<th>Serial Product</th>
+												<th>Stock</th>
+
+												<th>Action</th>
+											</tr>
+											</tr>
+										</tfoot>
+										<tbody>
+
+											<?php
+											foreach ($product as $listProduct) { ?>
+												<tr>
+													<td><?php echo $listProduct->id_produk ?></td>
+													<td><?php echo $listProduct->id_brand ?></td>
+													<td><?php echo $listProduct->nama_produk ?></td>
+													<td><?php echo $listProduct->kategori_produk ?></td>
+													<td><?php echo $listProduct->warna_produk ?></td>
+													<td><?php echo $listProduct->gambar_produk ?></td>
+													<td><?php echo $listProduct->deskripsi_produk ?></td>
+													<td><?php echo $listProduct->serial_produk ?></td>
+													<td><?php echo $listProduct->jumlah_tersedia ?></td>
+													<td>
+														<a href="<?php echo base_url() . 'Brand/edit_data/' . $listProduct->id_product; ?>">Edit</a> ||
+														<a href="<?php echo base_url() . 'Brand/delete_data/' . $listProduct->id_product; ?>">Hapus</a>
+													</td>
+												</tr>
+											<?php
+											}
+											?>
+
+										</tbody>
+									</table>
 
 
 
-
-												<div class="form-group">
-													<div class="col-sm-8 col-sm-offset-4">
-
-														<button class="btn btn-primary" name="submit" type="submit">Submit</button>
-													</div>
-												</div>
-
-											</form>
-
-										</div>
-									</div>
 								</div>
-
 							</div>
 
 
 
 						</div>
 					</div>
-
 
 				</div>
 			</div>
@@ -117,7 +148,6 @@
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
-
 	</body>
 
 	</html>

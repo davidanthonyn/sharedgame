@@ -8,11 +8,13 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_Admin');
+        $this->load->model('M_Brand');
         $this->load->library('form_validation');
-        /*
-        if (empty($this->session->userdata('admin'))) {
+        $this->load->library('session');
+
+        /* if (empty($this->session->userdata('admin'))) {
             redirect('auth');
-        }*/
+        } */
     }
 
     function index()
@@ -41,6 +43,7 @@ class Admin extends CI_Controller
         //Menghitung row customer service melalui model M_Admin
         $data['jumlahcustomerservice'] = $this->M_Admin->getRowCustomerService();
 
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('admin/dashboard.php', $data);
     }

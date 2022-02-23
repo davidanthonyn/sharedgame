@@ -14,17 +14,7 @@
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
 
-                                <?php if ($this->session->flashdata('messagesuccess')) : ?>
-                                    <div class="alert alert-success" role="alert">
-                                        <?= $this->session->flashdata('messagesuccess'); ?>
-                                    </div>
-                                <?php endif; ?>
 
-                                <?php if ($this->session->flashdata('messagefailed')) : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        <?= $this->session->flashdata('messagefailed'); ?>
-                                    </div>
-                                <?php endif; ?>
 
                                 <form class="user" method="POST" action="<?= base_url('auth'); ?>">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email" value="<?= set_value('email'); ?>">
@@ -35,6 +25,7 @@
                                     </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
                                     <hr>
                                 </form>
+
                                 <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
                                 <div class="text-center"><a class="small" href="<?= base_url('auth/registration');
                                                                                 ?>">Create an Account!</a></div>

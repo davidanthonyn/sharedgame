@@ -9,6 +9,11 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->model('M_User');
         $this->load->library('form_validation');
+        $this->load->library('session');
+
+        if (!empty($this->session->userdata('admin')) || !empty($this->session->userdata('customer'))) {
+            redirect('home');
+        }
     }
 
     public function index()
@@ -38,7 +43,9 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
 
+        //Mengambil email
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
 
         //Set waktu untuk created at dan updated at
         $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
@@ -56,19 +63,36 @@ class Auth extends CI_Controller
                         'time_login' => $now
                     ];
 
+
+
                     //Kirim ke tabel user
                     $this->db->insert('loginhistory', $loginhistory);
 
-                    //Memasukkan data email dan userlevel ke session
-                    $data = [
-                        'email' => $user['email'],
+                    //Taruh data session ke array
+                    $data = array(
+                        'email' => $email,
                         'nama_lengkap' => $user['nama_lengkap'],
                         'user_level' => $user['user_level']
-                    ];
+                    );
 
-                    //Set userdata email dan session
-                    $this->session->set_userdata('user', $data);
-                    redirect('user');
+                    //Jika user adalah customer
+                    if ($user['user_level'] == 'customer') {
+                        //Membuat session customer
+                        $this->session->set_userdata($data);
+                        redirect('home', $data);
+                    }
+
+                    //Jika user adalah admin
+                    if ($user['user_level'] == 'admin') {
+                        //Membuat session admin
+                        $this->session->set_userdata($data);
+
+                        //Note: Kalau pakai view, data session ke load, tapi tidak berjalan perintah controller
+                        //$this->load->view('admin/dashboard.php');
+
+                        //Note: Kalau pakai redirect, perintah controller jalan, tapi data session tidak ke load
+                        redirect('admin', $data);
+                    }
                 } else {
                     //Password salah
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email atau password salah!</div>');
@@ -141,24 +165,25 @@ class Auth extends CI_Controller
             $this->load->view('includes/auth_footer');
 
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('messagefailed', 'Login gagal!');
+            $this->session->set_flashdata('error', 'Login gagal!');
         } else {
 
             //Model M_User pada fungsi tambahDataCustomer
             $this->M_User->tambahDataCustomer();
 
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('messagesuccess', 'Akun berhasil dibuat! 
-             Silakan login.');
+            $this->session->set_flashdata('success', '<div class="alert-success" role="alert"> <small>Congatulation your account has been created, Please login !</small></div>');
 
             //Redirect ke Login
             redirect('auth');
+            //redirect('auth', 'message');
         }
     }
 
     public function logout()
     {
         $this->session->unset_userdata('email');
+        $this->session->unset_userdata('nama_lengkap');
         $this->session->unset_userdata('user_level');
 
         $this->session->sess_destroy();
