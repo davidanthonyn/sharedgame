@@ -33,6 +33,8 @@ error_reporting(0);
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+
+	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
 </head>
 
 <body>
