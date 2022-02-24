@@ -18,7 +18,8 @@ class Product extends CI_Controller
         $this->load->database();
         $this->load->model('Modelproduk');
         $data["data"] = $this->Modelproduk->GetProduk();
-        $this->load->view('car-listing.php', $data);
+        $data['title'] = 'Products | SharedGame';
+        $this->load->view('game-listing.php', $data);
     }
 
     function detail($id)

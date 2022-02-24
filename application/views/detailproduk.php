@@ -13,7 +13,7 @@ error_reporting(0);
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>SharedGame | The Best Rental Gaming Equipment</title>
+  <title><?php echo $data[0]['nama_produk']; ?> | SharedGame</title>
   <!--Bootstrap -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.min.css" type="text/css">
   <!--Custome Style -->
@@ -42,15 +42,11 @@ error_reporting(0);
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>/assets/images/favicon-icon/apple-touch-icon-114-precomposed.html">
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>/assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>/assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
-  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/favicon-icon/favicon.png">
+  <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- Start Switcher -->
-  <?php include('includes/colorswitcher.php'); ?>
-  <!-- /Switcher -->
 
   <!--Header-->
   <?php include('includes/header.php'); ?>
@@ -115,17 +111,8 @@ error_reporting(0);
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
   <!--/Back to top-->
 
-  <!--Login-Form -->
-  <?php include('includes/login.php'); ?>
-  <!--/Login-Form -->
 
-  <!--Register-Form -->
-  <?php include('includes/registration.php'); ?>
 
-  <!--/Register-Form -->
-
-  <!--Forgot-password-Form -->
-  <?php include('includes/forgotpassword.php'); ?>
 
   <!-- Scripts -->
   <script src="<?php echo base_url(); ?>/assets/js/jquery.min.js"></script>
