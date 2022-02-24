@@ -127,25 +127,26 @@ error_reporting(0);
           <h3>Contact Info</h3>
           <div class="contact_detail">
             <?php
-
+            /*
             if ($query->rowCount() > 0) {
-              foreach ($results as $result) { ?>
-                <ul>
-                  <li>
-                    <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                    <div class="contact_info_m"><?php echo htmlentities($result->Address); ?></div>
-                  </li>
-                  <li>
-                    <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-                    <div class="contact_info_m"><a href="tel:61-1234-567-90"><?php echo htmlentities($result->EmailId); ?></a></div>
-                  </li>
-                  <li>
-                    <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-                    <div class="contact_info_m"><a href="mailto:contact@exampleurl.com"><?php echo htmlentities($result->ContactNo); ?></a></div>
-                  </li>
-                </ul>
-            <?php }
-            } ?>
+              foreach ($results as $result) { */ ?>
+            <ul>
+              <li>
+                <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                <div class="contact_info_m"><?php /* echo htmlentities($result->Address); */ ?></div>
+              </li>
+              <li>
+                <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                <div class="contact_info_m"><a href="tel:61-1234-567-90"><?php /* echo htmlentities($result->EmailId); */ ?></a></div>
+              </li>
+              <li>
+                <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                <div class="contact_info_m"><a href="mailto:cs@sharedgame.tech"><?php /* echo htmlentities($result->ContactNo); */ ?></a></div>
+              </li>
+            </ul>
+            <?php // }
+            //  } 
+            ?>
           </div>
         </div>
       </div>
@@ -161,19 +162,6 @@ error_reporting(0);
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
   <!--/Back to top-->
-
-  <!--Login-Form -->
-  <?php include('includes/login.php'); ?>
-  <!--/Login-Form -->
-
-  <!--Register-Form -->
-  <?php include('includes/registration.php'); ?>
-
-  <!--/Register-Form -->
-
-  <!--Forgot-password-Form -->
-  <?php include('includes/forgotpassword.php'); ?>
-  <!--/Forgot-password-Form -->
 
   <!-- Scripts -->
   <script src="assets/js/jquery.min.js"></script>

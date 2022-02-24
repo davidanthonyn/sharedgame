@@ -12,6 +12,7 @@ class Contact extends CI_Controller
     function index()
     {
         //session_start();
+        /*
         error_reporting(0);
 
         // DB credentials.
@@ -33,7 +34,7 @@ class Contact extends CI_Controller
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
         $cnt = 1;
-        $this->load->view('contact-us.php');
+       
 
 
 
@@ -56,6 +57,8 @@ class Contact extends CI_Controller
             } else {
                 $error = "Something went wrong. Please try again";
             }
-        }
+        }*/
+
+        $this->load->view('contact-us.php');
     }
 }
