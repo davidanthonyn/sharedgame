@@ -58,7 +58,7 @@ class Contact extends CI_Controller
                 $error = "Something went wrong. Please try again";
             }
         }*/
-
-        $this->load->view('contact-us.php');
+        $data['title'] = 'Contact Us | SharedGame';
+        $this->load->view('contact-us.php', $data);
     }
 }
