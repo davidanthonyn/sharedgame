@@ -64,8 +64,8 @@ class M_User extends CI_model
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'danthonynathanael@gmail.com',
-            'smtp_pass' => 'Superdup3ryummy!',
+            'smtp_user' => 'sharedgametech@gmail.com',
+            'smtp_pass' => 'sukamaingame',
             'smtp_port' => 465,
             'mail_type' => 'html',
             'charset' => 'utf-8',
@@ -75,7 +75,7 @@ class M_User extends CI_model
         $this->load->library('email');
         $this->email->initialize($config);
 
-        $this->email->from('danthonynathanael@gmail.com', 'SharedGame | Do Not Reply');
+        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to($this->input->post('email'));
 
