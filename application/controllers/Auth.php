@@ -172,61 +172,107 @@ class Auth extends CI_Controller
             $this->session->flashdata('message', '<div class="alert-danger" role="alert">Akun tidak berhasil dibuat.</div>');
         } else {
 
-            /*
-            //Siapkan token untuk aktivasi akun
-            $token = base64_encode(random_bytes(32));
-            var_dump($token);
-            die;
-            */
-
             //Model M_User pada fungsi tambahDataCustomer
-            //$this->M_User->tambahDataCustomer();
+            $this->M_User->tambahDataCustomer();
 
-            //$this->_sendEmail();
+            //Model M_User pada fungsi tambahUserToken(sekaligus dengan fungsi send token ke email)
+            $this->M_User->tambahUserToken();
 
             //Alert akun berhasil dibuat
             $this->session->flashdata('message', ' <div class="alert alert-success" role="alert">Selamat, akun berhasil dibuat! Mohon konfirmasi melalui email!</div>');
 
 
             //Redirect ke Login
-            //redirect('auth');
             redirect('auth');
         }
     }
 
-    private function _sendEmail()
+    public function verify()
     {
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'danthonynathanael@gmail.com',
-            'smtp_pass' => 'Superdup3ryummy!',
-            'smtp_port' => 465,
-            'mail_type' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        ];
+        //Pengambilan data dari link controller
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
 
-        $this->load->library('email');
-        $this->email->initialize($config);
+        //Now
+        $now = date('Y-m-d H:i:s');
 
-        $this->email->from('danthonynathanael@gmail.com', 'SharedGame | Do Not Reply');
 
-        //$this->email->to($this->input->post('email'));
+        //Memasukkan email ker array, untuk dibawa ke if pertama(cek email nya benar atau tidak)
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
 
-        $this->email->to('kontolbinatang@protonmail.com');
+        //Pengecekan user(apakah user nya ada, dan email nya benar)
+        if ($user) {
 
-        $this->email->subject('Konfirmasi Pembuatan Akun');
+            //Pengecekan apakah user nya sudah aktif atau tidak(mencegah adanya dua kali pencet aktivasi)
+            if ($user['is_active'] == 'yes') {
+                //Alert akun sudah diaktivasi
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda sudah diaktivasi!</div>');
 
-        $this->email->message('Hello world');
+                //Redirect ke Login
+                redirect('auth');
+            }
 
-        if ($this->email->send()) {
-            return true;
+            //Memasukkan token ker array, untuk dibawa ke if kedua(cek token nya benar atau tidak)
+            $user_token = $this->db->get_where('usertoken', ['token' => $token])->row_array();
+
+            if ($user_token) {
+
+
+                //Pengecekan waktu token(maksimal 1x24 jam setelah registrasi)
+                if ($now - $user_token['time_created'] < (60 * 60 * 24)) {
+
+                    //Memasukkan data user ke array, untuk dibawa ke if ketiga(cek akun nya aktif atau tidak)
+                    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+                    if ($user['is_active'] == 'not_yet_activated') {
+
+                        //Update user set is_active = yes
+                        $this->db->set('is_active', 'yes');
+                        $this->db->where('email', $email);
+                        $this->db->update('user');
+
+                        //Delete user_token
+                        $this->db->delete('usertoken', ['email' => $email]);
+
+                        //Alert akun berhasil diaktivasi
+                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat, akun anda berhasil diaktivasi!</div>');
+
+                        //Redirect ke Login
+                        redirect('auth');
+                    } else {
+                        //Alert akun sudah diaktivasi
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda sudah diaktivasi!</div>');
+
+                        //Redirect ke Login
+                        redirect('auth');
+                    }
+                } else {
+                    //Alert token expired
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Anda expired! Mohon hubungi Customer Service.</div>');
+
+                    //Redirect ke Login
+                    redirect('auth');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-danger" role="alert">Aktivasi akun gagal! Token tidak valid.</div>');
+
+                redirect('auth');
+            }
         } else {
-            echo $this->email->print_debugger();
-            die;
+            //Alert email salah
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Aktivasi akun gagal! Email tidak valid.</div>');
+
+            redirect('auth');
         }
     }
+
+    public function forgot()
+    {
+    }
+
+
 
     public function logout()
     {
