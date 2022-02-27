@@ -10,6 +10,7 @@ class Auth extends CI_Controller
         $this->load->model('M_User');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->helper('url');
 
         if (!empty($this->session->userdata('admin')) || !empty($this->session->userdata('customer'))) {
             redirect('home');
@@ -130,6 +131,9 @@ class Auth extends CI_Controller
 
     public function registration()
     {
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
 
         //Validasi Nama
         $this->form_validation->set_rules('name', 'Name', 'required|trim', [
@@ -164,19 +168,63 @@ class Auth extends CI_Controller
             $this->load->view('includes/registration');
             $this->load->view('includes/auth_footer');
 
-            //Alert akun berhasil dibuat
-            $this->session->set_flashdata('error', 'Login gagal!');
+            //Alert akun gagal dibuat
+            $this->session->flashdata('message', '<div class="alert-danger" role="alert">Akun tidak berhasil dibuat.</div>');
         } else {
 
+            /*
+            //Siapkan token untuk aktivasi akun
+            $token = base64_encode(random_bytes(32));
+            var_dump($token);
+            die;
+            */
+
             //Model M_User pada fungsi tambahDataCustomer
-            $this->M_User->tambahDataCustomer();
+            //$this->M_User->tambahDataCustomer();
+
+            //$this->_sendEmail();
 
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('success', '<div class="alert-success" role="alert"> <small>Congatulation your account has been created, Please login !</small></div>');
+            $this->session->flashdata('message', ' <div class="alert alert-success" role="alert">Selamat, akun berhasil dibuat! Mohon konfirmasi melalui email!</div>');
+
 
             //Redirect ke Login
+            //redirect('auth');
             redirect('auth');
-            //redirect('auth', 'message');
+        }
+    }
+
+    private function _sendEmail()
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'danthonynathanael@gmail.com',
+            'smtp_pass' => 'Superdup3ryummy!',
+            'smtp_port' => 465,
+            'mail_type' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+
+        $this->load->library('email');
+        $this->email->initialize($config);
+
+        $this->email->from('danthonynathanael@gmail.com', 'SharedGame | Do Not Reply');
+
+        //$this->email->to($this->input->post('email'));
+
+        $this->email->to('kontolbinatang@protonmail.com');
+
+        $this->email->subject('Konfirmasi Pembuatan Akun');
+
+        $this->email->message('Hello world');
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
         }
     }
 
@@ -192,7 +240,7 @@ class Auth extends CI_Controller
         redirect('auth');
 
         //Alert akun berhasil dibuat
-        $this->session->set_flashdata('messagesuccess', '<div class="alert 
+        $this->session->set_flashdata('message', '<div class="alert 
         alert-success" role="alert">Berhasil logout!</div>');
     }
 }

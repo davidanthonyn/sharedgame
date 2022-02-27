@@ -13,8 +13,12 @@
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
-
-
+                                <?php
+                                if ($this->session->flashdata('message')) {
+                                    echo $this->session->flashdata('message');
+                                    $this->session->unset_userdata('message');
+                                }
+                                ?>
 
                                 <form class="user" method="POST" action="<?= base_url('auth'); ?>">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email" value="<?= set_value('email'); ?>">

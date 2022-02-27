@@ -25,7 +25,7 @@ class M_User extends CI_model
             'foto_selfie_ktp' => "empty",
             'user_level' => "customer",
             'status_ktp' => "belum",
-            'is_active' => "yes",
+            'is_active' => "not_yet_activated",
             'created_at' => $now,
             'updated_at' => $now
         ];
