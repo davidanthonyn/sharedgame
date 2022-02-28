@@ -62,7 +62,6 @@ error_reporting(0);
   </section>
   <!-- /Banners -->
 
-
   <!-- Resent Cat-->
   <section class="section-padding gray-bg">
     <div class="container">
@@ -80,11 +79,13 @@ error_reporting(0);
             <li role="presentation" class="active"><a href="#resentnewcar" role="tab" data-toggle="tab">New Game Product</a></li>
           </ul>
         </div>
-        <!-- Recently Listed New Cars -->
+        <!-- Recently Listed New Cars --><br>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="resentnewcar">
 
-            <?php for ($i = 0; $i < count($produk); $i++) : ?>
+
+            <?php //count($produk); <- ini buat ngitung kolom array, disembunyikan dulu, kalo mau nampilin semua produk, kasih ini
+            for ($i = 0; $i < 3; $i++) : ?>
 
               <div class="col-list-3">
                 <div class="recent-car-list">
