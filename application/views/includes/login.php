@@ -11,6 +11,7 @@
                         <div class="col-lg-15">
                             <div class="p-5">
                                 <div class="text-center">
+                                    <div class="logo"><img src="<?php echo base_url() . "assets/"; ?>images/sharedgame160.png" alt="image" /></a> </div>
                                     <h4 class="text-dark mb-4">Login Page</h4>
                                 </div>
                                 <?php

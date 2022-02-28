@@ -13,7 +13,7 @@ class User extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $this->load->view('index', $data);
+        echo 'Selamat datang ' . $data['user']['nama_lengkap'];
     }
 
     function profile_settings()

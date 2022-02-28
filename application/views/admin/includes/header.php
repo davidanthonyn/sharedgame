@@ -4,9 +4,14 @@
 	<ul class="ts-profile-nav">
 
 		<li class="ts-account">
-			<a href="#">nama admin<i class="fa fa-angle-down hidden-side"></i></a>
+			<?php
+			$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+			?>
+			<a href="#"><?= $data['user']['nama_lengkap']; ?><i class="fa fa-angle-down hidden-side"></i></a>
 			<ul>
 				<li><a href="change-password.php">Change Password</a></li>
+				<li><a href="<?= base_url('');
+								?>">Web Page for Customer</a></li>
 				<li><a href="<?= base_url('Auth/logout');
 								?>">Logout</a></li>
 			</ul>

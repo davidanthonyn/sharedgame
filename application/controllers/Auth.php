@@ -11,14 +11,14 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->helper('url');
-
-        if (!empty($this->session->userdata('admin')) || !empty($this->session->userdata('customer'))) {
-            redirect('home');
-        }
     }
 
     public function index()
     {
+        if ($this->session->userdata('email')) {
+            redirect('');
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Email harus diisi!',
             'valid_email' => 'Mohon memasukkan email yang valid!'
@@ -64,35 +64,35 @@ class Auth extends CI_Controller
                         'time_login' => $now
                     ];
 
-
-
                     //Kirim ke tabel user
                     $this->db->insert('loginhistory', $loginhistory);
 
+                    /*
                     //Taruh data session ke array
                     $data = array(
                         'email' => $email,
                         'nama_lengkap' => $user['nama_lengkap'],
                         'user_level' => $user['user_level']
                     );
+                    */
 
                     //Jika user adalah customer
                     if ($user['user_level'] == 'customer') {
                         //Membuat session customer
-                        $this->session->set_userdata($data);
-                        redirect('home', $data);
+                        $this->session->set_userdata($user);
+                        redirect('', $user);
                     }
 
                     //Jika user adalah admin
                     if ($user['user_level'] == 'admin') {
                         //Membuat session admin
-                        $this->session->set_userdata($data);
+                        $this->session->set_userdata($user);
 
                         //Note: Kalau pakai view, data session ke load, tapi tidak berjalan perintah controller
                         //$this->load->view('admin/dashboard.php');
 
                         //Note: Kalau pakai redirect, perintah controller jalan, tapi data session tidak ke load
-                        redirect('admin', $data);
+                        redirect('admin', $user);
                     }
                 } else {
                     //Password salah
@@ -132,7 +132,7 @@ class Auth extends CI_Controller
     public function registration()
     {
         if ($this->session->userdata('email')) {
-            redirect('user');
+            redirect('');
         }
 
         //Validasi Nama
@@ -282,11 +282,11 @@ class Auth extends CI_Controller
 
         $this->session->sess_destroy();
 
-        //Redirect ke Login
-        redirect('auth');
-
-        //Alert akun berhasil dibuat
+        //Alert akun berhasil logout
         $this->session->set_flashdata('message', '<div class="alert 
         alert-success" role="alert">Berhasil logout!</div>');
+
+        //Redirect ke Login
+        redirect(base_url());
     }
 }
