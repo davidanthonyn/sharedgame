@@ -8,6 +8,7 @@ class Contact extends CI_Controller
     {
         parent::__construct();
         $this->load->model(array('M_CustomerService'));
+        $this->load->library('form_validation');
     }
 
     function index()
@@ -63,5 +64,29 @@ class Contact extends CI_Controller
         $data['cs'] = $this->M_CustomerService->index()->result();
         $data['title'] = 'Contact Us | SharedGame';
         $this->load->view('contact-us.php', $data);
+    }
+
+    function kirim()
+    {
+        if ($this->form_validation->run() == false) {
+            $data['cs'] = $this->M_CustomerService->index()->result();
+            $data['title'] = 'Contact Us | SharedGame';
+            $this->load->view('contact-us.php', $data);
+        } else {
+            //Model M_CustomerService pada fungsi tambahDataCustomer
+            $this->M_CustomerService->tambahDataKeluhanCS();
+
+            //Jalankan fungsi email kirim ke customer
+            $this->_sendEmailToCustomer();
+        }
+    }
+
+    private function _sendEmailToCustomer()
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => ''
+        ];
     }
 }

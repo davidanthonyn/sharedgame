@@ -122,7 +122,8 @@ class Auth extends CI_Controller
             redirect('auth');
         } else {
             //Email tidak ada
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
+            //$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email atau Password salah!</div>');
 
             //Redirect ke Login
             redirect('auth');

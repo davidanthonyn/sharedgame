@@ -33,7 +33,7 @@ class M_User extends CI_model
         ];
 
         //Kirim ke tabel user
-        $this->db->insert('user', $data);
+        //$this->db->insert('user', $data);
     }
 
     public function tambahUserToken()
@@ -61,12 +61,27 @@ class M_User extends CI_model
     {
         $email = $this->input->post('email', true);
 
+        /*
+        //Config gmail
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_user' => 'sharedgametech@gmail.com',
             'smtp_pass' => 'sukamaingame',
             'smtp_port' => 465,
+            'mail_type' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+        */
+
+        //Config 000WebHost
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ns02.000webhost.com',
+            'smtp_user' => 'noreply@sharedgame.tech',
+            'smtp_pass' => 'qmSgTyH6',
+            'smtp_port' => 587,
             'mail_type' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n"
