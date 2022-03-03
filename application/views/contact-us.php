@@ -1,8 +1,3 @@
-<?php
-//session_start();
-error_reporting(0);
-//include('includes/config.php');
-?>
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -91,7 +86,8 @@ error_reporting(0);
     <div class="dark-overlay"></div>
   </section>
   <!-- /Page Header-->
-
+  <!--Pesan berhasil/gagal-->
+  <div class="alert alert-success" role="alert" style="text-align:center;">Pesan Anda terkirim. Terima kasih!</div>
   <!--Contact-us-->
   <section class="contact_us section-padding">
     <div class="container">
@@ -127,25 +123,24 @@ error_reporting(0);
           <h3>Contact Info</h3>
           <div class="contact_detail">
             <?php
-            /*
-            if ($query->rowCount() > 0) {
-              foreach ($results as $result) { */ ?>
-            <ul>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><?php /* echo htmlentities($result->Address); */ ?></div>
-              </li>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><a href="tel:61-1234-567-90"><?php /* echo htmlentities($result->EmailId); */ ?></a></div>
-              </li>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><a href="mailto:cs@sharedgame.tech"><?php /* echo htmlentities($result->ContactNo); */ ?></a></div>
-              </li>
-            </ul>
-            <?php // }
-            //  } 
+
+            foreach ($cs as $listCs) { ?>
+              <ul>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><?php echo $listCs->nama_lengkap ?></div>
+                </li>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><a href="tel:<?php echo $listCs->number_cs ?>"><?php echo $listCs->number_cs ?></a></div>
+                </li>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><a href="mailto:<?php echo $listCs->email_cs ?>"><?php echo $listCs->email_cs ?></a></div>
+                </li>
+              </ul>
+            <?php }
+
             ?>
           </div>
         </div>

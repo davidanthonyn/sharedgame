@@ -7,6 +7,7 @@ class Contact extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model(array('M_CustomerService'));
     }
 
     function index()
@@ -58,6 +59,8 @@ class Contact extends CI_Controller
                 $error = "Something went wrong. Please try again";
             }
         }*/
+        //Model M_CustomerService pada fungsi index(panggil data CS dari database)
+        $data['cs'] = $this->M_CustomerService->index()->result();
         $data['title'] = 'Contact Us | SharedGame';
         $this->load->view('contact-us.php', $data);
     }
