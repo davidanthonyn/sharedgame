@@ -8,6 +8,7 @@ class M_Product extends CI_model
         return $this->db->get('produk')->result_array();
     }
 
+
     public function tambahDataProduk()
     {
         //Set waktu untuk created at dan updated at
