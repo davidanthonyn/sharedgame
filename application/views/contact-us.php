@@ -1,8 +1,3 @@
-<?php
-//session_start();
-error_reporting(0);
-//include('includes/config.php');
-?>
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -91,34 +86,40 @@ error_reporting(0);
     <div class="dark-overlay"></div>
   </section>
   <!-- /Page Header-->
-
+  <!--Pesan berhasil/gagal-->
+  <div class="alert alert-success" role="alert" style="text-align:center;">Pesan Anda terkirim. Terima kasih!</div>
   <!--Contact-us-->
   <section class="contact_us section-padding">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h3>Get in touch using the form below</h3>
-          <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+          <?php //if ($error) { 
+          ?><div class="errorWrap"><strong>ERROR</strong>:<?php //echo htmlentities($error); 
+                                                          ?> </div><?php //} else if ($msg) { 
+                                                                    ?><div class="succWrap"><strong>SUCCESS</strong>:<?php //echo htmlentities($msg); 
+                                                                                                                      ?> </div><?php //} 
+                                                                                                                                ?>
           <div class="contact_form gray-bg">
-            <form method="post">
+            <form class="user" method="POST" action="<?= base_url('contact/kirim'); ?>">
               <div class="form-group">
-                <label class="control-label">Full Name <span>*</span></label>
+                <label class="control-label">Nama Lengkap <span>*</span></label>
                 <input type="text" name="fullname" class="form-control white_bg" id="fullname" required>
               </div>
               <div class="form-group">
-                <label class="control-label">Email Address <span>*</span></label>
-                <input type="email" name="email" class="form-control white_bg" id="emailaddress" required>
+                <label class="control-label">Email <span>*</span></label>
+                <input type="email" name="emailaddress" class="form-control white_bg" id="emailaddress" required>
               </div>
               <div class="form-group">
-                <label class="control-label">Phone Number <span>*</span></label>
-                <input type="text" name="contactno" class="form-control white_bg" id="phonenumber" required>
+                <label class="control-label">Nomor HP <span>*</span></label>
+                <input type="text" name="phonenumber" class="form-control white_bg" id="phonenumber" required>
               </div>
               <div class="form-group">
-                <label class="control-label">Message <span>*</span></label>
-                <textarea class="form-control white_bg" name="message" rows="4" required></textarea>
+                <label class="control-label">Kritik/Masukan <span>*</span></label>
+                <textarea class="form-control white_bg" name="message" rows="4" id="message" required></textarea>
               </div>
               <div class="form-group">
-                <button class="btn" type="submit" name="send" type="submit">Send Message <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                <button class="btn" type="submit" name="send" type="submit">Kirim <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
               </div>
             </form>
           </div>
@@ -127,25 +128,24 @@ error_reporting(0);
           <h3>Contact Info</h3>
           <div class="contact_detail">
             <?php
-            /*
-            if ($query->rowCount() > 0) {
-              foreach ($results as $result) { */ ?>
-            <ul>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><?php /* echo htmlentities($result->Address); */ ?></div>
-              </li>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><a href="tel:61-1234-567-90"><?php /* echo htmlentities($result->EmailId); */ ?></a></div>
-              </li>
-              <li>
-                <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-                <div class="contact_info_m"><a href="mailto:cs@sharedgame.tech"><?php /* echo htmlentities($result->ContactNo); */ ?></a></div>
-              </li>
-            </ul>
-            <?php // }
-            //  } 
+
+            foreach ($cs as $listCs) { ?>
+              <ul>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><?php echo $listCs->nama_lengkap ?></div>
+                </li>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><a href="tel:<?php echo $listCs->number_cs ?>"><?php echo $listCs->number_cs ?></a></div>
+                </li>
+                <li>
+                  <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                  <div class="contact_info_m"><a href="mailto:<?php echo $listCs->email_cs ?>"><?php echo $listCs->email_cs ?></a></div>
+                </li>
+              </ul>
+            <?php }
+
             ?>
           </div>
         </div>

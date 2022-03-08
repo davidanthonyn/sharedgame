@@ -10,14 +10,15 @@ class Auth extends CI_Controller
         $this->load->model('M_User');
         $this->load->library('form_validation');
         $this->load->library('session');
-
-        if (!empty($this->session->userdata('admin')) || !empty($this->session->userdata('customer'))) {
-            redirect('home');
-        }
+        $this->load->helper('url');
     }
 
     public function index()
     {
+        if ($this->session->userdata('email')) {
+            redirect('');
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Email harus diisi!',
             'valid_email' => 'Mohon memasukkan email yang valid!'
@@ -63,35 +64,35 @@ class Auth extends CI_Controller
                         'time_login' => $now
                     ];
 
-
-
                     //Kirim ke tabel user
                     $this->db->insert('loginhistory', $loginhistory);
 
+                    /*
                     //Taruh data session ke array
                     $data = array(
                         'email' => $email,
                         'nama_lengkap' => $user['nama_lengkap'],
                         'user_level' => $user['user_level']
                     );
+                    */
 
                     //Jika user adalah customer
                     if ($user['user_level'] == 'customer') {
                         //Membuat session customer
-                        $this->session->set_userdata($data);
-                        redirect('home', $data);
+                        $this->session->set_userdata($user);
+                        redirect('', $user);
                     }
 
                     //Jika user adalah admin
                     if ($user['user_level'] == 'admin') {
                         //Membuat session admin
-                        $this->session->set_userdata($data);
+                        $this->session->set_userdata($user);
 
                         //Note: Kalau pakai view, data session ke load, tapi tidak berjalan perintah controller
                         //$this->load->view('admin/dashboard.php');
 
                         //Note: Kalau pakai redirect, perintah controller jalan, tapi data session tidak ke load
-                        redirect('admin', $data);
+                        redirect('admin', $user);
                     }
                 } else {
                     //Password salah
@@ -121,7 +122,8 @@ class Auth extends CI_Controller
             redirect('auth');
         } else {
             //Email tidak ada
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
+            //$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email atau Password salah!</div>');
 
             //Redirect ke Login
             redirect('auth');
@@ -130,6 +132,9 @@ class Auth extends CI_Controller
 
     public function registration()
     {
+        if ($this->session->userdata('email')) {
+            redirect('');
+        }
 
         //Validasi Nama
         $this->form_validation->set_rules('name', 'Name', 'required|trim', [
@@ -164,21 +169,111 @@ class Auth extends CI_Controller
             $this->load->view('includes/registration');
             $this->load->view('includes/auth_footer');
 
-            //Alert akun berhasil dibuat
-            $this->session->set_flashdata('error', 'Login gagal!');
+            //Alert akun gagal dibuat
+            $this->session->flashdata('message', '<div class="alert-danger" role="alert">Akun tidak berhasil dibuat.</div>');
         } else {
 
             //Model M_User pada fungsi tambahDataCustomer
             $this->M_User->tambahDataCustomer();
 
+            //Model M_User pada fungsi tambahUserToken(sekaligus dengan fungsi send token ke email)
+            $this->M_User->tambahUserToken();
+
             //Alert akun berhasil dibuat
-            $this->session->set_flashdata('success', '<div class="alert-success" role="alert"> <small>Congatulation your account has been created, Please login !</small></div>');
+            $this->session->flashdata('message', ' <div class="alert alert-success" role="alert">Selamat, akun berhasil dibuat! Mohon konfirmasi melalui email!</div>');
+
 
             //Redirect ke Login
             redirect('auth');
-            //redirect('auth', 'message');
         }
     }
+
+    public function verify()
+    {
+        //Pengambilan data dari link controller
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        //Now
+        $now = date('Y-m-d H:i:s');
+
+
+        //Memasukkan email ker array, untuk dibawa ke if pertama(cek email nya benar atau tidak)
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        //Pengecekan user(apakah user nya ada, dan email nya benar)
+        if ($user) {
+
+            //Pengecekan apakah user nya sudah aktif atau tidak(mencegah adanya dua kali pencet aktivasi)
+            if ($user['is_active'] == 'yes') {
+                //Alert akun sudah diaktivasi
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda sudah diaktivasi!</div>');
+
+                //Redirect ke Login
+                redirect('auth');
+            }
+
+            //Memasukkan token ker array, untuk dibawa ke if kedua(cek token nya benar atau tidak)
+            $user_token = $this->db->get_where('usertoken', ['token' => $token])->row_array();
+
+            if ($user_token) {
+
+
+                //Pengecekan waktu token(maksimal 1x24 jam setelah registrasi)
+                if ($now - $user_token['time_created'] < (60 * 60 * 24)) {
+
+                    //Memasukkan data user ke array, untuk dibawa ke if ketiga(cek akun nya aktif atau tidak)
+                    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+                    if ($user['is_active'] == 'not_yet_activated') {
+
+                        //Update user set is_active = yes
+                        $this->db->set('is_active', 'yes');
+                        $this->db->where('email', $email);
+                        $this->db->update('user');
+
+                        //Delete user_token
+                        $this->db->delete('usertoken', ['email' => $email]);
+
+                        //Alert akun berhasil diaktivasi
+                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat, akun anda berhasil diaktivasi!</div>');
+
+                        //Redirect ke Login
+                        redirect('auth');
+                    } else {
+                        //Alert akun sudah diaktivasi
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda sudah diaktivasi!</div>');
+
+                        //Redirect ke Login
+                        redirect('auth');
+                    }
+                } else {
+                    //Alert token expired
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Anda expired! Mohon hubungi Customer Service.</div>');
+
+                    //Redirect ke Login
+                    redirect('auth');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-danger" role="alert">Aktivasi akun gagal! Token tidak valid.</div>');
+
+                redirect('auth');
+            }
+        } else {
+            //Alert email salah
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Aktivasi akun gagal! Email tidak valid.</div>');
+
+            redirect('auth');
+        }
+    }
+
+    public function forgot()
+    {
+    }
+
+
 
     public function logout()
     {
@@ -188,11 +283,11 @@ class Auth extends CI_Controller
 
         $this->session->sess_destroy();
 
-        //Redirect ke Login
-        redirect('auth');
-
-        //Alert akun berhasil dibuat
-        $this->session->set_flashdata('messagesuccess', '<div class="alert 
+        //Alert akun berhasil logout
+        $this->session->set_flashdata('message', '<div class="alert 
         alert-success" role="alert">Berhasil logout!</div>');
+
+        //Redirect ke Login
+        redirect(base_url());
     }
 }

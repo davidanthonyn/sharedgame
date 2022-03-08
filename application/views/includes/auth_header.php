@@ -15,4 +15,4 @@
     <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
 </head>
 
-<body class="bg-gradient-primary">
+<body class="">

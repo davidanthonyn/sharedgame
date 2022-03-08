@@ -8,12 +8,19 @@
         <div class="col-sm-9 col-md-10">
           <div class="header_info">
             <div class="header_widgets">
-              <?php /* if (strlen($_SESSION['login']) == 0) { */
-              ?>
-              <div class="login_btn"> <a href="<?php echo base_url() . 'auth' ?>" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
               <?php
-              echo $this->session->userdata('email');
+
+              $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+              if ($this->session->userdata('email')) {
               ?>
+                <br><br><br>
+                <p>Selamat datang, <?= $data['user']['nama_lengkap']; ?></p>
+              <?php
+              } else {
+              ?>
+                <div class="login_btn"> <a href="<?php echo base_url() . 'auth' ?>" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -29,31 +36,31 @@
         <div class="header_wrap">
           <div class="user_login">
             <ul>
-              <li class="dropdown"> <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i>
-                  <?php
-                  /*$email = $_SESSION['login'];
-                  $sql = "SELECT FullName FROM tblusers WHERE EmailId=:email ";
-                  $query = $dbh->prepare($sql);
-                  $query->bindParam(':email', $email, PDO::PARAM_STR);
-                  $query->execute();
-                  $results = $query->fetchAll(PDO::FETCH_OBJ);
-                  if ($query->rowCount() > 0) {
-                    foreach ($results as $result) {
+              <?php if ($this->session->userdata('email')) { ?>
+                <li class="dropdown"> <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    <?= $data['user']['nama_lengkap']; ?>
 
-                      echo htmlentities($result->FullName);
+                  </a>
+                  <ul class="dropdown-menu">
+                    <?php
+                    //Khusus admin, ada pilihan admin page
+                    if ($data['user']['user_level'] == 'admin') {
+                    ?>
+                      <li><a href="<?php echo base_url() . 'admin' ?>">Admin Page</a></li>
+                    <?php
                     }
-                  } */ ?><i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                <ul class="dropdown-menu">
-                  <?php if ($_SESSION['login']) { ?>
+                    ?>
+
                     <li><a href="profile.php">Profile Settings</a></li>
                     <li><a href="update-password.php">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
                     <li><a href="post-testimonial.php">Post a Testimonial</a></li>
                     <li><a href="my-testimonials.php">My Testimonial</a></li>
-                    <li><a href="<?php echo base_url() . 'Home/logout' ?>">Sign Out</a></li>
+                    <li><a href="<?php echo base_url() . 'auth/logout' ?>">Sign Out</a></li>
                   <?php } ?>
-                </ul>
-              </li>
+                  </ul>
+                </li>
             </ul>
           </div>
           <div class="header_search">

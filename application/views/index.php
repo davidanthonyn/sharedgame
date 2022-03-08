@@ -42,10 +42,6 @@ error_reporting(0);
 
 <body>
 
-  <!--Header-->
-  <?php include('includes/header.php'); ?>
-  <!-- /Header -->
-
   <!-- Banners -->
   <section id="banner" class="banner-section">
     <div class="container">
@@ -66,7 +62,6 @@ error_reporting(0);
   </section>
   <!-- /Banners -->
 
-
   <!-- Resent Cat-->
   <section class="section-padding gray-bg">
     <div class="container">
@@ -84,39 +79,34 @@ error_reporting(0);
             <li role="presentation" class="active"><a href="#resentnewcar" role="tab" data-toggle="tab">New Game Product</a></li>
           </ul>
         </div>
-        <!-- Recently Listed New Cars -->
+        <!-- Recently Listed New Cars --><br>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="resentnewcar">
 
-            <?php /*$sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-            $query = $dbh->prepare($sql);
-            $query->execute();
-            $results = $query->fetchAll(PDO::FETCH_OBJ);
-            $cnt = 1;
-            if ($query->rowCount() > 0) {
-              foreach ($results as $result) {*/
-            ?>
 
-            <div class="col-list-3">
-              <div class="recent-car-list">
-                <div class="car-info-box"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1); ?>" class="img-responsive" alt="image"></a>
-                  <ul>
-                    <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($result->FuelType); ?></li>
-                    <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($result->ModelYear); ?> Model</li>
-                    <li><i class="fa fa-user" aria-hidden="true"></i><?php echo htmlentities($result->SeatingCapacity); ?> seats</li>
-                  </ul>
-                </div>
-                <div class="car-title-m">
-                  <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a></h6>
-                  <span class="price">$<?php echo htmlentities($result->PricePerDay); ?> /Day</span>
-                </div>
-                <div class="inventory_info_m">
-                  <p><?php echo substr($result->VehiclesOverview, 0, 70); ?></p>
+            <?php //count($produk); <- ini buat ngitung kolom array, disembunyikan dulu, kalo mau nampilin semua produk, kasih ini
+            for ($i = 0; $i < 3; $i++) : ?>
+
+              <div class="col-list-3">
+                <div class="recent-car-list">
+                  <div class="car-info-box"> <a href="<?= $data[$i]['id_produk']; ?>"><img src="<?= $data[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
+                    <ul>
+                      <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($result->FuelType); ?></li>
+                      <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($result->ModelYear); ?> Model</li>
+                      <li><i class="fa fa-user" aria-hidden="true"></i><?php echo htmlentities($result->SeatingCapacity); ?> seats</li>
+                    </ul>
+                  </div>
+                  <div class="car-title-m">
+                    <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><?= $data[$i]['id_produk']; ?> , <?php echo $data[$i]['nama_produk']; ?></a></h6>
+                    <span class="price">$<?php //harga //echo htmlentities($result->PricePerDay); 
+                                          ?> /Day</span>
+                  </div>
+                  <div class="inventory_info_m">
+                    <p><?= $data[$i]['warna_produk']; ?></p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <?php /*}
-            } */ ?>
+            <?php endfor; ?>
 
           </div>
         </div>
@@ -214,11 +204,6 @@ error_reporting(0);
     <div class="dark-overlay"></div>
   </section>
   <!-- /Testimonial-->
-
-
-  <!--Footer -->
-  <?php include('includes/footer.php'); ?>
-  <!-- /Footer-->
 
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
