@@ -13,7 +13,7 @@ class M_Admin extends CI_model
     {
         $this->db->select('customer');
         $this->db->from('user');
-        $this->db->where('user_level', 'customer');
+        $this->db->where('id_role', 3);
         return $this->db->count_all_results();
     }
 
