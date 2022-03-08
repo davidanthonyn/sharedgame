@@ -45,7 +45,7 @@
                   <ul class="dropdown-menu">
                     <?php
                     //Khusus admin, ada pilihan admin page
-                    if ($data['user']['id_role'] == 1) {
+                    if ($data['user']['id_role'] == '1') {
                     ?>
                       <li><a href="<?php echo base_url() . 'admin' ?>">Admin Page</a></li>
                     <?php
