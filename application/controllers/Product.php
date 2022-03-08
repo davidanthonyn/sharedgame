@@ -26,6 +26,8 @@ class Product extends CI_Controller
     {
         $this->load->database();
         $this->load->model('Modelproduk');
+        $where = array('id_produk' => $id);
+        $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         $data["data"] = $this->Modelproduk->GetProdukById($id);
         $this->load->view('detailproduk.php', $data);
     }

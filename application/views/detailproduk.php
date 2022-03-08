@@ -88,19 +88,47 @@ error_reporting(0);
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                   </div>
+
+    <!-- Nama Produk-->
                   <h3><?php echo $data[0]['nama_produk']; ?></h3>
-                  <div class="price"> jumlah : <?php echo $data[0]['jumlah_tersedia']; ?> <span> </span> </div>
-                  <div class="price"> Rp 300.000 <span> </span> </div>
+
+    <!-- Quantity Barang-->
+    <div class="form-group">
+        <label>Quantity: </label>
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button id="down" class="btn btn-default" onclick=" down('0')"><span class="glyphicon glyphicon-minus"></span></button>
+            </div>
+            <input type="text" id="myNumber" class="form-control input-number" value="1" />
+            <div class="input-group-btn">
+                <button id="up" class="btn btn-default" onclick="up('10')"><span class="glyphicon glyphicon-plus"></span></button>
+            </div>
+        </div>
+    </div>       
+
+    <!--tarif-->
+                  <div class="price"> tarif sewa 1 hari : <?php echo $tarifsewa[0]['tarif_harga']; ?> <span> </span> </div> 
+                  <div class="price"> tarif sewa 3 hari : <?php echo $tarifsewa[1]['tarif_harga']; ?> <span> </span> </div>
+                  <div class="price"> tarif sewa 7 hari : <?php echo $tarifsewa[2]['tarif_harga']; ?> <span> </span> </div>                                                      
                   <a> Available </a>
+                  <div class="row mb-2">
+        <div class="col-sm-6">
+         <button type="button" class="btn btn-primary" >
+            <i class="<i class="fa-regular fa-cart-circle-check></i>Cart
+          </button>
+        </div>
+      </div>
                 </div>
               </div>
 
 
 
-
+  
             </div>
           </div>
   </section>
+
+  
   <!-- /Listing-->
 
   <!--Footer -->
@@ -125,6 +153,24 @@ error_reporting(0);
   <!--Slider-JS-->
   <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
+
+  <!--Quantity + - -->
+  <script>
+    function up(max) {
+    document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) + 1;
+    if (document.getElementById("myNumber").value >= parseInt(max)) {
+        document.getElementById("myNumber").value = max;
+	 }
+}
+function down(min) {
+    document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) - 1;
+    if (document.getElementById("myNumber").value <= parseInt(min)) {
+        document.getElementById("myNumber").value = min;
+    }
+}
+</script>
+
+  
 
 </body>
 

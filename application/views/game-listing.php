@@ -94,7 +94,6 @@ error_reporting(0);
                       <i class="fas fa-star"></i>
                     </div>
                     <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $data[$i]['id_produk']; ?>"> <?php echo $data[$i]['nama_produk']; ?></a> </h3>
-                    <div class="price"> Rp 300.000 <span> </span> </div>
                     <div class="price"><?php echo $data[$i]['warna_produk']; ?> <span> </span> </div>
                     <a> Available </a>
                   </div>
