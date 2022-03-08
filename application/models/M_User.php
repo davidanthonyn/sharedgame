@@ -25,7 +25,7 @@ class M_User extends CI_model
             'tgl_lahir' => "0000-00-00",
             'foto_ktp' => "empty",
             'foto_selfie_ktp' => "empty",
-            'user_level' => "customer",
+            'id_role' => 3,
             'status_ktp' => "belum",
             'is_active' => "not_yet_activated",
             'created_at' => $now,
@@ -102,7 +102,7 @@ class M_User extends CI_model
         if ($type == 'verify') {
             $this->email->subject('Verifikasi Akun | SharedGame');
 
-            $this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a>');
+            $this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
         }
 
         //Jika tipe nya adalah lupa password
