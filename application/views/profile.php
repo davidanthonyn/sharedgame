@@ -114,19 +114,6 @@ if (strlen($_SESSION['login']) == 0) {
   </section>
   <!-- /Page Header-->
 
-
-  <?php
-  /*
-    $useremail = $_SESSION['login'];
-    $sql = "SELECT * from tblusers where EmailId=:useremail";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-    $cnt = 1;
-    if ($query->rowCount() > 0) {
-      foreach ($results as $result) {
-        */ ?>
   <section class="user_profile inner_pages">
     <div class="container">
       <div class="user_profile_info gray-bg padding_4x4_40">
@@ -140,7 +127,7 @@ if (strlen($_SESSION['login']) == 0) {
               ?><br>
             <?php //echo htmlentities($result->City); 
             ?>&nbsp;<?php //echo htmlentities($result->Country); 
-                                                              ?></p>
+                    ?></p>
         </div>
       </div>
 
@@ -152,7 +139,7 @@ if (strlen($_SESSION['login']) == 0) {
               <h5 class="uppercase underline">Genral Settings</h5>
               <?php
               if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php //echo htmlentities($msg); 
-                                                                                  ?> </div><?php } ?>
+                                                                            ?> </div><?php } ?>
               <form method="post">
                 <div class="form-group">
                   <label class="control-label">Reg Date -</label>

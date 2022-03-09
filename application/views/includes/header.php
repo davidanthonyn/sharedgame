@@ -51,12 +51,7 @@
                     ?>
                       <li><a href="<?php echo base_url() . 'admin' ?>">Admin Page</a></li>
                     <?php
-                    }
-                    ?>
-
-                    <?php
-                    //Khusus karyawan, ada pilihan karyawan page
-                    if ($data['user']['id_role'] == '2') {
+                    } else if ($data['user']['id_role'] == '2') {
                     ?>
                       <li><a href="<?php echo base_url() . 'admin' ?>">Employee Page</a></li>
                     <?php
