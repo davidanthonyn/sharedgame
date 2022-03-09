@@ -84,7 +84,7 @@ class Auth extends CI_Controller
                     }
 
                     //Jika user adalah admin
-                    if ($user['id_role'] == '1') {
+                    if ($user['id_role'] == '1' || $user['id_role'] == '2') {
                         //Membuat session admin
                         $this->session->set_userdata($user);
 

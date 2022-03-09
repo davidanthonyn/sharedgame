@@ -14,7 +14,7 @@ class Admin extends CI_Controller
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        if ($data['user']['id_role'] != '1') {
+        if ($data['user']['id_role'] != '1' && $data['user']['id_role'] != '2') {
             redirect('');
         }
     }
@@ -24,8 +24,16 @@ class Admin extends CI_Controller
         //Load database
         $this->load->database();
 
-        //Title Dashboard Admin saat halaman dibuka
-        $data['title'] = 'Dashboard Admin | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+
+        if ($data['user']['id_role'] == '1') {
+            //Title Dashboard Admin saat halaman dibuka
+            $data['title'] = 'Dashboard Admin | SharedGame';
+        } else if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Karyawan saat halaman dibuka
+            $data['title'] = 'Dashboard Karyawan | SharedGame';
+        }
 
         //Menghitung row customer melalui model M_Admin
         $data['jumlahcustomer'] = $this->M_Admin->getRowCustomer();

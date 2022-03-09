@@ -52,6 +52,15 @@
                     }
                     ?>
 
+                    <?php
+                    //Khusus karyawan, ada pilihan karyawan page
+                    if ($data['user']['id_role'] == '2') {
+                    ?>
+                      <li><a href="<?php echo base_url() . 'admin' ?>">Employee Page</a></li>
+                    <?php
+                    }
+                    ?>
+
                     <li><a href="profile.php">Profile Settings</a></li>
                     <li><a href="update-password.php">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
