@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-md-2">
-          <div class="logo"> <a href="<?php echo base_url() . '' ?>"><img src="assets/images/sharedgame160.png" alt="image" /></a> </div>
+          <div class="logo"> <a href="<?php echo base_url() . '' ?>"><img src="<?php echo base_url() . "assets/"; ?>images/sharedgame160.png" alt="image" /></a> </div>
         </div>
         <div class="col-sm-9 col-md-10">
           <div class="header_info">

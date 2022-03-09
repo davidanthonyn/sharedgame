@@ -43,6 +43,9 @@ class User extends CI_Controller
     public function edit()
     {
         $data['title'] = 'Edit Profile | SharedGame';
+
+        $this->load->view('includes/header.php', $data);
         $this->load->view('profile.php', $data);
+        $this->load->view('includes/footer.php', $data);
     }
 }
