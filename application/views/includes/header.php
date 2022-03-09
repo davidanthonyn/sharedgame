@@ -13,8 +13,6 @@
               $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
               if ($this->session->userdata('email')) {
-                redirect('');
-
               ?>
                 <br><br><br>
                 <p>Selamat datang, <?= $data['user']['nama_lengkap']; ?></p>
