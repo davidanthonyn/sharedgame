@@ -13,6 +13,8 @@
               $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
               if ($this->session->userdata('email')) {
+                redirect('');
+
               ?>
                 <br><br><br>
                 <p>Selamat datang, <?= $data['user']['nama_lengkap']; ?></p>
@@ -61,7 +63,7 @@
                     }
                     ?>
 
-                    <li><a href="profile.php">Profile Settings</a></li>
+                    <li><a href="<?php echo base_url() . 'user/edit' ?>">Profile Settings</a></li>
                     <li><a href="update-password.php">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
                     <li><a href="post-testimonial.php">Post a Testimonial</a></li>

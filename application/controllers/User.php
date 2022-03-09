@@ -7,14 +7,20 @@ class User extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        //is_logged_in();
+        $this->load->model('M_User');
+        $this->load->library('form_validation');
+        $this->load->library('session');
+        $this->load->helper('url');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     }
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-        echo 'Selamat datang ' . $data['user']['nama_lengkap'];
+        if ($this->session->userdata('email')) {
+        } else {
+            redirect('');
+        }
     }
 
     function profile_settings()
@@ -40,7 +46,6 @@ class User extends CI_Controller
     public function edit()
     {
         $data['title'] = 'Edit Profile | SharedGame';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->view('profile.php', $data);
     }
 }
