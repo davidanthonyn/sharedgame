@@ -101,11 +101,12 @@
             <div class="profile_wrap">
               <h5 class="uppercase underline">Your Profile</h5>
               <?php
-              //if ($msg) { 
-              ?><div class="succWrap"><strong>SUCCESS</strong>:<?php //echo htmlentities($msg); 
-                                                                ?> </div><?php //} 
+              if ($this->session->flashdata('message')) {
+              ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo $this->session->flashdata('message');
+                                                                $this->session->unset_userdata('message');
+                                                                ?> </div><?php }
                                                                           ?>
-              <form method="post">
+              <form method="post" action="<?= base_url('user/edit'); ?>">
                 <div class="form-group">
                   <label class="control-label">Reg Date -</label>
                   <?= $user['created_at'];
@@ -125,22 +126,23 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">Full Name</label>
+                  <label class="control-label">Nama Lengkap</label>
                   <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
-                                                                              ?>" id="fullname" type="text" required>
+                                                                              ?>" id="fullname" type="text">
+                  <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Email Address</label>
+                  <label class="control-label">Email</label>
                   <input class="form-control white_bg" value="<?= $user['email'];
-                                                              ?>" name="emailid" id="email" type="email" required readonly>
+                                                              ?>" name="email" id="email" type="email" required readonly>
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Phone Number</label>
+                  <label class="control-label">Nomor HP</label>
                   <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
                                                                                   ?>" id="phone-number" type="text" required>
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Phone Number Second</label>
+                  <label class="control-label">Nomor HP Cadangan</label>
                   <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp_dua'];
                                                                                   ?>" id="phone-number" type="text" required>
                 </div>
@@ -150,34 +152,47 @@
                                                               ?>" name="dob" placeholder="dd/mm/yyyy" id="birth-date" type="text">
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Your Address</label>
+                  <label class="control-label">Alamat Lengkap</label>
                   <textarea class="form-control white_bg" name="address" rows="4"><?= $user['alamat_lengkap'];
                                                                                   ?></textarea>
                 </div>
-                <div class="form-group">
-                  <label class="control-label">Country</label>
-                  <input class="form-control white_bg" id="country" name="country" value="<?php //echo htmlentities($result->City); 
-                                                                                          ?>" type="text">
-                </div>
-                <div class="form-group">
-                  <label class="control-label">City</label>
-                  <input class="form-control white_bg" id="city" name="city" value="<?php //echo htmlentities($result->City); 
-                                                                                    ?>" type="text">
-                </div>
                 <div class="form-group row">
-                  <label class="control-label">Picture</label>
-                  <div class="col-sm-10">
+                  <label class="control-label">KTP</label>
+                  <div class="col-sm-1">
                     <div class="row">
                       <div class="col-sm-3">
                         <img src="" class="img-thumbnail">
                       </div>
-                    </div class="col-sm-9">
+                    </div class="col-sm-1">
                     <div class="custom-file">
+                      <br>
                       <input type="file" class="custom-file-input" id="image" name="image">
+
                       <label class="custom-file-label" for="image"></label>
                     </div>
                   </div>
                 </div>
+
+                <hr>
+                <br><br>
+                <div class="form-group row">
+                  <label class="control-label">Selfie KTP</label>
+                  <div class="col-sm-1">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <img src="" class="img-thumbnail">
+                      </div>
+                    </div class="col-sm-1">
+                    <div class="custom-file">
+                      <br>
+                      <input type="file" class="custom-file-input" id="image" name="image">
+
+                      <label class="custom-file-label" for="image"></label>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <br><br>
 
                 <div class="form-group">
                   <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>

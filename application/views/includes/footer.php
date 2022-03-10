@@ -23,7 +23,6 @@ if (isset($_POST['emailsubscibe'])) {
   }
 }
 ?>
-
 <footer>
   <div class="footer-top">
     <div class="container">
