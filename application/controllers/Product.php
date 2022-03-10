@@ -19,10 +19,7 @@ class Product extends CI_Controller
         $this->load->model('Modelproduk');
         $data["data"] = $this->Modelproduk->GetProduk();
         $data['title'] = 'Products | SharedGame';
-
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-
         $this->load->view('includes/header.php', $data);
         $this->load->view('game-listing.php', $data);
         $this->load->view('includes/footer.php', $data);
