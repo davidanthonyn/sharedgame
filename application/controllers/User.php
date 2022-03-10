@@ -8,16 +8,10 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_User');
-
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     }
 
     public function index()
     {
-        if ($this->session->userdata('email')) {
-        } else {
-            redirect('');
-        }
     }
 
     function profile_settings()
@@ -42,7 +36,13 @@ class User extends CI_Controller
 
     public function edit()
     {
+        if ($this->session->userdata('email')) {
+        } else {
+            redirect('');
+        }
+
         $data['title'] = 'Edit Profile | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('includes/header.php', $data);
         $this->load->view('profile.php', $data);

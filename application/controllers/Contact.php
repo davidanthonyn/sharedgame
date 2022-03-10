@@ -62,8 +62,12 @@ class Contact extends CI_Controller
         }*/
         //Model M_CustomerService pada fungsi index(panggil data CS dari database)
         $data['cs'] = $this->M_CustomerService->index()->result();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
         $data['title'] = 'Contact Us | SharedGame';
+        $this->load->view('includes/header.php', $data);
         $this->load->view('contact-us.php', $data);
+        $this->load->view('includes/footer.php', $data);
     }
 
     function kirim()

@@ -99,7 +99,7 @@
           <?php include('includes/sidebar.php'); ?>
           <div class="col-md-6 col-sm-8">
             <div class="profile_wrap">
-              <h5 class="uppercase underline">Genral Settings</h5>
+              <h5 class="uppercase underline">Your Profile</h5>
               <?php
               //if ($msg) { 
               ?><div class="succWrap"><strong>SUCCESS</strong>:<?php //echo htmlentities($msg); 
@@ -108,41 +108,50 @@
               <form method="post">
                 <div class="form-group">
                   <label class="control-label">Reg Date -</label>
-                  <?php //echo htmlentities($result->RegDate); 
+                  <?= $user['created_at'];
                   ?>
                 </div>
-                <?php // if ($result->UpdationDate != "") { 
-                ?>
+
                 <div class="form-group">
                   <label class="control-label">Last Update at -</label>
-                  <?php //echo htmlentities($result->UpdationDate); 
+                  <?= $user['updated_at'];
                   ?>
                 </div>
-                <?php //} 
-                ?>
+
+                <div class="form-group">
+                  <label class="control-label">Status KTP -</label>
+                  <?= $user['status_ktp'];
+                  ?>
+                </div>
+
                 <div class="form-group">
                   <label class="control-label">Full Name</label>
-                  <input class="form-control white_bg" name="fullname" value="<?php //echo htmlentities($result->FullName); 
+                  <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
                                                                               ?>" id="fullname" type="text" required>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Email Address</label>
-                  <input class="form-control white_bg" value="<?php //echo htmlentities($result->EmailId); 
+                  <input class="form-control white_bg" value="<?= $user['email'];
                                                               ?>" name="emailid" id="email" type="email" required readonly>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Phone Number</label>
-                  <input class="form-control white_bg" name="mobilenumber" value="<?php //echo htmlentities($result->ContactNo); 
+                  <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
+                                                                                  ?>" id="phone-number" type="text" required>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Phone Number Second</label>
+                  <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp_dua'];
                                                                                   ?>" id="phone-number" type="text" required>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Date of Birth&nbsp;(dd/mm/yyyy)</label>
-                  <input class="form-control white_bg" value="<?php //echo htmlentities($result->dob); 
+                  <input class="form-control white_bg" value="<?= $user['tgl_lahir'];
                                                               ?>" name="dob" placeholder="dd/mm/yyyy" id="birth-date" type="text">
                 </div>
                 <div class="form-group">
                   <label class="control-label">Your Address</label>
-                  <textarea class="form-control white_bg" name="address" rows="4"><?php //echo htmlentities($result->Address); 
+                  <textarea class="form-control white_bg" name="address" rows="4"><?= $user['alamat_lengkap'];
                                                                                   ?></textarea>
                 </div>
                 <div class="form-group">
@@ -162,14 +171,13 @@
                       <div class="col-sm-3">
                         <img src="" class="img-thumbnail">
                       </div>
+                    </div class="col-sm-9">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="image" name="image">
+                      <label class="custom-file-label" for="image"></label>
                     </div>
                   </div>
-                  <input class="form-control white_bg" id="city" name="city" value="<?php //echo htmlentities($result->City); 
-                                                                                    ?>" type="text">
                 </div>
-                <?php //}
-                //} 
-                ?>
 
                 <div class="form-group">
                   <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>

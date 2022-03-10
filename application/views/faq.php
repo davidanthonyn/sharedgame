@@ -47,12 +47,8 @@ error_reporting(0);
 </head>
 
 <body>
-  <!-- Start Switcher -->
-  <?php include('includes/colorswitcher.php'); ?>
-  <!-- /Switcher -->
 
-  <!--Header-->
-  <?php include('includes/header.php'); ?>
+
   <section class="page-header aboutus_page">
     <div class="container">
       <div class="page-header_wrap">
@@ -70,14 +66,14 @@ error_reporting(0);
     <div class="container">
       <div class="section-header text-center">
         <p> <strong>Q:</strong> Apa benefit Membership?
-                Benefit yang diberikan dari membership adalah potongan harga sebesar 10 persen dari harga sewa </p>
+          Benefit yang diberikan dari membership adalah potongan harga sebesar 10 persen dari harga sewa </p>
         <p> <strong>Q:</strong> Bagaimana cara mendapatkan Membership?
-                Dengan membayar sebesar Rp 150.000 maka customer akan mendapatkan Membership selama 3 bulan </p>
+          Dengan membayar sebesar Rp 150.000 maka customer akan mendapatkan Membership selama 3 bulan </p>
         <p> <strong>Q:</strong> Bagaimana cara melakukan pemesanan?
-                Login akun anda yang sudah terdaftar > pilih alat gaming yang diinginkan > pilih berapa lama ingin menyewa alat gaming > isi form penyewa > lakukan pembayaran > pickup barang </p>
-        
-        <p>    <strong>Jika ada pertanyaan lebih lanjut bisa melalui Contac US</strong> </p>
-                
+          Login akun anda yang sudah terdaftar > pilih alat gaming yang diinginkan > pilih berapa lama ingin menyewa alat gaming > isi form penyewa > lakukan pembayaran > pickup barang </p>
+
+        <p> <strong>Jika ada pertanyaan lebih lanjut bisa melalui Contac US</strong> </p>
+
       </div>
     </div>
   </section>
@@ -86,39 +82,21 @@ error_reporting(0);
 
 
 
+  <!--Back to top-->
+  <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+  <!--/Back to top-->
 
-  <<!--Footer -->
-    <?php include('includes/footer.php'); ?>
-    <!-- /Footer-->
-
-    <!--Back to top-->
-    <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
-    <!--/Back to top-->
-
-    <!--Login-Form -->
-    <?php include('includes/login.php'); ?>
-    <!--/Login-Form -->
-
-    <!--Register-Form -->
-    <?php include('includes/registration.php'); ?>
-
-    <!--/Register-Form -->
-
-    <!--Forgot-password-Form -->
-    <?php include('includes/forgotpassword.php'); ?>
-    <!--/Forgot-password-Form -->
-
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/interface.js"></script>
-    <!--Switcher-->
-    <script src="assets/switcher/js/switcher.js"></script>
-    <!--bootstrap-slider-JS-->
-    <script src="assets/js/bootstrap-slider.min.js"></script>
-    <!--Slider-JS-->
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/interface.js"></script>
+  <!--Switcher-->
+  <script src="assets/switcher/js/switcher.js"></script>
+  <!--bootstrap-slider-JS-->
+  <script src="assets/js/bootstrap-slider.min.js"></script>
+  <!--Slider-JS-->
+  <script src="assets/js/slick.min.js"></script>
+  <script src="assets/js/owl.carousel.min.js"></script>
 
 </body>
 

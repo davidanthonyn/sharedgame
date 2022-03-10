@@ -48,10 +48,6 @@ error_reporting(0);
 
 <body>
 
-  <!--Header-->
-  <?php include('includes/header.php'); ?>
-  <!-- /Header -->
-
   <!--Page Header-->
   <section class="page-header listing_page">
     <div class="container">
@@ -89,51 +85,47 @@ error_reporting(0);
                     <i class="fas fa-star"></i>
                   </div>
 
-    <!-- Nama Produk-->
+                  <!-- Nama Produk-->
                   <h3><?php echo $data[0]['nama_produk']; ?></h3>
 
-    <!-- Quantity Barang-->
-    <div class="form-group">
-        <label>Quantity: </label>
-        <div class="input-group">
-            <div class="input-group-btn">
-                <button id="down" class="btn btn-default" onclick=" down('0')"><span class="glyphicon glyphicon-minus"></span></button>
-            </div>
-            <input type="text" id="myNumber" class="form-control input-number" value="1" />
-            <div class="input-group-btn">
-                <button id="up" class="btn btn-default" onclick="up('10')"><span class="glyphicon glyphicon-plus"></span></button>
-            </div>
-        </div>
-    </div>       
+                  <!-- Quantity Barang-->
+                  <div class="form-group">
+                    <label>Quantity: </label>
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                        <button id="down" class="btn btn-default" onclick=" down('0')"><span class="glyphicon glyphicon-minus"></span></button>
+                      </div>
+                      <input type="text" id="myNumber" class="form-control input-number" value="1" />
+                      <div class="input-group-btn">
+                        <button id="up" class="btn btn-default" onclick="up('10')"><span class="glyphicon glyphicon-plus"></span></button>
+                      </div>
+                    </div>
+                  </div>
 
-    <!--tarif-->
-                  <div class="price"> tarif sewa 1 hari : <?php echo $tarifsewa[0]['tarif_harga']; ?> <span> </span> </div> 
+                  <!--tarif-->
+                  <div class="price"> tarif sewa 1 hari : <?php echo $tarifsewa[0]['tarif_harga']; ?> <span> </span> </div>
                   <div class="price"> tarif sewa 3 hari : <?php echo $tarifsewa[1]['tarif_harga']; ?> <span> </span> </div>
-                  <div class="price"> tarif sewa 7 hari : <?php echo $tarifsewa[2]['tarif_harga']; ?> <span> </span> </div>                                                      
+                  <div class="price"> tarif sewa 7 hari : <?php echo $tarifsewa[2]['tarif_harga']; ?> <span> </span> </div>
                   <a> Available </a>
                   <div class="row mb-2">
-        <div class="col-sm-6">
-         <button type="button" class="btn btn-primary" >
-            <i class="<i class="fa-regular fa-cart-circle-check></i>Cart
-          </button>
-        </div>
-      </div>
+                    <div class="col-sm-6">
+                      <button type="button" class="btn btn-primary">
+                        <i class="<i class=" fa-regular fa-cart-circle-check></i>Cart
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
 
 
-  
+
             </div>
           </div>
   </section>
 
-  
-  <!-- /Listing-->
 
-  <!--Footer -->
-  <?php include('includes/footer.php'); ?>
-  <!-- /Footer-->
+  <!-- /Listing-->
 
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
@@ -157,20 +149,21 @@ error_reporting(0);
   <!--Quantity + - -->
   <script>
     function up(max) {
-    document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) + 1;
-    if (document.getElementById("myNumber").value >= parseInt(max)) {
+      document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) + 1;
+      if (document.getElementById("myNumber").value >= parseInt(max)) {
         document.getElementById("myNumber").value = max;
-	 }
-}
-function down(min) {
-    document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) - 1;
-    if (document.getElementById("myNumber").value <= parseInt(min)) {
-        document.getElementById("myNumber").value = min;
+      }
     }
-}
-</script>
 
-  
+    function down(min) {
+      document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) - 1;
+      if (document.getElementById("myNumber").value <= parseInt(min)) {
+        document.getElementById("myNumber").value = min;
+      }
+    }
+  </script>
+
+
 
 </body>
 

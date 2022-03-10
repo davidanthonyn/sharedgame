@@ -11,7 +11,10 @@ class Faq extends CI_Controller
 
     function index()
     {
-        //$this->load->view('page.php?type=faqs');
+        $data['title'] = 'FAQ | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->view('includes/header.php', $data);
         $this->load->view('faq.php');
+        $this->load->view('includes/footer.php', $data);
     }
 }
