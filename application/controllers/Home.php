@@ -9,7 +9,6 @@ class Home extends CI_Controller
         parent::__construct();
     }
 
-    #[\ReturnTypeWillChange]
     function index()
     {
         $data['title'] = 'SharedGame | The Best Rental Gaming Equipment';
