@@ -13,7 +13,7 @@ error_reporting(0);
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>Game Rental Portal | Page details</title>
+  <title><?= $title; ?></title>
   <!--Bootstrap -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
   <!--Custome Style -->
@@ -69,7 +69,15 @@ error_reporting(0);
   <section class="about_us section-padding">
     <div class="container">
       <div class="section-header text-center">
-        <p> Sharedgame adalah webdite penyewaan alat gaming yang terbaik,termurah,terpercaya</p>
+        <p> <strong>Q:</strong> Apa benefit Membership?
+                Benefit yang diberikan dari membership adalah potongan harga sebesar 10 persen dari harga sewa </p>
+        <p> <strong>Q:</strong> Bagaimana cara mendapatkan Membership?
+                Dengan membayar sebesar Rp 150.000 maka customer akan mendapatkan Membership selama 3 bulan </p>
+        <p> <strong>Q:</strong> Bagaimana cara melakukan pemesanan?
+                Login akun anda yang sudah terdaftar > pilih alat gaming yang diinginkan > pilih berapa lama ingin menyewa alat gaming > isi form penyewa > lakukan pembayaran > pickup barang </p>
+        
+        <p>    <strong>Jika ada pertanyaan lebih lanjut bisa melalui Contac US</strong> </p>
+                
       </div>
     </div>
   </section>

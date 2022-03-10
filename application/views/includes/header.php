@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-md-2">
-          <div class="logo"> <a href="<?php echo base_url() . '' ?>"><img src="assets/images/sharedgame160.png" alt="image" /></a> </div>
+          <div class="logo"> <a href="<?php echo base_url() . '' ?>"><img src="<?php echo base_url() . "assets/"; ?>images/sharedgame160.png" alt="image" /></a> </div>
         </div>
         <div class="col-sm-9 col-md-10">
           <div class="header_info">
@@ -45,14 +45,18 @@
                   <ul class="dropdown-menu">
                     <?php
                     //Khusus admin, ada pilihan admin page
-                    if ($data['user']['id_role'] == 1) {
+                    if ($data['user']['id_role'] == '1') {
                     ?>
                       <li><a href="<?php echo base_url() . 'admin' ?>">Admin Page</a></li>
+                    <?php
+                    } else if ($data['user']['id_role'] == '2') {
+                    ?>
+                      <li><a href="<?php echo base_url() . 'admin' ?>">Employee Page</a></li>
                     <?php
                     }
                     ?>
 
-                    <li><a href="profile.php">Profile Settings</a></li>
+                    <li><a href="<?php echo base_url() . 'user/edit' ?>">Profile Settings</a></li>
                     <li><a href="update-password.php">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
                     <li><a href="post-testimonial.php">Post a Testimonial</a></li>

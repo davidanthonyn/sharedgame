@@ -77,14 +77,14 @@ class Auth extends CI_Controller
                     */
 
                     //Jika user adalah customer
-                    if ($user['id_role'] == 3) {
+                    if ($user['id_role'] == '3') {
                         //Membuat session customer
                         $this->session->set_userdata($user);
                         redirect('', $user);
                     }
 
                     //Jika user adalah admin
-                    if ($user['id_role'] == 1) {
+                    if ($user['id_role'] == '1' || $user['id_role'] == '2') {
                         //Membuat session admin
                         $this->session->set_userdata($user);
 

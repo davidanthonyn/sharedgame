@@ -3,17 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
-    /*
+
     function __construct()
     {
         parent::__construct();
-    }*/
+        $this->load->model('M_User');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+    }
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-        echo 'Selamat datang ' . $data['user']['nama_lengkap'];
+        if ($this->session->userdata('email')) {
+        } else {
+            redirect('');
+        }
     }
 
     function profile_settings()
@@ -34,5 +38,14 @@ class User extends CI_Controller
     function manage_testimonial()
     {
         $this->load->view('my-testimonials.php');
+    }
+
+    public function edit()
+    {
+        $data['title'] = 'Edit Profile | SharedGame';
+
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('profile.php', $data);
+        $this->load->view('includes/footer.php', $data);
     }
 }
