@@ -87,10 +87,25 @@ class Contact extends CI_Controller
 
     private function _sendEmailToCustomer()
     {
+        $email = $this->input->post('email', true);
+
+        //Config gmail
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => ''
+            'smtp_user' => 'sharedgametech@gmail.com',
+            'smtp_pass' => 'sukamaingame',
+            'smtp_port' => 465,
+            'mail_type' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
         ];
+
+        $this->load->library('email');
+        $this->email->initialize($config);
+
+        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+
+        $this->email->to($email);
     }
 }

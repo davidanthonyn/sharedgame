@@ -79,7 +79,7 @@
   </section>
   <!-- /Page Header-->
   <!--Pesan berhasil/gagal-->
-  <div class="alert alert-success" role="alert" style="text-align:center;">Pesan Anda terkirim. Terima kasih!</div>
+  <div class="alert alert-warning" role="alert" style="text-align:center;">Pesan Anda terkirim. Terima kasih!</div>
   <!--Contact-us-->
   <section class="contact_us section-padding">
     <div class="container">

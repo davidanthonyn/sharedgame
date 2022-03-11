@@ -37,6 +37,8 @@
   <link rel="apple-touch-icon-precomposed" href="<?php echo base_url() . "assets/"; ?>images/favicon-icon/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <style>
     .errorWrap {
       padding: 10px;
@@ -58,6 +60,7 @@
   </style>
 </head>
 
+
 <body>
   <!--Page Header-->
   <section class="page-header profile_page">
@@ -76,6 +79,13 @@
     <div class="dark-overlay"></div>
   </section>
   <!-- /Page Header-->
+  <!--Pesan berhasil/gagal-->
+  <?php
+  if ($this->session->flashdata('datausermessage')) {
+    echo $this->session->flashdata('datausermessage');
+    $this->session->unset_userdata('datausermessage');
+  }
+  ?>
 
   <section class="user_profile inner_pages">
     <div class="container">
@@ -102,6 +112,13 @@
               <h5 class="uppercase underline">Your Profile</h5>
               <?php
               if ($this->session->flashdata('message')) {
+              ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo $this->session->flashdata('message');
+                                                                $this->session->unset_userdata('message');
+                                                                ?> </div><?php }
+                                                                          ?>
+
+              <?php
+              if ($this->session->flashdata('verificationdata')) {
               ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo $this->session->flashdata('message');
                                                                 $this->session->unset_userdata('message');
                                                                 ?> </div><?php }
@@ -139,23 +156,32 @@
                 <div class="form-group">
                   <label class="control-label">Nomor HP</label>
                   <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
-                                                                                  ?>" id="phone-number" type="text" required>
+                                                                                  ?>" id="mobilenumber" type="text" required>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Nomor HP Cadangan</label>
-                  <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp_dua'];
-                                                                                  ?>" id="phone-number" type="text" required>
+                  <input class="form-control white_bg" name="mobilenumbertwo" value="<?= $user['no_hp_dua'];
+                                                                                      ?>" id="mobilenumbertwo" type="text" required>
                 </div>
+
                 <div class="form-group">
-                  <label class="control-label">Date of Birth&nbsp;(dd/mm/yyyy)</label>
-                  <input class="form-control white_bg" value="<?= $user['tgl_lahir'];
-                                                              ?>" name="dob" placeholder="dd/mm/yyyy" id="birth-date" type="text">
+                  <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
+                  <br>
+                  <input name="dob" value="<?= $user['tgl_lahir'];
+                                            ?>" id="dob" required>
                 </div>
+                <script type="text/javascript">
+                  flatpickr("#dob", {});
+                </script>
+
+
+                <br>
                 <div class="form-group">
                   <label class="control-label">Alamat Lengkap</label>
-                  <textarea class="form-control white_bg" name="address" rows="4"><?= $user['alamat_lengkap'];
-                                                                                  ?></textarea>
+                  <textarea class="form-control white_bg" name="address" id="address" rows="4"><?= $user['alamat_lengkap'];
+                                                                                                ?></textarea>
                 </div>
+                <hr>
                 <div class="form-group row">
                   <label class="control-label">KTP</label>
                   <div class="col-sm-1">
@@ -166,9 +192,31 @@
                     </div class="col-sm-1">
                     <div class="custom-file">
                       <br>
-                      <input type="file" class="custom-file-input" id="image" name="image">
-
-                      <label class="custom-file-label" for="image"></label>
+                      <?php
+                      $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+                      //Mengecek apakah user adalah customer atau bukan
+                      if ($data['user']['id_role'] == '3') {
+                        //Membuat if ktp customer
+                        if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak') {
+                      ?>
+                          <input type="file" class="custom-file-input" id="ktp" name="ktp">
+                          <label class="custom-file-label" for="ktp"></label>
+                        <?php
+                        } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
+                        ?>
+                          <label class="control-label">Sedang diverifikasi.</label>
+                        <?php
+                        } else if ($data['user']['status_ktp'] == 'diterima') {
+                        ?>
+                          <label class="control-label">Dinyatakan valid.</label>
+                        <?php
+                        }
+                      } else {
+                        ?>
+                        <label class="control-label">Non-Customer</label>
+                      <?php
+                      }
+                      ?>
                     </div>
                   </div>
                 </div>
@@ -185,9 +233,33 @@
                     </div class="col-sm-1">
                     <div class="custom-file">
                       <br>
-                      <input type="file" class="custom-file-input" id="image" name="image">
+                      <?php
+                      $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+                      //Mengecek apakah user adalah customer atau bukan
+                      if ($data['user']['id_role'] == '3') {
+                        //Membuat if ktp customer
+                        if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak') {
+                      ?>
+                          <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
+                          <label class="custom-file-label" for="selfiektp"></label>
+                        <?php
+                        } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
+                        ?>
+                          <label class="control-label">Sedang diverifikasi.</label>
+                        <?php
+                        } else if ($data['user']['status_ktp'] == 'diterima') {
+                        ?>
+                          <label class="control-label">Dinyatakan valid.</label>
+                        <?php
+                        }
+                      } else {
+                        ?>
+                        <label class="control-label">Non-Customer</label>
+                      <?php
+                      }
+                      ?>
 
-                      <label class="custom-file-label" for="image"></label>
+
                     </div>
                   </div>
                 </div>
@@ -220,9 +292,16 @@
   <!--Slider-JS-->
   <script src="<?php echo base_url() . "assets/"; ?>js/slick.min.js"></script>
   <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    /*var date = new Date();
+  var year = date.getFullYear();
+  var month = String(date.getMonth() + 1).padStart(2, '0');
+  var todayDate = String(date.getDate()).padStart(2, '0');
+  var datePattern = year + '-' + month + '-' + todayDate;
+  document.getElementById("dob").value = datePattern;*/
+  </script>
 
 </body>
 
 </html>
-<?php //} 
-?>

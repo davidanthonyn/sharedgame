@@ -36,6 +36,29 @@ class M_User extends CI_model
         $this->db->insert('user', $data);
     }
 
+    public function editDataUser()
+    {
+        $name = $this->input->post('fullname');
+        $email = $this->input->post('email', true);
+        $mobilenumber = $this->input->post('mobilenumber');
+        $mobilenumbertwo = $this->input->post('mobilenumbertwo');
+        $dob = $this->input->post('dob');
+        $address = $this->input->post('address');
+
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        $this->db->set('nama_lengkap', $name);
+        $this->db->set('no_hp', $mobilenumber);
+        $this->db->set('no_hp_dua', $mobilenumbertwo);
+        $this->db->set('tgl_lahir', $dob);
+        $this->db->set('alamat_lengkap', $address);
+        $this->db->set('updated_at', $now);
+        $this->db->where('email', $email);
+        $this->db->update('user');
+    }
+
     public function tambahUserToken()
     {
         $email = $this->input->post('email', true);

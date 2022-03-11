@@ -45,6 +45,29 @@ class User extends CI_Controller
         $data['title'] = 'Edit Profile | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        if ($data['user']['id_role'] == '1') {
+            //Membuat flashdata bahwa user adalah admin
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-success" role="alert" style="text-align:center;">Anda adalah admin, pergantian data bersifat opsional.</div>');
+        } else if ($data['user']['id_role'] == '2') {
+            //Membuat flashdata bahwa user adalah karyawan
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-success" role="alert" style="text-align:center;">Anda adalah karyawan, pergantian data bersifat opsional.</div>');
+        } else if ($data['user']['id_role'] == '3') {
+            //Membuat if ktp customer
+            if ($data['user']['status_ktp'] == 'belum') {
+                //Membuat flashdata bahwa customer belum ktp
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi dan identitas Anda, agar dapat menyewa produk.</div>');
+            } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
+                //Membuat flashdata bahwa customer ktp nya sedang diverifikasi
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Identitas Anda sedang diverifikasi. Mohon untuk menunggu sejenak untuk penerimaan.</div>');
+            } else if ($data['user']['status_ktp'] == 'diterima') {
+                //Membuat flashdata bahwa customer ktp nya diterima
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-success" role="alert" style="text-align:center;">Identitas Anda telah diterima. Silakan melanjutkan transaksi.</div>');
+            } else if ($data['user']['status_ktp'] == 'ditolak') {
+                //Membuat flashdata bahwa customer ktp nya ditolak
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Identitas Anda ditolak. Mohon untuk mengupload identitas anda kembali. Bila kesulitan, hubungi <a href="http://localhost/sharedgame/Contact">Kami</a>.</div>');
+            }
+        }
+
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
 
         if ($this->form_validation->run() == false) {
@@ -52,12 +75,8 @@ class User extends CI_Controller
             $this->load->view('profile.php', $data);
             $this->load->view('includes/footer.php', $data);
         } else {
-            $name = $this->input->post('fullname');
-            $email = $this->input->post('email');
 
-            $this->db->set('nama_lengkap', $name);
-            $this->db->where('email', $email);
-            $this->db->update('user');
+            $this->M_User->editDataUser();
 
             $this->session->set_flashdata('message', 'Your profile has been updated!');
 
