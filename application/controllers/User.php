@@ -74,9 +74,11 @@ class User extends CI_Controller
             }
         }
 
-        if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty' || $data['user']['tgl_lahir'] == '0000-00-00') {
-            //Membuat flashdata bahwa customer belum ktp
-            $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
+        if ($data['user']['id_role'] == '3') {
+            if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty' || $data['user']['tgl_lahir'] == '0000-00-00') {
+                //Membuat flashdata bahwa customer belum ktp
+                $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
+            }
         }
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
