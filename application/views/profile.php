@@ -118,19 +118,17 @@
               <h5 class="uppercase underline">Your Profile</h5>
               <?php
               if ($this->session->flashdata('message')) {
-              ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo $this->session->flashdata('message');
-                                                                $this->session->unset_userdata('message');
-                                                                ?> </div><?php }
-                                                                          ?>
-
+              ?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+                                                                  $this->session->unset_userdata('message');
+                                                                  ?> </div><?php }
+                                                                            ?>
               <?php
-              if ($this->session->flashdata('verificationdata')) {
-              ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo $this->session->flashdata('message');
-                                                                $this->session->unset_userdata('message');
+              if ($this->session->flashdata('message_error')) {
+              ?>
+                <div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+                                                                $this->session->unset_userdata('message_error');
                                                                 ?> </div><?php }
                                                                           ?>
-
-
 
 
               <?= form_open_multipart('user/edit'); ?>
@@ -156,7 +154,7 @@
                 <label class="control-label">Nama Lengkap</label>
                 <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
                                                                             ?>" id="fullname" type="text">
-                <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
+                <?= form_error('fullname', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label class="control-label">Email</label>
@@ -164,12 +162,12 @@
                                                             ?>" name="email" id="email" type="email" required readonly>
               </div>
               <div class="form-group">
-                <label class="control-label">Nomor HP</label>
+                <label class="control-label">Nomor HP (08xxx)</label>
                 <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
                                                                                 ?>" id="mobilenumber" type="text" required>
               </div>
               <div class="form-group">
-                <label class="control-label">Nomor HP Cadangan</label>
+                <label class="control-label">Nomor HP Cadangan (08xxx) (berbeda dengan Nomor HP Utama)</label>
                 <input class="form-control white_bg" name="mobilenumbertwo" value="<?= $user['no_hp_dua'];
                                                                                     ?>" id="mobilenumbertwo" type="text" required>
               </div>

@@ -75,13 +75,27 @@ class User extends CI_Controller
         }
 
         if ($data['user']['id_role'] == '3') {
-            if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty' || $data['user']['tgl_lahir'] == '0000-00-00') {
+            if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty') {
                 //Membuat flashdata bahwa customer belum ktp
                 $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
             }
         }
 
+        $nomorhp = $data['user']['no_hp'];
+        $nomorhpdua =  $data['user']['no_hp_dua'];
+
+        //$nomorhpketik = $this->input->post('mobilenumber');
+        //$nomorhpduaketik = $this->input->post('mobilenumbertwo');
+
+        if ($nomorhp == $nomorhpdua) {
+            //Membuat flashdata bahwa customer belum ktp
+            $this->session->set_flashdata('message_error', 'Nomor HP Utama TIDAK boleh sama dengan Nomor HP Cadangan');
+        }
+
+        //Validasi nama
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
+        //$this->form_validation->set_rules('mobilenumber', 'Mobile Number ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
+        //$this->form_validation->set_rules('mobilenumbertwo', 'Mobile Number Two ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
 
         if ($this->form_validation->run() == false) {
             $this->load->view('includes/header.php', $data);
