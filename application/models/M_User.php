@@ -23,8 +23,8 @@ class M_User extends CI_model
             'no_hp' => "empty",
             'no_hp_dua' => "empty",
             'tgl_lahir' => "0000-00-00",
-            'foto_ktp' => "empty",
-            'foto_selfie_ktp' => "empty",
+            'foto_ktp' => "emptyktp.png",
+            'foto_selfie_ktp' => "emptyselfiektp.png",
             'id_role' => 3,
             'status_ktp' => "belum",
             'is_active' => "not_yet_activated",
@@ -44,6 +44,74 @@ class M_User extends CI_model
         $mobilenumbertwo = $this->input->post('mobilenumbertwo');
         $dob = $this->input->post('dob');
         $address = $this->input->post('address');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $cekktp = $data['user']['fotoktp'];
+        $cekselfiektp = $data['user']['selfie_foto_ktp'];
+        $cekstatusktp = $data['user']['status_ktp'];
+
+        //Memvalidasi ktp dan selfie terlebih dahulu, sebelum mengambil file dari POST
+        if ($cekktp == 'emptyktp.png' && $cekselfiektp == 'emptyselfiektp.png') {
+            //Cek jika ada gambar yang akan diupload
+            $upload_ktp = $_FILES['ktp']['name'];
+            $upload_selfie_ktp = $_FILES['selfiektp']['name'];
+        } else if ($cekktp == 'emptyktp.png' && $cekselfiektp != 'emptyselfiektp.png') {
+            //Cek jika ada gambar yang akan diupload
+            $upload_ktp = $_FILES['ktp']['name'];
+        } else if ($cekktp != 'emptyktp.png' && $cekselfiektp == 'emptyselfiektp.png') {
+            //Cek jika ada gambar yang akan diupload
+            $upload_selfie_ktp = $_FILES['selfiektp']['name'];
+        } else if ($cekktp != 'emptyktp.png' && $cekselfiektp != 'emptyselfiektp.png') {
+        }
+
+        if ($upload_ktp) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size']     = '5120';
+            $config['upload_path']     = './assets/img/ktp/';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('ktp')) {
+                //Jika upload ktp berhasil
+                $new_image_ktp = $this->upload->data('file_name');
+                $this->db->set('foto_ktp', $new_image_ktp);
+            } else {
+                //Jika upload ktp gagal
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload KTP anda gagal.</div>');
+            }
+        }
+
+        if ($upload_selfie_ktp) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size']     = '5120';
+            $config['upload_path']     = './assets/img/selfiektp/';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('selfiektp')) {
+                //Jika upload ktp berhasil
+                $new_image_selfie_ktp = $this->upload->data('file_name');
+                $this->db->set('foto_selfie_ktp', $new_image_selfie_ktp);
+            } else {
+                //Jika upload ktp gagal
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Selfie KTP anda gagal.</div>');
+            }
+        }
+
+        //Mengecek kembali, apakah user telah mengupload ktp, serta selfie ktp juga
+        if ($cekktp != 'emptyktp.png' && $cekselfiektp != 'emptyselfiektp.png') {
+            //Kedua dokumen telah diupload
+            $this->db->set('status_ktp', 'sedang_verifikasi');
+        } else if ($cekktp == 'emptyktp.png' && $cekselfiektp != 'emptyselfiektp.png') {
+            //Kedua dokumen telah diupload
+            $this->db->set('status_ktp', 'selfie_ktp_saja');
+        } else if ($cekktp != 'emptyktp.png' && $cekselfiektp == 'emptyselfiektp.png') {
+            //Kedua dokumen telah diupload
+            $this->db->set('status_ktp', 'ktp_saja');
+        } else if ($cekktp == 'emptyktp.png' && $cekselfiektp == 'emptyselfiektp.png') {
+            //Kedua dokumen telah diupload
+            $this->db->set('status_ktp', 'belum');
+        }
 
         //Set waktu untuk created at dan updated at
         $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone

@@ -58,14 +58,25 @@ class User extends CI_Controller
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi dan identitas Anda, agar dapat menyewa produk.</div>');
             } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
                 //Membuat flashdata bahwa customer ktp nya sedang diverifikasi
-                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Identitas Anda sedang diverifikasi. Mohon untuk menunggu sejenak untuk penerimaan.</div>');
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Identitas Anda sedang diverifikasi. Mohon untuk menunggu sejenak.</div>');
             } else if ($data['user']['status_ktp'] == 'diterima') {
                 //Membuat flashdata bahwa customer ktp nya diterima
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-success" role="alert" style="text-align:center;">Identitas Anda telah diterima. Silakan melanjutkan transaksi.</div>');
             } else if ($data['user']['status_ktp'] == 'ditolak') {
                 //Membuat flashdata bahwa customer ktp nya ditolak
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Identitas Anda ditolak. Mohon untuk mengupload identitas anda kembali. Bila kesulitan, hubungi <a href="http://localhost/sharedgame/Contact">Kami</a>.</div>');
+            } else if ($data['user']['status_ktp'] == 'ktp_saja') {
+                //Membuat flashdata bahwa customer ktp nya ditolak
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Anda baru mengupload KTP Anda, mohon lengkapi dengan foto selfie KTP.</a></div>');
+            } else if ($data['user']['status_ktp'] == 'selfie_ktp_saja') {
+                //Membuat flashdata bahwa customer ktp nya ditolak
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Anda baru mengupload selfie KTP Anda, mohon lengkapi dengan foto KTP.</a></div>');
             }
+        }
+
+        if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty' || $data['user']['tgl_lahir'] == '0000-00-00') {
+            //Membuat flashdata bahwa customer belum ktp
+            $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
         }
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');

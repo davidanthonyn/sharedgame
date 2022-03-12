@@ -86,6 +86,12 @@
     $this->session->unset_userdata('datausermessage');
   }
   ?>
+  <?php
+  if ($this->session->flashdata('otherdata')) {
+  ?><?php echo $this->session->flashdata('otherdata');
+    $this->session->unset_userdata('otherdata');
+    ?><?php }
+      ?>
 
   <section class="user_profile inner_pages">
     <div class="container">
@@ -123,152 +129,159 @@
                                                                 $this->session->unset_userdata('message');
                                                                 ?> </div><?php }
                                                                           ?>
-              <form method="post" action="<?= base_url('user/edit'); ?>">
-                <div class="form-group">
-                  <label class="control-label">Reg Date -</label>
-                  <?= $user['created_at'];
-                  ?>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Last Update at -</label>
-                  <?= $user['updated_at'];
-                  ?>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Status KTP -</label>
-                  <?= $user['status_ktp'];
-                  ?>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Nama Lengkap</label>
-                  <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
-                                                                              ?>" id="fullname" type="text">
-                  <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Email</label>
-                  <input class="form-control white_bg" value="<?= $user['email'];
-                                                              ?>" name="email" id="email" type="email" required readonly>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Nomor HP</label>
-                  <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
-                                                                                  ?>" id="mobilenumber" type="text" required>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Nomor HP Cadangan</label>
-                  <input class="form-control white_bg" name="mobilenumbertwo" value="<?= $user['no_hp_dua'];
-                                                                                      ?>" id="mobilenumbertwo" type="text" required>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
-                  <br>
-                  <input name="dob" value="<?= $user['tgl_lahir'];
-                                            ?>" id="dob" required>
-                </div>
-                <script type="text/javascript">
-                  flatpickr("#dob", {});
-                </script>
 
 
+
+
+              <?= form_open_multipart('user/edit'); ?>
+              <div class="form-group">
+                <label class="control-label">Reg Date -</label>
+                <?= $user['created_at'];
+                ?>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Last Update at -</label>
+                <?= $user['updated_at'];
+                ?>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Status KTP -</label>
+                <?= $user['status_ktp'];
+                ?>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Nama Lengkap</label>
+                <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
+                                                                            ?>" id="fullname" type="text">
+                <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input class="form-control white_bg" value="<?= $user['email'];
+                                                            ?>" name="email" id="email" type="email" required readonly>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Nomor HP</label>
+                <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
+                                                                                ?>" id="mobilenumber" type="text" required>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Nomor HP Cadangan</label>
+                <input class="form-control white_bg" name="mobilenumbertwo" value="<?= $user['no_hp_dua'];
+                                                                                    ?>" id="mobilenumbertwo" type="text" required>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
                 <br>
-                <div class="form-group">
-                  <label class="control-label">Alamat Lengkap</label>
-                  <textarea class="form-control white_bg" name="address" id="address" rows="4"><?= $user['alamat_lengkap'];
-                                                                                                ?></textarea>
-                </div>
-                <hr>
-                <div class="form-group row">
-                  <label class="control-label">KTP</label>
-                  <div class="col-sm-1">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <img src="" class="img-thumbnail">
-                      </div>
-                    </div class="col-sm-1">
-                    <div class="custom-file">
-                      <br>
+                <input name="dob" value="<?= $user['tgl_lahir'];
+                                          ?>" id="dob" required>
+              </div>
+              <script type="text/javascript">
+                flatpickr("#dob", {});
+              </script>
+
+
+              <br>
+              <div class="form-group">
+                <label class="control-label">Alamat Lengkap</label>
+                <textarea class="form-control white_bg" name="address" id="address" rows="4"><?= $user['alamat_lengkap'];
+                                                                                              ?></textarea>
+              </div>
+              <hr>
+              <div class="form-group row">
+                <label class="control-label">KTP</label>
+                <div class="col-sm-1">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <img src="<?= base_url('assets/img/ktp/') . $user['foto_ktp']; ?>" class="card-img" width="200" height="200">
+                    </div>
+                  </div class="col-sm-1">
+                  <div class="custom-file">
+                    <br>
+                    <?php
+                    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+                    //Mengecek apakah user adalah customer atau bukan
+                    if ($data['user']['id_role'] == '3') {
+                      //Membuat if ktp customer
+                      if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak' || $data['user']['status_ktp'] == 'selfie_ktp_saja' || $data['user']['status_ktp'] == 'ktp_saja') {
+                    ?>
+                        <input type="file" class="custom-file-input" id="ktp" name="ktp">
+                        <label class="custom-file-label" for="ktp"></label>
+                        <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
                       <?php
-                      $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-                      //Mengecek apakah user adalah customer atau bukan
-                      if ($data['user']['id_role'] == '3') {
-                        //Membuat if ktp customer
-                        if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak') {
+                      } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
                       ?>
-                          <input type="file" class="custom-file-input" id="ktp" name="ktp">
-                          <label class="custom-file-label" for="ktp"></label>
-                        <?php
-                        } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
-                        ?>
-                          <label class="control-label">Sedang diverifikasi.</label>
-                        <?php
-                        } else if ($data['user']['status_ktp'] == 'diterima') {
-                        ?>
-                          <label class="control-label">Dinyatakan valid.</label>
-                        <?php
-                        }
-                      } else {
-                        ?>
-                        <label class="control-label">Non-Customer</label>
+                        <label class="control-label">Sedang diverifikasi.</label>
+                      <?php
+                      } else if ($data['user']['status_ktp'] == 'diterima') {
+                      ?>
+                        <label class="control-label">Dinyatakan valid.</label>
                       <?php
                       }
+                    } else {
                       ?>
-                    </div>
+                      <label class="control-label">Non-Customer</label>
+                    <?php
+                    }
+                    ?>
                   </div>
                 </div>
+              </div>
 
-                <hr>
-                <br><br>
-                <div class="form-group row">
-                  <label class="control-label">Selfie KTP</label>
-                  <div class="col-sm-1">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <img src="" class="img-thumbnail">
-                      </div>
-                    </div class="col-sm-1">
-                    <div class="custom-file">
-                      <br>
+              <hr>
+              <br><br>
+              <div class="form-group row">
+                <label class="control-label">Selfie KTP</label>
+                <div class="col-sm-1">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <hr>
+                      <img src="<?= base_url('assets/img/selfiektp/') . $user['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
+                    </div>
+                  </div class="col-sm-1">
+                  <div class="custom-file">
+                    <br>
+                    <?php
+                    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+                    //Mengecek apakah user adalah customer atau bukan
+                    if ($data['user']['id_role'] == '3') {
+                      //Membuat if ktp customer
+                      if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak' || $data['user']['status_ktp'] == 'ktp_saja' || $data['user']['status_ktp'] == 'selfie_ktp_saja') {
+                    ?>
+                        <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
+                        <label class="custom-file-label" for="selfiektp"></label>
+                        <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
                       <?php
-                      $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-                      //Mengecek apakah user adalah customer atau bukan
-                      if ($data['user']['id_role'] == '3') {
-                        //Membuat if ktp customer
-                        if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak') {
+                      } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
                       ?>
-                          <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
-                          <label class="custom-file-label" for="selfiektp"></label>
-                        <?php
-                        } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
-                        ?>
-                          <label class="control-label">Sedang diverifikasi.</label>
-                        <?php
-                        } else if ($data['user']['status_ktp'] == 'diterima') {
-                        ?>
-                          <label class="control-label">Dinyatakan valid.</label>
-                        <?php
-                        }
-                      } else {
-                        ?>
-                        <label class="control-label">Non-Customer</label>
+                        <label class="control-label">Sedang diverifikasi.</label>
+                      <?php
+                      } else if ($data['user']['status_ktp'] == 'diterima') {
+                      ?>
+                        <label class="control-label">Dinyatakan valid.</label>
                       <?php
                       }
+                    } else {
                       ?>
+                      <label class="control-label">Non-Customer</label>
+                    <?php
+                    }
+                    ?>
 
 
-                    </div>
                   </div>
                 </div>
-                <hr>
-                <br><br>
+              </div>
+              <hr>
+              <br><br>
 
-                <div class="form-group">
-                  <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
-                </div>
+              <div class="form-group">
+                <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+              </div>
               </form>
             </div>
           </div>
