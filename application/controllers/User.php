@@ -55,7 +55,7 @@ class User extends CI_Controller
             //Membuat if ktp customer
             if ($data['user']['status_ktp'] == 'belum') {
                 //Membuat flashdata bahwa customer belum ktp
-                $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi dan identitas Anda, agar dapat menyewa produk.</div>');
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon mengupload KTP dan selfie KTP anda, agar dapat menyewa produk.</div>');
             } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
                 //Membuat flashdata bahwa customer ktp nya sedang diverifikasi
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Identitas Anda sedang diverifikasi. Mohon untuk menunggu sejenak.</div>');

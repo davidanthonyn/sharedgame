@@ -1,6 +1,7 @@
 <div class="profile_nav">
   <ul>
     <li><a href="<?= base_url('user/edit'); ?>">Profile Settings</a></li>
+    <li><a href="<?= base_url('user/updateemail'); ?>">Update Email</a></li>
     <li><a href="update-password.php">Update Password</a></li>
     <li><a href="my-booking.php">My Booking</a></li>
     <li><a href="post-testimonial.php">Post a Testimonial</a></li>

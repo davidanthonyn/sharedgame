@@ -21,7 +21,7 @@ class M_User extends CI_model
             'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
             'alamat_lengkap' => "empty",
             'no_hp' => "empty",
-            'no_hp_dua' => "empty",
+            'no_hp_dua' => "emptysecond",
             'tgl_lahir' => "0000-00-00",
             'foto_ktp' => "emptyktp.png",
             'foto_selfie_ktp' => "emptyselfiektp.png",
