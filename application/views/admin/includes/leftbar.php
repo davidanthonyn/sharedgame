@@ -28,7 +28,7 @@
 
 			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Rekening Toko</a></li>
 
-			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa</a></li>
+			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
 
 
 			<li class="ts-label">Users</li>
