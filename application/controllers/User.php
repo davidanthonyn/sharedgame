@@ -74,23 +74,12 @@ class User extends CI_Controller
             }
         }
 
-        if ($data['user']['id_role'] == '3') {
-            if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty') {
-                //Membuat flashdata bahwa customer belum ktp
-                $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
-            }
-        }
-
-        $nomorhp = $data['user']['no_hp'];
-        $nomorhpdua =  $data['user']['no_hp_dua'];
-
         //$nomorhpketik = $this->input->post('mobilenumber');
         //$nomorhpduaketik = $this->input->post('mobilenumbertwo');
 
-        if ($nomorhp == $nomorhpdua) {
-            //Membuat flashdata bahwa customer belum ktp
-            $this->session->set_flashdata('message_error', 'Nomor HP Utama TIDAK boleh sama dengan Nomor HP Cadangan');
-        }
+
+
+
 
         //Validasi nama
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
@@ -102,6 +91,25 @@ class User extends CI_Controller
             $this->load->view('profile.php', $data);
             $this->load->view('includes/footer.php', $data);
         } else {
+            $nomorhp = $data['user']['no_hp'];
+            $nomorhpdua =  $data['user']['no_hp_dua'];
+
+
+            if ($data['user']['id_role'] == '3') {
+                if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty') {
+                    //Membuat flashdata bahwa customer belum ktp
+                    $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
+                    redirect('user/edit');
+                }
+            }
+
+            if ($data['user']['id_role'] == '3') {
+                if ($nomorhp == $nomorhpdua) {
+                    //Membuat flashdata bahwa customer belum ktp
+                    $this->session->set_flashdata('message_error', 'Nomor HP Utama TIDAK boleh sama dengan Nomor HP Cadangan');
+                    redirect('user/edit');
+                }
+            }
 
             $this->M_User->editDataUser();
 
@@ -114,5 +122,47 @@ class User extends CI_Controller
 
     public function processEdit()
     {
+    }
+
+    public function changePassword()
+    {
+        $data['title'] = 'Change Password | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('currentpassword', 'Current Password', 'required|trim');
+        $this->form_validation->set_rules('newpassword', 'New Password', 'required|trim|min_length[8]|matches[confirmpassword]');
+        $this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|trim|min_length[8]|matches[newpassword]');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('includes/header.php', $data);
+            $this->load->view('update-password.php', $data);
+            $this->load->view('includes/footer.php', $data);
+        } else {
+            $current_password = $this->input->post('currentpassword');
+            $new_password = $this->input->post('newpassword');
+            $confirm_password = $this->input->post('confirmpassword');
+
+            //Validasi input password lama dengan password sekarang pada database
+            if (!password_verify($current_password, $data['user']['password'])) {
+                $this->session->set_flashdata('message_error', 'Wrong Current Password!');
+                redirect('user/changePassword');
+            } else {
+                //Validasi password baru dan password yang diinput
+                if ($current_password == $new_password) {
+                    $this->session->set_flashdata('message_error', 'New Password cannot be the same as Current Password!');
+                    redirect('user/changePassword');
+                } else {
+                    //Password sudah ok
+                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $this->db->set('password', $password_hash);
+                    $this->db->where('email', $this->session->userdata('email'));
+                    $this->db->update('user');
+
+                    $this->session->set_flashdata('message', 'Password changed!');
+                    redirect('user/changePassword');
+                }
+            }
+        }
     }
 }

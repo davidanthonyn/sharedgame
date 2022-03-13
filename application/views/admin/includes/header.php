@@ -9,7 +9,7 @@
 			?>
 			<a href="#"><?= $data['user']['nama_lengkap']; ?><i class="fa fa-angle-down hidden-side"></i></a>
 			<ul>
-				<li><a href="change-password.php">Change Password</a></li>
+				<li><a href="<?= base_url('user/changepassword'); ?>">Change Password</a></li>
 				<li><a href="<?= base_url('');
 								?>">Web Page for Customer</a></li>
 				<li><a href="<?= base_url('Auth/logout');
