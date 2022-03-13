@@ -82,13 +82,13 @@
   <!-- /Page Header-->
   <!--Contact-us-->
   <section class="contact_us section-padding">
-    <div class="container" style="text-align:center;">
+    <div class="container" style="text-align:center">
       <h1>Oops!</h1>
       <h2>Halaman Tidak Ditemukan.</h2>
-      <img src="<?= base_url() . "assets/"; ?>images/404.png" class="card-img" width="625" height="445" style="position=center">
+      <img src="<?= base_url() . "assets/" ?>images/404.png" class="card-img" width="625" height="445" style="position=center">
       <br>
       <h3>Cari jalan lain:</h3>
-      <h4><a href="<?= base_url(''); ?>">Home</a> | <a href="<?= base_url(''); ?>product">Product</a> | <a href="<?= base_url(''); ?>faq">FAQ</a> | <a href="<?= base_url(''); ?>contact">Kontak Kami</a></h4>
+      <h4><a href="<?= base_url('') ?>">Home</a> | <a href="<?= base_url('') ?>product">Product</a> | <a href="<?= base_url('') ?>faq">FAQ</a> | <a href="<?= base_url('') ?>contact">Kontak Kami</a></h4>
     </div>
   </section>
   <!-- /Contact-us-->
