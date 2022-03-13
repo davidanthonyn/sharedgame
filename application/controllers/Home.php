@@ -35,4 +35,13 @@ class Home extends CI_Controller
     {
         $this->load->view('newsletter.php');
     }
+
+    public function error_404()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Not Found | SharedGame';
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('404.php', $data);
+        $this->load->view('includes/footer.php', $data);
+    }
 }
