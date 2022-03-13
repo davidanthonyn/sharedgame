@@ -37,8 +37,7 @@ class User extends CI_Controller
 
     public function edit()
     {
-        if ($this->session->userdata('email')) {
-        } else {
+        if (!$this->session->userdata('email')) {
             redirect('');
         }
 

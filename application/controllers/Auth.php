@@ -176,8 +176,8 @@ class Auth extends CI_Controller
             //Model M_User pada fungsi tambahDataCustomer
             $this->M_User->tambahDataCustomer();
 
-            //Model M_User pada fungsi tambahUserToken(sekaligus dengan fungsi send token ke email)
-            $this->M_User->tambahUserToken();
+            //Model M_User pada fungsi tambahUserTokenVerify(sekaligus dengan fungsi send token ke email)
+            $this->M_User->tambahUserTokenVerify();
 
             //Alert akun berhasil dibuat
             $this->session->flashdata('message', ' <div class="alert alert-success" role="alert">Selamat, akun berhasil dibuat! Mohon konfirmasi melalui email!</div>');
@@ -269,8 +269,115 @@ class Auth extends CI_Controller
         }
     }
 
-    public function forgot()
+    public function forgotPassword()
     {
+
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Forgot Password | SharedGame';
+            $this->load->view('includes/auth_header', $data);
+            $this->load->view('includes/forgot-password');
+            $this->load->view('includes/auth_footer');
+        } else {
+            $email = $this->input->post('email');
+            $user = $this->db->get_where('user', ['email' => $email, 'is_active' => 'yes'])->row_array();
+
+            if ($user) {
+                //Model M_User pada fungsi tambahUserTokenForgot(sekaligus dengan fungsi send token ke email)
+                $this->M_User->tambahUserTokenForgot();
+
+                //Alert akun tidak ditemukan/belum aktif
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-success" role="alert">Reset Password telah dikirim. Cek Email Anda.</div>');
+
+                //Redirect ke Login
+                redirect('auth/forgotpassword');
+            } else {
+                //Alert akun tidak ditemukan/belum aktif
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-danger" role="alert">Email tidak ditemukan atau belum aktif!</div>');
+
+                //Redirect ke Login
+                redirect('auth/forgotpassword');
+            }
+        }
+    }
+
+    public function resetPassword()
+    {
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        //Memeriksa user, ada atau tidak
+        if ($user) {
+            //Mengambil token
+            $user_token = $this->db->get_where('usertoken', ['token' => $token])->row_array();
+
+            //Memeriksa token, ada atau tidak
+            if ($user_token) {
+                //Membuat userdata email untuk reset password
+                $this->session->set_userdata('reset_email', $email);
+                //Mengalihkan ke controller changePassword()
+                $this->changePassword();
+                //Token tidak valid
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-danger" role="alert">Reset Password gagal! Token tidak valid.</div>');
+
+                redirect('auth');
+            }
+            //User tidak valid
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert">Reset Password gagal! Email tidak valid.</div>');
+
+            redirect('auth');
+        }
+    }
+
+    public function changePassword()
+    {
+        if (!$this->session->userdata('reset_email')) {
+            redirect('auth');
+        } else if ($this->session->userdata('email')) {
+            redirect('');
+        }
+
+        $this->form_validation->set_rules('newpassword', 'New Password', 'required|trim|min_length[8]|matches[confirmpassword]');
+        $this->form_validation->set_rules('confirmpassword', 'Repeat Password', 'required|trim|min_length[8]|matches[newpassword]');
+
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Reset Password | SharedGame';
+            $this->load->view('includes/auth_header', $data);
+            $this->load->view('includes/reset-password');
+            $this->load->view('includes/auth_footer');
+        } else {
+            //Pengambilan password baru(dari post) dan email(userdata get)
+            $password = password_hash($this->input->post('newpassword'), PASSWORD_DEFAULT);
+            $email = $this->session->userdata('reset_email');
+
+            //Perubahan password melalui forgot password
+            $this->db->set('password', $password);
+            $this->db->where('email', $email);
+            $this->db->update('user');
+
+            //Hapus token agar tidak digunakan kembali
+            $this->db->delete('usertoken', ['email' => $email]);
+
+            $this->session->unset_userdata('reset_email');
+
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-success" role="alert">Reset Password berhasil! Silakan login.</div>');
+
+
+            $this->db->delete('usertoken', ['email' => $email]);
+
+            redirect('auth');
+        }
     }
 
 

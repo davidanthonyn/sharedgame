@@ -127,7 +127,7 @@ class M_User extends CI_model
         $this->db->update('user');
     }
 
-    public function tambahUserToken()
+    public function tambahUserTokenVerify()
     {
         $email = $this->input->post('email', true);
 
@@ -146,6 +146,27 @@ class M_User extends CI_model
         //Kirim ke tabel user token
         $this->db->insert('usertoken', $user_token);
         $this->_sendEmail($token, 'verify');
+    }
+
+    public function tambahUserTokenForgot()
+    {
+        $email = $this->input->post('email', true);
+
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        //Siapkan token untuk aktivasi akun
+        $token = base64_encode(random_bytes(32));
+        $user_token = [
+            'email' => $email,
+            'token' => $token,
+            'time_created' => $now
+        ];
+
+        //Kirim ke tabel user token
+        $this->db->insert('usertoken', $user_token);
+        $this->_sendEmail($token, 'forgot');
     }
 
     private function _sendEmail($token, $type)
@@ -191,14 +212,16 @@ class M_User extends CI_model
         if ($type == 'verify') {
             $this->email->subject('Verifikasi Akun | SharedGame');
 
-            $this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
+            $this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . urlencode($token) . '">Aktivasi Akun</a>');
+
+            //$this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : 
+            //<a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
+        } else if ($type == 'forgot') {
+            //Jika tipe nya lupa password
+            $this->email->subject('Reset Password | SharedGame');
+
+            $this->email->message('Klik link berikut untuk mereset password Anda : <a href="' . base_url() . 'auth/resetpassword?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>');
         }
-
-        //Jika tipe nya adalah lupa password
-        if ($type == 'forgot') {
-        }
-
-
 
         if ($this->email->send()) {
             return true;
