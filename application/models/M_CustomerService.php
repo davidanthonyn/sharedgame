@@ -15,6 +15,7 @@ class M_CustomerService extends CI_Model
         return $query;
     }
 
+    /*
     function tambahDataKeluhanCS()
     {
         //Set waktu untuk created at dan updated at
@@ -32,5 +33,11 @@ class M_CustomerService extends CI_Model
 
         //Kirim ke tabel user
         $this->db->insert('customerservice', $data);
+    }
+    */
+
+    function insert_record($table, $data)
+    {
+        $this->db->insert($table, $data);
     }
 }

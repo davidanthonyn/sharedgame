@@ -13,75 +13,66 @@ class Contact extends CI_Controller
 
     function index()
     {
-        //session_start();
-        /*
-        error_reporting(0);
-
-        // DB credentials.
-        define('DB_HOST', 'localhost');
-        define('DB_USER', 'root');
-        define('DB_PASS', '');
-        define('DB_NAME', 'carrental');
-        // Establish database connection.
-        try {
-            $dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-        } catch (PDOException $e) {
-            exit("Error: " . $e->getMessage());
-        }
-
-        $pagetype = $_GET['type'];
-        $sql = "SELECT Address,EmailId,ContactNo from tblcontactusinfo";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':pagetype', $pagetype, PDO::PARAM_STR);
-        $query->execute();
-        $results = $query->fetchAll(PDO::FETCH_OBJ);
-        $cnt = 1;
-       
-
-
-
-
-        if (isset($_POST['send'])) {
-            $name = $_POST['fullname'];
-            $email = $_POST['email'];
-            $contactno = $_POST['contactno'];
-            $message = $_POST['message'];
-            $sql = "INSERT INTO  tblcontactusquery(name,EmailId,ContactNumber,Message) VALUES(:name,:email,:contactno,:message)";
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':name', $name, PDO::PARAM_STR);
-            $query->bindParam(':email', $email, PDO::PARAM_STR);
-            $query->bindParam(':contactno', $contactno, PDO::PARAM_STR);
-            $query->bindParam(':message', $message, PDO::PARAM_STR);
-            $query->execute();
-            $lastInsertId = $dbh->lastInsertId();
-            if ($lastInsertId) {
-                $msg = "Query Sent. We will contact you shortly";
-            } else {
-                $error = "Something went wrong. Please try again";
-            }
-        }*/
         //Model M_CustomerService pada fungsi index(panggil data CS dari database)
         $data['cs'] = $this->M_CustomerService->index()->result();
+
+
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $data['title'] = 'Contact Us | SharedGame';
-        $this->load->view('includes/header.php', $data);
-        $this->load->view('contact-us.php', $data);
-        $this->load->view('includes/footer.php', $data);
-    }
 
-    function kirim()
-    {
+        $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
+        $this->form_validation->set_rules('emailaddress', 'Email Address', 'trim|required|valid_email');
+        $this->form_validation->set_rules('phonenumber', 'Phone Number', 'trim|required');
+        $this->form_validation->set_rules('kritik', 'Critics', 'trim|required');
+
+
         if ($this->form_validation->run() == false) {
-            $data['cs'] = $this->M_CustomerService->index()->result();
             $data['title'] = 'Contact Us | SharedGame';
+            $this->load->view('includes/header.php', $data);
             $this->load->view('contact-us.php', $data);
+            $this->load->view('includes/footer.php', $data);
         } else {
-            //Model M_CustomerService pada fungsi tambahDataCustomer
-            $this->M_CustomerService->tambahDataKeluhanCS();
+            $name = htmlspecialchars($this->input->post('fullname', true));
+            $email = htmlspecialchars($this->input->post('emailaddress', true));
+            $phonenumber = htmlspecialchars($this->input->post('phonenumber', true));
+            $kritik = htmlspecialchars($this->input->post('kritik', true));
 
-            //Jalankan fungsi email kirim ke customer
-            $this->_sendEmailToCustomer();
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
+            //Jika nomor hp user(yang login) kosong
+            if ($phonenumber == 'empty') {
+                $this->session->set_flashdata('messagefailed', 'Mohon mengubah nomor telepon anda terlebih dahulu, pada Profile Settings ');
+                redirect('contact');
+            } else {
+                $data = array(
+                    'nama_lengkap' => $name,
+                    'email_cs' => $email,
+                    'number_cs' => $phonenumber,
+                    'pesan_cs' => $kritik,
+                    'created_at' => $now,
+                    'status' => 'pending'
+                );
+
+                //Menjalankan model customer service untuk mengirim data ke tabel customerservice
+                $proses = $this->M_CustomerService->insert_record('customerservice', $data);
+
+                //Model M_CustomerService pada fungsi tambahDataCustomer
+                //$tambahData = $this->M_CustomerService->tambahDataKeluhanCS();
+
+                //Jika proses kirim ke database berhasil
+                if ($proses) {
+                    //Jalankan fungsi email kirim ke customer
+                    $this->_sendEmailToCustomer();
+
+                    $this->session->set_flashdata('messagesuccess', 'Terima kasih telah menghubungi kami. Kami akan segera menghubungi anda.');
+                    redirect('contact');
+                } else {
+                    $this->session->set_flashdata('messagefailed', 'Maaf, terjadi kesalahan pada sistem. Mohon coba lagi.');
+                    redirect('contact');
+                }
+            }
         }
     }
 
@@ -104,7 +95,7 @@ class Contact extends CI_Controller
         $this->load->library('email');
         $this->email->initialize($config);
 
-        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+        $this->email->from('sharedgametech@gmail.com', 'SharedGame | Do Not Reply');
 
         $this->email->to($email);
     }

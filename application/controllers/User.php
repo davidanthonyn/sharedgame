@@ -125,6 +125,10 @@ class User extends CI_Controller
 
     public function changePassword()
     {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        }
+
         $data['title'] = 'Change Password | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
