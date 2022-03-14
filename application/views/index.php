@@ -84,13 +84,17 @@
                 <div class="recent-car-list">
                   <div class="car-info-box"> <a href="<?= $data[$i]['id_produk']; ?>"><img src="<?= $data[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
                     <ul>
-                      <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($result->FuelType); ?></li>
-                      <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($result->ModelYear); ?> Model</li>
-                      <li><i class="fa fa-user" aria-hidden="true"></i><?php echo htmlentities($result->SeatingCapacity); ?> seats</li>
+                      <li><i class="fa fa-car" aria-hidden="true"></i><?php //echo htmlentities($result->FuelType); 
+                                                                      ?></li>
+                      <li><i class="fa fa-calendar" aria-hidden="true"></i><?php //echo htmlentities($result->ModelYear); 
+                                                                            ?> Model</li>
+                      <li><i class="fa fa-user" aria-hidden="true"></i><?php //echo htmlentities($result->SeatingCapacity); 
+                                                                        ?> seats</li>
                     </ul>
                   </div>
                   <div class="car-title-m">
-                    <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><?= $data[$i]['id_produk']; ?> , <?php echo $data[$i]['nama_produk']; ?></a></h6>
+                    <h6><a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
+                                                          ?>"><?= $data[$i]['id_produk']; ?> , <?php echo $data[$i]['nama_produk']; ?></a></h6>
                     <span class="price">$<?php //harga //echo htmlentities($result->PricePerDay); 
                                           ?> /Day</span>
                   </div>
