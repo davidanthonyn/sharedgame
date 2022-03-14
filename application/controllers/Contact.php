@@ -56,22 +56,19 @@ class Contact extends CI_Controller
                 );
 
                 //Menjalankan model customer service untuk mengirim data ke tabel customerservice
-                $proses = $this->M_CustomerService->insert_record('customerservice', $data);
+                $this->M_CustomerService->insert_record('customerservice', $data);
 
                 //Model M_CustomerService pada fungsi tambahDataCustomer
                 //$tambahData = $this->M_CustomerService->tambahDataKeluhanCS();
 
-                //Jika proses kirim ke database berhasil
-                if ($proses) {
-                    //Jalankan fungsi email kirim ke customer
-                    $this->_sendEmailToCustomer();
+                //$this->session->set_flashdata('messagefailed', 'Maaf, terjadi kesalahan pada sistem. Mohon coba lagi.');
+                //redirect('contact');
 
-                    $this->session->set_flashdata('messagesuccess', 'Terima kasih telah menghubungi kami. Kami akan segera menghubungi anda.');
-                    redirect('contact');
-                } else {
-                    $this->session->set_flashdata('messagefailed', 'Maaf, terjadi kesalahan pada sistem. Mohon coba lagi.');
-                    redirect('contact');
-                }
+                //Jalankan fungsi email kirim ke customer
+                $this->_sendEmailToCustomer();
+
+                $this->session->set_flashdata('messagesuccess', 'Terima kasih telah menghubungi kami. Kami akan segera menghubungi anda.');
+                redirect('contact');
             }
         }
     }
