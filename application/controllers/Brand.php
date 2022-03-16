@@ -8,6 +8,8 @@ class Brand extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        //Model M_Brand pada fungsi tambahDataCustomer
+        $this->load->model('M_Brand');
     }
 
     public function index()
@@ -26,9 +28,24 @@ class Brand extends CI_Controller
 
             $this->load->view('admin/create-brand', $data);
         } else {
-            //Model M_Brand pada fungsi tambahDataCustomer
-            $this->load->model('M_Brand');
-            $this->M_Brand->tambahDataBrand();
+            $brand = $this->input->post('brand');
+            $gambar = $this->input->post('gambar');
+
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
+            $data = array(
+                'nama_brand' => $brand,
+                'gambar_brand' => $gambar,
+                'status_brand' => 'aktif',
+                'datetime_brand_added' => $now
+            );
+
+            //Menjalankan model customer service untuk mengirim data ke tabel customerservice
+            $this->M_CustomerService->insert_record('customerservice', $data);
+
+
             $this->session->set_flashdata('flash', 'Ditambahkan');
             //Redirect ke Login
             redirect('brand/kelola');

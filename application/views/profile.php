@@ -159,24 +159,24 @@
               <div class="form-group">
                 <label class="control-label">Email</label>
                 <input class="form-control white_bg" value="<?= $user['email'];
-                                                            ?>" name="email" id="email" type="email" required readonly>
+                                                            ?>" name="email" id="email" type="email" readonly>
               </div>
               <div class="form-group">
                 <label class="control-label">Nomor HP (08xxx)</label>
-                <input class="form-control white_bg" name="mobilenumber" value="<?= $user['no_hp'];
-                                                                                ?>" id="mobilenumber" type="text" required>
+                <input class="form-control white_bg" type="text" name="mobilenumber" id="mobilenumber" value="<?= $user['no_hp'];
+                                                                                                              ?>" onkeypress="return onlyNumberKey(event)">
               </div>
               <div class="form-group">
                 <label class="control-label">Nomor HP Cadangan (08xxx) (berbeda dengan Nomor HP Utama)</label>
-                <input class="form-control white_bg" name="mobilenumbertwo" value="<?= $user['no_hp_dua'];
-                                                                                    ?>" id="mobilenumbertwo" type="text" required>
+                <input class="form-control white_bg" type="text" name="mobilenumbertwo" id="mobilenumbertwo" value="<?= $user['no_hp'];
+                                                                                                                    ?>" onkeypress="return onlyNumberKey(event)">
               </div>
 
               <div class="form-group">
                 <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
                 <br>
-                <input name="dob" value="<?= $user['tgl_lahir'];
-                                          ?>" id="dob" required>
+                <input class="form-control white_bg" name="dob" value="<?= $user['tgl_lahir'];
+                                                                        ?>" id="dob">
               </div>
               <script type="text/javascript">
                 flatpickr("#dob", {});
@@ -311,6 +311,16 @@
   var todayDate = String(date.getDate()).padStart(2, '0');
   var datePattern = year + '-' + month + '-' + todayDate;
   document.getElementById("dob").value = datePattern;*/
+  </script>
+  <script>
+    function onlyNumberKey(evt) {
+
+      // Only ASCII character in that range allowed
+      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+      return true;
+    }
   </script>
 
 </body>

@@ -90,6 +90,14 @@ class User extends CI_Controller
             $this->load->view('profile.php', $data);
             $this->load->view('includes/footer.php', $data);
         } else {
+            $name = $this->input->post('fullname');
+            $email = $this->input->post('email', true);
+            $mobilenumber = $this->input->post('mobilenumber');
+            $mobilenumbertwo = $this->input->post('mobilenumbertwo');
+            $dob = $this->input->post('dob');
+            $address = $this->input->post('address');
+
+
             $nomorhp = $data['user']['no_hp'];
             $nomorhpdua =  $data['user']['no_hp_dua'];
 
