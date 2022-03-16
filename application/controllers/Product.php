@@ -29,6 +29,8 @@ class Product extends CI_Controller
     {
         $this->load->database();
         $this->load->model('Modelproduk');
+        $this->load->model('Rekening');
+        $data['rekening']=$this->Rekening->getAllRekening();
         $where = array('id_produk' => $id);
         $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         $data["data"] = $this->Modelproduk->GetProdukById($id);
@@ -36,6 +38,7 @@ class Product extends CI_Controller
         $this->load->view('includes/header.php', $data);
         $this->load->view('detailproduk.php', $data);
         $this->load->view('includes/footer.php', $data);
+        
     }
 
     function kelolaproduk()

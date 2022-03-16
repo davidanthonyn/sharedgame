@@ -28,6 +28,8 @@ error_reporting(0);
   <!--FontAwesome Font Style -->
   <link href="<?php echo base_url(); ?>/assets/css/font-awesome.min.css" rel="stylesheet">
 
+  <script src="https://kit.fontawesome.com/77d9ac2836.js" crossorigin="anonymous"></script>
+
   <!-- SWITCHER -->
   <link rel="stylesheet" id="switcher-css" type="text/css" href="<?php echo base_url(); ?>/assets/switcher/css/switcher.css" media="all" />
   <link rel="alternate stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
@@ -79,17 +81,19 @@ error_reporting(0);
                   <img src="<?php echo $data[$i]['gambar_produk']; ?>" alt="">
                   <div class="content">
                     <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
                     </div>
                     <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $data[$i]['id_produk']; ?>"> <?php echo $data[$i]['nama_produk']; ?></a> </h3>
                     <div class="price"><?php echo $data[$i]['warna_produk']; ?> <span> </span> </div>
                     <a> Available </a>
                   </div>
                 </div>
+                <br>
+                <br>
               <?php endfor; ?>
 
 

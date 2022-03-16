@@ -28,6 +28,9 @@ error_reporting(0);
   <!--FontAwesome Font Style -->
   <link href="<?php echo base_url(); ?>/assets/css/font-awesome.min.css" rel="stylesheet">
 
+  <script src="https://kit.fontawesome.com/77d9ac2836.js" crossorigin="anonymous"></script>
+
+
   <!-- SWITCHER -->
   <link rel="stylesheet" id="switcher-css" type="text/css" href="<?php echo base_url(); ?>/assets/switcher/css/switcher.css" media="all" />
   <link rel="alternate stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
@@ -78,11 +81,11 @@ error_reporting(0);
                 <img src="<?php echo $data[0]['gambar_produk']; ?>" alt="">
                 <div class="content">
                   <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"style="color:orange"></i>
+                    <i class="fas fa-star"style="color:orange"></i>
+                    <i class="fas fa-star"style="color:orange"></i>
+                    <i class="fas fa-star"style="color:orange"></i>
+                    <i class="fas fa-star"style="color:orange"></i>
                   </div>
 
                   <!-- Nama Produk-->
@@ -92,27 +95,42 @@ error_reporting(0);
                   <div class="form-group">
                     <label>Quantity: </label>
                     <div class="input-group">
-                      <div class="input-group-btn">
-                        <button id="down" class="btn btn-default" onclick=" down('0')"><span class="glyphicon glyphicon-minus"></span></button>
-                      </div>
-                      <input type="text" id="myNumber" class="form-control input-number" value="1" />
-                      <div class="input-group-btn">
-                        <button id="up" class="btn btn-default" onclick="up('10')"><span class="glyphicon glyphicon-plus"></span></button>
-                      </div>
+                      <input type="number" id="myNumber" class="form-control input-number" value="1" min = "1" max = "<?php echo $data[0]['jumlah_tersedia']; ?>" required />
                     </div>
                   </div>
 
                   <!--tarif-->
-                  <div class="price"> tarif sewa 1 hari : <?php echo $tarifsewa[0]['tarif_harga']; ?> <span> </span> </div>
-                  <div class="price"> tarif sewa 3 hari : <?php echo $tarifsewa[1]['tarif_harga']; ?> <span> </span> </div>
-                  <div class="price"> tarif sewa 7 hari : <?php echo $tarifsewa[2]['tarif_harga']; ?> <span> </span> </div>
-                  <a> Available </a>
+                  <div class="row">
+                  <div class="form-group col-lg-3">
+                      <label>Jangka Waktu</label>
+                      <select class="form-control" onchange="change_time()" name="time" id="time" required>
+                     <option value="0">-- Pilih --</option>
+                    <option value="1"> 1 Hari</option>
+                    <option value="2"> 3 Hari</option>
+                    <option value="3"> 7 Hari</option>
+                      </select>
+                  </div>
+                      </div>
+                      <div id="div_content" style="display: none;">
+                      <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                       <span class="input-group-text">Rp</span>
+                    </div>
+                     <input type="text" class="form-control" id="price" name="price" disabled>
+                    </div>                 
+                   </div>
+                   <br>
                   <div class="row mb-2">
                     <div class="col-sm-6">
                       <button type="button" class="btn btn-primary">
                         <i class="<i class=" fa-regular fa-cart-circle-check></i>Cart
                       </button>
                     </div>
+                  </div>
+                  <br>
+                  <h5> Pembayaran dapat dilakukan melalui : </h5>
+                  <h5><?php echo $rekening[0]['no_rekening_toko']; ?></h5>
+                  <h5><?php echo $rekening[0]['bank_rekening_toko']; ?></h5>
                   </div>
                 </div>
               </div>
@@ -146,21 +164,32 @@ error_reporting(0);
   <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
 
+
+
   <!--Quantity + - -->
   <script>
-    function up(max) {
-      document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) + 1;
-      if (document.getElementById("myNumber").value >= parseInt(max)) {
-        document.getElementById("myNumber").value = max;
-      }
+    
+      function change_time() {
+        var select = document.getElementById('time');
+        var value = select.options[select.selectedIndex].value;
+
+        if (value == "1") {
+            document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
+            document.getElementById('div_content').style.display = 'block';
+        } else
+        if (value == "2") {
+            document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
+            document.getElementById('div_content').style.display = 'block';
+        } else
+        if (value == "3") {
+            document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
+            document.getElementById('div_content').style.display = 'block';
+        } else {
+            document.getElementById('price').value = "";
+            document.getElementById('div_content').style.display = 'none';
+        }
     }
 
-    function down(min) {
-      document.getElementById("myNumber").value = parseInt(document.getElementById("myNumber").value) - 1;
-      if (document.getElementById("myNumber").value <= parseInt(min)) {
-        document.getElementById("myNumber").value = min;
-      }
-    }
   </script>
 
 
