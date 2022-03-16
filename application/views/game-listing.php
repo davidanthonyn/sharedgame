@@ -50,6 +50,10 @@ error_reporting(0);
 
 <body>
 
+  <!--Header-->
+  <?php include('includes/header.php'); ?>
+
+
   <!--Page Header-->
   <section class="page-header listing_page">
     <div class="container">
@@ -137,6 +141,9 @@ error_reporting(0);
           </div>
   </section>
   <!-- /Listing-->
+
+  <!--Footer-->
+  <?php include_once('includes/footer.php'); ?>
 
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>

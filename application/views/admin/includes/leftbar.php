@@ -28,9 +28,11 @@
 
 			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Rekening Toko</a></li>
 
+			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
+
 
 			<li class="ts-label">Users</li>
-			<li><a href="reg-users.php"><i class="fa fa-users"></i> Manage Users</a>
+			<li><a href="reg-users.php"><i class="fa fa-users"></i>Users</a>
 				<ul>
 					<li><a href="post-avehical.php">Admin</a></li>
 					<li><a href="manage-vehicles.php">Karyawan</a></li>
@@ -38,9 +40,15 @@
 					<li><a href="manage-vehicles.php">Customer + Member</a></li>
 				</ul>
 			</li>
-			<li><a href="manage-contactusquery.php"><i class="fa fa-desktop"></i> Manage Customer Service</a></li>
-			<li><a href="manage-pages.php"><i class="fa fa-files-o"></i> Manage Pages</a></li>
-			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Update Contact Info</a></li>
+			<li><a href="manage-contactusquery.php"><i class="fa fa-desktop"></i>Customer Service</a></li>
+
+
+			<li class="ts-label">Pages</li>
+			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> About Us</a></li>
+			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Contact Info</a></li>
+			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> FAQ</a></li>
+			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Privacy Policy</a></li>
+			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Terms of Services</a></li>
 
 		</ul>
 	</nav>

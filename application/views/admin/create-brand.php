@@ -66,7 +66,7 @@
 							<div class="row">
 								<div class="col-md-10">
 									<div class="panel panel-default">
-										<div class="panel-heading">Form fields</div>
+										<div class="panel-heading">Create Brand</div>
 										<div class="panel-body">
 											<form method="post" class="form-horizontal" action="<?= base_url('brand/tambahbrand'); ?>">
 
@@ -78,9 +78,10 @@
 													</div>
 												</div>
 												<div class="hr-dashed"></div>
-
-
-
+												<div class="form-group">
+													<label class="col-sm-4 control-label">Brand Logo</label>
+													<input type="file" class="custom-file-input" id="brand" name="brand">
+												</div>
 
 												<div class="form-group">
 													<div class="col-sm-8 col-sm-offset-4">

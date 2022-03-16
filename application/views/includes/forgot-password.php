@@ -12,7 +12,7 @@
                             <div class="p-5">
                                 <div class="text-center">
                                     <div class="logo"><img src="<?php echo base_url() . "assets/"; ?>images/sharedgame160.png" alt="image" /></a> </div>
-                                    <h4 class="text-dark mb-4">Login Page</h4>
+                                    <h4 class="text-dark mb-4">Forgot Password</h4>
                                 </div>
                                 <?php
                                 if ($this->session->flashdata('message')) {
@@ -21,19 +21,15 @@
                                 }
                                 ?>
 
-                                <form class="user" method="POST" action="<?= base_url('auth'); ?>">
+                                <form class="user" method="POST" action="<?= base_url('auth/forgotpassword'); ?>">
                                     <div class="mb-3"><input class="form-control form-control-user" type="text" id="email" placeholder="Enter Email Address..." name="email" value="<?= set_value('email'); ?>">
                                         <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?></div>
-                                    <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Enter Password" name="password">
-                                        <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?></div>
                                     <div class="mb-3">
-                                    </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                    </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Reset Password</button>
                                     <hr>
                                 </form>
 
-                                <div class="text-center"><a class="small" href="<?= base_url('auth/forgotpassword'); ?>">Forgot Password?</a></div>
-                                <div class="text-center"><a class="small" href="<?= base_url('auth/registration');
-                                                                                ?>">Create an Account!</a></div>
+                                <div class="text-center"><a class="small" href="<?= base_url('auth'); ?>">Back to Login</a></div>
                                 <div class="text-center"><a class="small" href="<?= base_url('');
                                                                                 ?>">Back to Home</a></div>
                             </div>

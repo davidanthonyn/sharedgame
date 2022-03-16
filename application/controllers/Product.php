@@ -46,8 +46,6 @@ class Product extends CI_Controller
         $this->load->model('Modelproduk');
         $data['title'] = 'Kelola Produk | SharedGame';
         $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
-        $this->load->view('includes/header.php', $data);
         $this->load->view('admin/manage-products.php', $data);
-        $this->load->view('includes/footer.php', $data);
     }
 }

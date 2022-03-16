@@ -79,36 +79,56 @@
   </section>
   <!-- /Page Header-->
   <!--Pesan berhasil/gagal-->
-  <div class="alert alert-success" role="alert" style="text-align:center;">Pesan Anda terkirim. Terima kasih!</div>
+  <?php
+  if ($this->session->flashdata('messagesuccess')) {
+  ?>
+    <div class="alert alert-success" role="alert" style="text-align:center;"><?= $this->session->flashdata('messagesuccess'); ?></div>
+  <?php
+    $this->session->unset_userdata('messagesuccess');
+  } else if ($this->session->flashdata('messagefailed')) {
+  ?>
+    <div class="alert alert-danger" role="alert" style="text-align:center;"><?= $this->session->flashdata('messagefailed'); ?></div>
+  <?php
+    $this->session->unset_userdata('messagefailed');
+  }
+  ?>
   <!--Contact-us-->
   <section class="contact_us section-padding">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h3>Get in touch using the form below</h3>
-          <?php //if ($error) { 
-          ?><div class="errorWrap"><strong>ERROR</strong>:<?php //echo htmlentities($error); 
-                                                          ?> </div><?php //} else if ($msg) { 
-                                                                    ?><div class="succWrap"><strong>SUCCESS</strong>:<?php //echo htmlentities($msg); 
-                                                                                                                      ?> </div><?php //} 
-                                                                                                                                ?>
           <div class="contact_form gray-bg">
-            <form class="user" method="POST" action="<?= base_url('contact/kirim'); ?>">
+            <form class="user" method="POST" action="<?= base_url('contact'); ?>">
               <div class="form-group">
                 <label class="control-label">Nama Lengkap <span>*</span></label>
-                <input type="text" name="fullname" class="form-control white_bg" id="fullname" required>
+                <input onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" type="text" name="fullname" class="form-control white_bg" id="fullname" value="<?php if ($this->session->userdata('email')) {
+                                                                                                                                                        echo $user['nama_lengkap'];
+                                                                                                                                                      }
+                                                                                                                                                      ?>">
+                <?= form_error('fullname', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label class="control-label">Email <span>*</span></label>
-                <input type="email" name="emailaddress" class="form-control white_bg" id="emailaddress" required>
+                <input type="email" name="emailaddress" class="form-control white_bg" id="emailaddress" value="<?php if ($this->session->userdata('email')) {
+                                                                                                                  echo $user['email'];
+                                                                                                                }
+                                                                                                                ?>">
+                <?= form_error('emailaddress', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label class="control-label">Nomor HP <span>*</span></label>
-                <input type="text" name="phonenumber" class="form-control white_bg" id="phonenumber" required>
+                <input onkeypress="return onlyNumberKey(event)" maxlength="15" type="text" name="phonenumber" class="form-control white_bg" id="phonenumber" value="<?php if ($this->session->userdata('email')) {
+                                                                                                                                                                      echo $user['no_hp'];
+                                                                                                                                                                    }
+                                                                                                                                                                    ?>">
+                <?= form_error('phonenumber', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label class="control-label">Kritik/Masukan <span>*</span></label>
-                <textarea class="form-control white_bg" name="message" rows="4" id="message" required></textarea>
+                <textarea class="form-control white_bg" name="kritik" rows="4" id="kritik"></textarea>
+                <?= form_error('kritik', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <button class="btn" type="submit" name="send" type="submit">Kirim <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
@@ -161,6 +181,16 @@
   <!--Slider-JS-->
   <script src="<?php echo base_url() . "assets/"; ?>js/slick.min.js"></script>
   <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
+  <script>
+    function onlyNumberKey(evt) {
+
+      // Only ASCII character in that range allowed
+      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+      return true;
+    }
+  </script>
 
 </body>
 
