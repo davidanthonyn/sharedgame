@@ -53,9 +53,6 @@ $route['default_controller'] = 'home';
 $route['404_override'] = 'home/error_404';
 $route['translate_uri_dashes'] = FALSE;
 $route['product/detail/(:num)'] = 'Product/detail/$1';
-<<<<<<< Updated upstream
-=======
 
 //Cart
-$route [ 'add-to-cart'] = "Cart/CartController/addToCart";
->>>>>>> Stashed changes
+$route['add-to-cart'] = "Cart/CartController/addToCart";
