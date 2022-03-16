@@ -19,7 +19,6 @@ class Home extends CI_Controller
         $data['smallsentence'] = 'Apa yang kamu butuhkan untuk bermain game?
                                 Kami menyediakan berbagai macam game untuk kamu.';
 
-
         $this->load->database();
         $this->load->model('Modelproduk');
         $data["produk"] = $this->Modelproduk->GetProduk();

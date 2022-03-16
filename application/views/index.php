@@ -76,13 +76,11 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="resentnewcar">
 
-
-            <?php //count($produk); <- ini buat ngitung kolom array, disembunyikan dulu, kalo mau nampilin semua produk, kasih ini
-            for ($i = 0; $i < 3; $i++) : ?>
+            <?php for ($i = 0; $i < 3; $i++) : ?>
 
               <div class="col-list-3">
                 <div class="recent-car-list">
-                  <div class="car-info-box"> <a href="<?= $data[$i]['id_produk']; ?>"><img src="<?= $data[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
+                  <div class="car-info-box"> <a href="<?= $produk[$i]['id_produk']; ?>"><img src="<?php echo $produk[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
                     <ul>
                       <li><i class="fa fa-car" aria-hidden="true"></i><?php //echo htmlentities($result->FuelType); 
                                                                       ?></li>
@@ -93,13 +91,14 @@
                     </ul>
                   </div>
                   <div class="car-title-m">
-                    <h6><a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
-                                                          ?>"><?= $data[$i]['id_produk']; ?> , <?php echo $data[$i]['nama_produk']; ?></a></h6>
+                    <h6><a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $produk[$i]['id_produk']; ?>"><?php echo $produk[$i]['nama_produk']; ?></a></h6>
                     <span class="price">$<?php //harga //echo htmlentities($result->PricePerDay); 
                                           ?> /Day</span>
+
+
                   </div>
                   <div class="inventory_info_m">
-                    <p><?= $data[$i]['warna_produk']; ?></p>
+                    <p><?= $produk[$i]['warna_produk']; ?></p>
                   </div>
                 </div>
               </div>
@@ -110,6 +109,7 @@
       </div>
   </section>
   <!-- /Resent Cat -->
+
 
 
   <!-- Fun Facts-->
