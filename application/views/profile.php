@@ -168,7 +168,7 @@
               </div>
               <div class="form-group">
                 <label class="control-label">Nomor HP Cadangan (08xxx) (berbeda dengan Nomor HP Utama)</label>
-                <input class="form-control white_bg" type="text" name="mobilenumbertwo" id="mobilenumbertwo" value="<?= $user['no_hp'];
+                <input class="form-control white_bg" type="text" name="mobilenumbertwo" id="mobilenumbertwo" value="<?= $user['no_hp_dua'];
                                                                                                                     ?>" onkeypress="return onlyNumberKey(event)">
               </div>
 
@@ -179,7 +179,10 @@
                                                                         ?>" id="dob">
               </div>
               <script type="text/javascript">
-                flatpickr("#dob", {});
+                flatpickr("#dob", {
+                  minDate: "1980-01-01",
+                  maxDate: "2021-12-31"
+                });
               </script>
 
 

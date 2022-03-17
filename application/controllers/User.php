@@ -73,17 +73,21 @@ class User extends CI_Controller
             }
         }
 
+        if ($data['user']['id_role'] == '3') {
+            if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty') {
+                //Membuat flashdata bahwa customer belum ktp
+                $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
+            }
+        }
+
         //$nomorhpketik = $this->input->post('mobilenumber');
         //$nomorhpduaketik = $this->input->post('mobilenumbertwo');
 
 
-
-
-
         //Validasi nama
         $this->form_validation->set_rules('fullname', 'Full Name', 'required|trim');
-        //$this->form_validation->set_rules('mobilenumber', 'Mobile Number ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
-        //$this->form_validation->set_rules('mobilenumbertwo', 'Mobile Number Two ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
+        $this->form_validation->set_rules('mobilenumber', 'Mobile Number ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
+        $this->form_validation->set_rules('mobilenumbertwo', 'Mobile Number Two ', 'required|regex_match[/^[0-9]{15}$/]'); //{15} for 15 digits number
 
         if ($this->form_validation->run() == false) {
             $this->load->view('includes/header.php', $data);
@@ -97,35 +101,107 @@ class User extends CI_Controller
             $dob = $this->input->post('dob');
             $address = $this->input->post('address');
 
+            //Cek jika ada ktp dan/atau selfie ktp yang diupload
+            $upload_ktp = $_FILES['image']['ktp'];
+            $upload_selfie_ktp = $_FILES['image']['selfiektp'];
 
-            $nomorhp = $data['user']['no_hp'];
-            $nomorhpdua =  $data['user']['no_hp_dua'];
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+            $cekktp = $data['user']['fotoktp'];
+            $cekselfiektp = $data['user']['selfie_foto_ktp'];
+            $cekstatusktp = $data['user']['status_ktp'];
 
-
-            if ($data['user']['id_role'] == '3') {
-                if ($data['user']['alamat_lengkap'] == 'empty' || $data['user']['no_hp'] == 'empty' || $data['user']['no_hp_dua'] == 'empty') {
-                    //Membuat flashdata bahwa customer belum ktp
-                    $this->session->set_flashdata('otherdata', '<div class="alert alert-danger" role="alert" style="text-align:center;">Mohon melengkapi seluruh data pribadi Anda(Tgl Lahir, Kedua Nomor HP, dan Alamat), agar dapat menyewa produk.</div>');
-                    redirect('user/edit');
-                }
+            //Validation user for name(apakah berbeda antara input dengan database?)
+            if ($name != $data['user']['nama_lengkap']) {
+                $this->db->set('nama_lengkap', $name);
+                $this->db->where('email', $email);
+                $this->db->update('user');
             }
 
-            if ($data['user']['id_role'] == '3') {
-                if ($nomorhp == $nomorhpdua) {
-                    //Membuat flashdata bahwa customer belum ktp
+            //Validation user for phone number
+            if ($mobilenumber != 'empty' || $mobilenumbertwo != 'emptysecond') {
+                if ($mobilenumber == $mobilenumbertwo) {
+                    //Membuat flashdata bahwa customer tidak boleh mengisi nomor hp yang sama
                     $this->session->set_flashdata('message_error', 'Nomor HP Utama TIDAK boleh sama dengan Nomor HP Cadangan');
                     redirect('user/edit');
+                } else if ($mobilenumber != 'empty' && $mobilenumbertwo == 'emptysecond') {
+                    $this->db->set('no_hp', $mobilenumber);
+                    $this->db->where('email', $email);
+                    $this->db->update('user');
+                } else if ($mobilenumber == 'empty' && $mobilenumbertwo != 'emptysecond') {
+                    $this->db->set('no_hp_dua', $mobilenumbertwo);
+                    $this->db->where('email', $email);
+                    $this->db->update('user');
+                } else if ($mobilenumber != 'empty' && $mobilenumbertwo != 'emptysecond') {
+                    $this->db->set('no_hp', $mobilenumber);
+                    $this->db->set('no_hp_dua', $mobilenumbertwo);
+                    $this->db->where('email', $email);
+                    $this->db->update('user');
                 }
+
+                //Validasi tanggal lahir
+                if ($dob != '0000-00-00') {
+                    $this->db->set('tgl_lahir', $dob);
+                    $this->db->where('email', $email);
+                    $this->db->update('user');
+                }
+
+                //Validasi alamat
+                if ($address != 'empty') {
+                    $this->db->set('alamat_lengkap', $address);
+                    $this->db->where('email', $email);
+                    $this->db->update('user');
+                }
+
+                //Jika user upload ktp
+                if ($upload_ktp) {
+                    $config['allowed_types'] = 'jpg|png';
+                    $config['max_size']     = '5120';
+                    $config['upload_path']     = './assets/img/ktp/';
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('ktp')) {
+                        //Jika upload ktp berhasil
+                        $new_image_ktp = $this->upload->data('file_name');
+                        $this->db->set('foto_ktp', $new_image_ktp);
+                        $this->db->where('email', $email);
+                        $this->db->update('user');
+                    } else {
+                        //Jika upload ktp gagal
+                        $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload KTP anda gagal.</div>');
+                    }
+                }
+
+                //If user upload selfie ktp
+                if ($upload_selfie_ktp) {
+                    $config['allowed_types'] = 'jpg|png';
+                    $config['max_size']     = '5120';
+                    $config['upload_path']     = './assets/img/selfiektp/';
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('selfiektp')) {
+                        //Jika upload ktp berhasil
+                        $new_image_selfie_ktp = $this->upload->data('file_name');
+                        $this->db->set('foto_selfie_ktp', $new_image_selfie_ktp);
+                        $this->db->where('email', $email);
+                        $this->db->update('user');
+                    } else {
+                        //Jika upload ktp gagal
+                        $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Selfie KTP anda gagal.</div>');
+                    }
+                }
+
+                //$this->M_User->editDataUser();
+
+                $this->session->set_flashdata('message', 'Your profile has been updated!');
+
+                //Redirect ke Login
+                redirect('user/edit');
             }
-
-            $this->M_User->editDataUser();
-
-            $this->session->set_flashdata('message', 'Your profile has been updated!');
-
-            //Redirect ke Login
-            redirect('user/edit');
         }
     }
+
 
     public function processEdit()
     {
