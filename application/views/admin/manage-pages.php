@@ -8,27 +8,30 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta name="theme-color" content="#3e454c">
-
-		<title>Game Rental Portal | Admin Create Brand</title>
+		<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
+		<title><?= $title; ?></title>
 
 		<!-- Font awesome -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/font-awesome.min.css">
 		<!-- Sandstone Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap.min.css">
 		<!-- Bootstrap Datatables -->
-		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/dataTables.bootstrap.min.css">
 		<!-- Bootstrap social button library -->
-		<link rel="stylesheet" href="css/bootstrap-social.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap-social.css">
 		<!-- Bootstrap select -->
-		<link rel="stylesheet" href="css/bootstrap-select.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap-select.css">
 		<!-- Bootstrap file input -->
-		<link rel="stylesheet" href="css/fileinput.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/fileinput.min.css">
 		<!-- Awesome Bootstrap checkbox -->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+		<!--<script rel="javascript" type="text/javascript" src="<?php echo base_url() ?>jquery-3.4.1.min.js"></script>-->
+		<script rel="javascript" type="text/javascript" src="<?php echo base_url() . "assetsadmin/";
+																?>js/jquery.min.js"></script>
 		<script type="text/JavaScript">
-			<!--
+			/*
 function MM_findObj(n, d) { //v4.01
   var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
     d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
@@ -57,13 +60,55 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
   eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
   if (restore) selObj.selectedIndex=0;
 }
-//-->
+*/
 		</script>
-		<script type="text/javascript" src="nicEdit.js"></script>
+
+		<script type="text/javascript" src="<?php echo base_url() . "ckeditor/"; ?>ckeditor.js"></script>
+		<script type="text/javascript" src="<?php echo base_url() . "assetsadmin/"; ?>js/nicEdit.js"></script>
 		<script type="text/javascript">
-			bkLib.onDomLoaded(function() {
+			/*bkLib.onDomLoaded(function() {
 				nicEditors.allTextAreas()
+			});*/
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				$('#id_page').change(function() {
+					var id_page = $(this).val();
+
+					$.ajax({
+
+						type: 'POST',
+
+						url: "<?php echo base_url('admin/getPagesByAjax') ?>",
+
+						dataType: "JSON",
+
+						data: {
+							id_page: id_page
+						},
+
+						success: function(data)
+
+						{
+
+							$.each(data, function() {
+
+								$('[name="page_name"]').val(data.page_name);
+
+								$('[name="detail"]').val(data.detail);
+
+							});
+
+						}
+
+					});
+
+				});
+
 			});
+
+			JSONInPrettyFormat;
 		</script>
 		<style>
 			.errorWrap {
@@ -89,29 +134,43 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 	</head>
 
 	<body>
-		<?php include('includes/header.php'); ?>
+		<?php include('includes/header.php');
+		?>
 		<div class="ts-main-content">
-			<?php include('includes/leftbar.php'); ?>
+			<?php include('includes/leftbar.php');
+			?>
 			<div class="content-wrapper">
 				<div class="container-fluid">
 
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Manage Pages </h2>
+							<h2 class="page-title"><?= $title; ?></h2>
 
 							<div class="row">
 								<div class="col-md-10">
 									<div class="panel panel-default">
-										<div class="panel-heading">Form fields</div>
+										<div class="panel-heading"><?= $title; ?></div>
 										<div class="panel-body">
-											<form method="post" name="chngpwd" class="form-horizontal" onSubmit="return valid();">
-
-
-												<?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+											<form method="post" class="form-horizontal" action="<?php echo base_url() . 'Admin/manage_page'; ?>">
+												<!--Pesan berhasil/gagal-->
+												<?php
+												if ($this->session->flashdata('messagesuccess')) {
+												?>
+													<div class="succWrap" role="alert"><?= $this->session->flashdata('messagesuccess'); ?></div>
+												<?php
+													$this->session->unset_userdata('messagesuccess');
+												} else if ($this->session->flashdata('messagefailed')) {
+												?>
+													<div class="errorWrap" role="alert"><?= $this->session->flashdata('messagefailed'); ?></div>
+												<?php
+													$this->session->unset_userdata('messagefailed');
+												}
+												?>
 												<div class="form-group">
 													<label class="col-sm-4 control-label">select Page</label>
 													<div class="col-sm-8">
+														<!---
 														<select name="menu1" onChange="MM_jumpMenu('parent',this,0)">
 															<option value="" selected="selected" class="form-control">***Select One***</option>
 															<option value="manage-pages.php?type=terms">terms and condition</option>
@@ -119,46 +178,25 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 															<option value="manage-pages.php?type=aboutus">aboutus</option>
 															<option value="manage-pages.php?type=faqs">FAQs</option>
 														</select>
+														--->
+
+														<select name="id_page" id="id_page">
+
+															<option value="0">-- Pilih Halaman --</option>
+															<?php foreach ($page as $listPage) { ?>
+																<option value="<?php echo $listPage->id_page ?>"><?php echo $listPage->page_name ?></option>
+															<?php } ?>
+														</select>
 													</div>
 												</div>
 												<div class="hr-dashed"></div>
 
 												<div class="form-group">
-													<label class="col-sm-4 control-label">selected Page</label>
-													<div class="col-sm-8">
-														<?php
-
-														switch ($_GET['type']) {
-															case "terms":
-																echo "Terms and Conditions";
-																break;
-
-															case "privacy":
-																echo "Privacy And Policy";
-																break;
-
-															case "aboutus":
-																echo "About US";
-																break;
-
-															case "faqs":
-																echo "FAQs";
-																break;
-
-															default:
-																echo "";
-																break;
-														}
-
-														?>
-													</div>
-												</div>
-
-												<div class="form-group">
 													<label class="col-sm-4 control-label">Page Details </label>
 													<div class="col-sm-8">
-														<textarea class="form-control" rows="5" cols="50" name="pgedetails" id="pgedetails" placeholder="Package Details" required>
+														<textarea name="detail" id=detail" class="form-control" rows="5" cols="50">
 										<?php
+										/*
 										$pagetype = $_GET['type'];
 										$sql = "SELECT detail from tblpages where type=:pagetype";
 										$query = $dbh->prepare($sql);
@@ -170,10 +208,16 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 											foreach ($results as $result) {
 												echo htmlentities($result->detail);
 											}
-										}
+										}*/
 										?>
 
 										</textarea>
+														<?= form_error('detail', '<small class="text-danger pl-3">', '</small>'); ?>
+														<script>
+															// Replace the <textarea id="editor1"> with a CKEditor 4
+															// instance, using default configuration.
+															CKEDITOR.replace('detail');
+														</script>
 													</div>
 												</div>
 
@@ -203,17 +247,17 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 		</div>
 
 		<!-- Loading Scripts -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap-select.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap.min.js"></script>
-		<script src="js/Chart.min.js"></script>
-		<script src="js/fileinput.js"></script>
-		<script src="js/chartData.js"></script>
-		<script src="js/main.js"></script>
+
+
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap-select.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap.min.js"></script>
+		<script rel="javascript" type="text/javascript" src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.dataTables.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/dataTables.bootstrap.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/Chart.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
 
 	</body>
 
 	</html>
-<?php } ?>

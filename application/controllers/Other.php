@@ -45,8 +45,17 @@ class Other extends CI_Controller
         $this->load->view('includes/footer.php', $data);
     }
 
+
+
     function kelolaaboutus()
     {
+        //kelola brand
+        $this->load->model('M_Brand');
+        $data['title'] = 'Kelola Brand | SharedGame';
+        $data['brand'] = $this->M_Brand->getAllBrand()->result();
+        $this->load->view('admin/manage-brands', $data);
+
+
         $data['title'] = 'Kelola About Us | SharedGame';
         $this->load->view('admin/manage-pages.php', $data);
     }

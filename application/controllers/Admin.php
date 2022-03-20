@@ -9,6 +9,8 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('M_Admin');
         $this->load->model('M_Brand');
+        //$this->load->model('M_Page');
+        $this->load->model(array('M_Page'));
         $this->load->library('form_validation');
         $this->load->library('session');
 
@@ -54,5 +56,58 @@ class Admin extends CI_Controller
         $data['jumlahcustomerservice'] = $this->M_Admin->getRowCustomerService();
 
         $this->load->view('admin/dashboard.php', $data);
+    }
+
+    function manage_page()
+    {
+        //$data['about'] = $this->M_Page->tampilkan_about_us()->result();
+        //$data['faq'] = $this->M_Page->tampilkan_faq()->result();
+        //$data['privacy'] = $this->M_Page->tampilkan_privacy()->result();
+        //$data['terms'] = $this->M_Page->tampilkan_terms()->result();
+
+        $tangkapId = $this->input->post('id_page');
+        $tangkapDetail = $this->input->post('detail');
+
+        $this->form_validation->set_rules('detail', 'Detail Page', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Kelola Halaman | SharedGame';
+            $data['page'] = $this->M_Page->tampilkan_halaman()->result();
+            $this->load->view('admin/manage-pages.php', $data);
+        } else if ($tangkapId == '-- Pilih Halaman --') {
+            $this->session->set_flashdata('messagefailed', 'Pilih halaman yang ingin diubah!');
+            redirect('admin/kelolahalamanlain');
+        } else {
+            $data = array(
+                'detail' => $tangkapDetail
+            );
+
+            $where = array(
+                'id_page' => $tangkapId
+            );
+
+            $edit = $this->M_Page->update_record($where, $data, 'pages');
+
+            $this->session->set_flashdata('messagesuccess', 'Halaman berhasil diedit');
+            redirect('admin/manage_page');
+
+            /*
+            if ($edit == true) {
+                $this->session->set_flashdata('messagesuccess', 'Halaman berhasil diedit');
+                redirect('admin/manage_page');
+            } else {
+                $this->session->set_flashdata('messagefailed', 'Halaman gagal diedit');
+                redirect('admin/manage_page');
+            }*/
+        }
+    }
+
+    function getPagesByAjax()
+    {
+        $id_page = $this->input->post('id_page');
+        $where = array('id_page' => $id_page);
+        //$where = array('id_page' => 1);
+        $data = $this->M_Page->get_pages_by_ajax($where);
+        echo json_encode($data);
     }
 }
