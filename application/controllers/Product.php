@@ -42,10 +42,20 @@ class Product extends CI_Controller
 
     function kelolaproduk()
     {
-        $this->load->model('Modelproduk');
-        $data['title'] = 'Kelola Produk | SharedGame';
-        $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
-        $this->load->view('admin/manage-products.php', $data);
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1') {
+            $this->load->model('Modelproduk');
+            $data['title'] = 'Kelola Produk | SharedGame';
+            $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
+            $this->load->view('admin/manage-products.php', $data);
+        } else {
+            redirect('');
+        }
     }
 
     function getBrandByAjax()

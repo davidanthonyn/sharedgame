@@ -61,7 +61,19 @@
 						<div class="col-md-12">
 
 							<h2 class="page-title">Edit Brand</h2>
-
+							<?php
+							if ($this->session->flashdata('message')) {
+							?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+																				$this->session->unset_userdata('message');
+																				?> </div><?php }
+																							?>
+							<?php
+							if ($this->session->flashdata('message_error')) {
+							?>
+								<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+																				$this->session->unset_userdata('message_error');
+																				?> </div><?php }
+																							?>
 							<div class="row">
 								<div class="col-md-10">
 									<div class="panel panel-default">
@@ -71,29 +83,47 @@
 												<form method="post" class="form-horizontal" action="<?= base_url('brand/proses_edit_data'); ?>">
 
 													<div class="form-group">
+														<label class="col-sm-4 control-label">Brand ID</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" value="<?= $listBrandEdit->id_brand ?>" name="idbrand" id="idbrand" readonly>
+														</div>
+													</div>
+
+													<div class="form-group">
 														<label class="col-sm-4 control-label">Brand Name</label>
 														<div class="col-sm-8">
-															<input type="text" class="form-control" value="<?= $listBrandEdit->nama_brand ?>" name="brand" id="brand" required>
+															<input type="text" class="form-control" value="<?= $listBrandEdit->nama_brand ?>" name="brand" id="brand">
+															<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
 														</div>
 													</div>
 
 													<tr>
-														<td>Status Brand</td>
+														<label class="col-sm-4 control-label">Brand Status</label>
 														<td>
+
 															<select name="status">
-																<?php foreach ($status as $listStatus) { ?>
+																<?php if ($listBrandEdit->status_brand == "aktif") { ?>
 
-																	<option value="<?php echo $listStatus->status_brand ?>" <?php if ($listStatus->status_brand == $listBrandEdit->id_brand) {
-																																echo "selected";
-																															} ?>>
-
-																		<?php echo $listStatus->status_brand ?> </option>
-
+																	<option value="aktif">Aktif</option>
+																	<option value="tidak_aktif">Tidak Aktif</option>
+																<?php } else if ($listBrandEdit->status_brand == "tidak_aktif") { ?>
+																	<option value="tidak_aktif">Tidak Aktif</option>
+																	<option value="aktif">Aktif</option>
 																<?php } ?>
 															</select>
+
 														</td>
 													</tr>
+
 													<div class="hr-dashed"></div>
+
+													<div class="form-group">
+
+														<label class="col-sm-4 control-label">Brand Logo</label>
+
+														<input type="file" class="custom-file-input" id="rebrandlogo" name="rebrandlogo">
+														<img src="<?= base_url('assets/brandlogo/') . $listBrandEdit->gambar_brand ?>" class="card-img" width="200" height="200">
+													</div>
 
 
 

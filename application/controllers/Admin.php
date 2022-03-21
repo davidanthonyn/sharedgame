@@ -24,10 +24,13 @@ class Admin extends CI_Controller
     function index()
     {
         //Load database
-        $this->load->database();
+        //$this->load->database();
 
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
 
         if ($data['user']['id_role'] == '1') {
             //Title Dashboard Admin saat halaman dibuka
@@ -35,6 +38,8 @@ class Admin extends CI_Controller
         } else if ($data['user']['id_role'] == '2') {
             //Title Dashboard Karyawan saat halaman dibuka
             $data['title'] = 'Dashboard Karyawan | SharedGame';
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
         }
 
         //Menghitung row customer melalui model M_Admin
@@ -64,6 +69,19 @@ class Admin extends CI_Controller
         //$data['faq'] = $this->M_Page->tampilkan_faq()->result();
         //$data['privacy'] = $this->M_Page->tampilkan_privacy()->result();
         //$data['terms'] = $this->M_Page->tampilkan_terms()->result();
+
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
 
         $tangkapId = $this->input->post('id_page');
         $tangkapDetail = $this->input->post('detail');

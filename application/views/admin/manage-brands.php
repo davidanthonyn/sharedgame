@@ -27,6 +27,8 @@
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+
+		<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -61,6 +63,20 @@
 						<div class="col-md-12">
 
 							<h2 class="page-title">Manage Brands</h2>
+
+							<?php
+							if ($this->session->flashdata('message')) {
+							?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+																				$this->session->unset_userdata('message');
+																				?> </div><?php }
+																							?>
+							<?php
+							if ($this->session->flashdata('message_error')) {
+							?>
+								<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+																				$this->session->unset_userdata('message_error');
+																				?> </div><?php }
+																							?>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
@@ -97,7 +113,8 @@
 												<tr>
 													<td><?php echo $listBrand->id_brand ?></td>
 													<td><?php echo $listBrand->nama_brand ?></td>
-													<td><?php echo $listBrand->gambar_brand ?></td>
+
+													<td><img src="<?= base_url('assets/brandlogo/') . $listBrand->gambar_brand ?>" class="card-img" width="100" height="100"></td>
 													<td><?php echo $listBrand->status_brand ?></td>
 													<td><?php echo $listBrand->datetime_brand_added ?></td>
 													<td>

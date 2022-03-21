@@ -62,33 +62,48 @@
 						<div class="col-md-12">
 
 							<h2 class="page-title">Create Brand</h2>
+							<?php
+							if ($this->session->flashdata('message')) {
+							?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+																				$this->session->unset_userdata('message');
+																				?> </div><?php }
+																							?>
+							<?php
+							if ($this->session->flashdata('message_error')) {
+							?>
+								<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+																				$this->session->unset_userdata('message_error');
+																				?> </div><?php }
+																							?>
 
 							<div class="row">
 								<div class="col-md-10">
 									<div class="panel panel-default">
 										<div class="panel-heading">Create Brand</div>
 										<div class="panel-body">
-											<form method="post" class="form-horizontal" action="<?= base_url('brand/tambahbrand'); ?>">
+											<?= form_open_multipart('brand/tambahbrand'); ?>
 
-												<div class="form-group">
-													<label class="col-sm-4 control-label">Brand Name</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control" name="brand" id="brand">
-														<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label">Brand Name</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" name="brand" id="brand">
+													<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
-												<div class="hr-dashed"></div>
-												<div class="form-group">
-													<label class="col-sm-4 control-label">Brand Logo</label>
-													<input type="file" class="custom-file-input" id="brand" name="brand">
-												</div>
+												<br>
+												<br>
+											</div>
+											<div class="hr-dashed"></div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label">Brand Logo</label>
+												<input type="file" class="custom-file-input" id="brandlogo" name="brandlogo">
+											</div>
 
-												<div class="form-group">
-													<div class="col-sm-8 col-sm-offset-4">
+											<div class="form-group">
+												<div class="col-sm-8 col-sm-offset-4">
 
-														<button class="btn btn-primary" name="submit" type="submit">Submit</button>
-													</div>
+													<button class="btn btn-primary" name="submit" type="submit">Submit</button>
 												</div>
+											</div>
 
 											</form>
 
