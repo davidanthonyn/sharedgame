@@ -114,7 +114,7 @@
 													<td><?php echo $listBrand->id_brand ?></td>
 													<td><?php echo $listBrand->nama_brand ?></td>
 
-													<td><img src="<?= base_url('assets/brandlogo/') . $listBrand->gambar_brand ?>" class="card-img" width="100" height="100"></td>
+													<td><img src="<?= base_url('assets/img/brandlogo/') . $listBrand->gambar_brand ?>" class="card-img" width="100" height="100"></td>
 													<td><?php echo $listBrand->status_brand ?></td>
 													<td><?php echo $listBrand->datetime_brand_added ?></td>
 													<td>

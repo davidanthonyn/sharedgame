@@ -48,7 +48,7 @@ class Brand extends CI_Controller
             if ($brand && $upload_logo) {
                 $config['allowed_types'] = 'jpg|png';
                 $config['max_size']     = '5120';
-                $config['upload_path']     = './assets/brandlogo/';
+                $config['upload_path']     = './assets/img/brandlogo/';
 
                 $this->load->library('upload', $config);
 
@@ -138,7 +138,7 @@ class Brand extends CI_Controller
             if ($reupload_logo) {
                 $config['allowed_types'] = 'jpg|png';
                 $config['max_size']     = '5120';
-                $config['upload_path']     = './assets/brandlogo/';
+                $config['upload_path']     = './assets/img/brandlogo/';
 
                 $this->load->library('upload', $config);
 

@@ -122,7 +122,7 @@
 														<label class="col-sm-4 control-label">Brand Logo</label>
 
 														<input type="file" class="custom-file-input" id="rebrandlogo" name="rebrandlogo">
-														<img src="<?= base_url('assets/brandlogo/') . $listBrandEdit->gambar_brand ?>" class="card-img" width="200" height="200">
+														<img src="<?= base_url('assets/img/brandlogo/') . $listBrandEdit->gambar_brand ?>" class="card-img" width="200" height="200">
 													</div>
 
 

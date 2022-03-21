@@ -108,7 +108,7 @@
 													<td><?php echo $listProduct->nama_produk ?></td>
 													<td><?php echo $listProduct->kategori_produk ?></td>
 													<td><?php echo $listProduct->warna_produk ?></td>
-													<td><?php echo $listProduct->gambar_produk ?></td>
+													<td><img src="<?= base_url('assets/img/product/') . $listProduct->gambar_produk ?>" class="card-img" width="100" height="100"></td>
 													<td><?php echo $listProduct->deskripsi_produk ?></td>
 													<td><?php echo $listProduct->serial_produk ?></td>
 													<td><?php echo $listProduct->jumlah_tersedia ?></td>
