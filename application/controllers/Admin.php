@@ -128,4 +128,23 @@ class Admin extends CI_Controller
         $data = $this->M_Page->get_pages_by_ajax($where);
         echo json_encode($data);
     }
+
+    function manage_contact()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        if ($this->form_validation->run() == false) {
+        }
+    }
 }

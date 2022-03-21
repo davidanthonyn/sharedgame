@@ -17,7 +17,8 @@
 
 			<li><a href="#"><i class="fa fa-sitemap"></i> Products</a>
 				<ul>
-					<li><a href="post-avehical.php">Post a Product</a></li>
+					<li><a href="<?= base_url('product/tambahproduk');
+									?>">Post a Product</a></li>
 					<li><a href="<?= base_url('product/kelolaproduk');
 									?>">Manage Products</a></li>
 				</ul>
@@ -44,11 +45,9 @@
 
 
 			<li class="ts-label">Pages</li>
-			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> About Us</a></li>
 			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Contact Info</a></li>
-			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> FAQ</a></li>
-			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Privacy Policy</a></li>
-			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Terms of Services</a></li>
+			<li><a href="<?= base_url('admin/manage_page');
+							?>"><i class="fa fa-files-o"></i> About / FAQ / Privacy / Terms</a></li>
 
 		</ul>
 	</nav>

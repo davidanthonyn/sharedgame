@@ -113,8 +113,8 @@
 													<td><?php echo $listProduct->serial_produk ?></td>
 													<td><?php echo $listProduct->jumlah_tersedia ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'Brand/edit_data/' . $listProduct->id_product; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'Brand/delete_data/' . $listProduct->id_product; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'Brand/edit_data/' . $listProduct->id_produk; ?>">Edit</a> ||
+														<a href="<?php echo base_url() . 'Brand/delete_data/' . $listProduct->id_produk; ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php

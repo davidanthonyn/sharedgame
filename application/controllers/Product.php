@@ -58,11 +58,34 @@ class Product extends CI_Controller
         }
     }
 
+    //contoh
+    /*
     function getBrandByAjax()
     {
         $brand = $this->input->post('brand');
         $where = array('brand' => $brand);
         $data = $this->M_Brand->get_dosen_by_ajax($where);
         echo json_encode($data);
+    }*/
+
+    function tambahproduk()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        $this->form_validation->set_rules('brand', 'text', 'trim|required', [
+            'required' => 'Brand harus diisi!'
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Add Product | SharedGame';
+            $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
+
+            $this->load->view('admin/post-aproduct.php', $data);
+        } else {
+        }
     }
 }
