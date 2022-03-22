@@ -80,7 +80,7 @@
 										<div class="panel-heading">Form fields</div>
 										<div class="panel-body">
 											<?php foreach ($brandEdit as $listBrandEdit) { ?>
-												<form method="post" class="form-horizontal" action="<?= base_url('brand/proses_edit_data'); ?>">
+												<form method="post" class="form-horizontal" action="<?= base_url('admin/proses_edit_data_brand'); ?>">
 
 													<div class="form-group">
 														<label class="col-sm-4 control-label">Brand ID</label>

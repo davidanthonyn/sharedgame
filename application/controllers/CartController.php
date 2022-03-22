@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class CartController extends CI_Controller {
+class CartController extends CI_Controller
+{
     function __construct()
     {
         parent::__construct();
@@ -13,20 +14,18 @@ class CartController extends CI_Controller {
     public function addToCart()
     {
         $product_id = $this->ibput->post('id');
-        $product = $this->ProductsModel->get($producr_id);
+        $product = $this->ProductsModel->get($product_id);
 
         $qty = 1;
 
-        if($this->input->post('qty'))
-        {
+        if ($this->input->post('qty')) {
             $qty = $this->input->post('qty');
         }
 
         $product_display_img = "";
         $image = $product->cover_image;
 
-        if($image)
-        {
+        if ($image) {
             $product_display_img = $image->path;
         }
 
@@ -37,16 +36,14 @@ class CartController extends CI_Controller {
             'name' => $product->name,
             'options' => array('product_image' => $product_display_img)
         );
-    $status = $this->cart->insert($data);
-    if($status)
-    {
-        $this->session->set_flashdata('success','Produk Berhasil Ditambahkan');   
-    }else{
-        $this->session->set_flashdata('error','Produk Gagal Ditambah');
-    }
+        $status = $this->cart->insert($data);
+        if ($status) {
+            $this->session->set_flashdata('success', 'Produk Berhasil Ditambahkan');
+        } else {
+            $this->session->set_flashdata('error', 'Produk Gagal Ditambah');
+        }
 
-    redirect($_SERVER['HTTP_REFERER']);
-    exit;
+        redirect($_SERVER['HTTP_REFERER']);
+        exit;
     }
-}  
-;?>
+};

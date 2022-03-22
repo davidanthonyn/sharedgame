@@ -123,7 +123,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Listed Brands</div>
 												</div>
 											</div>
-											<a href="<?= base_url('brand/kelola'); ?>" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="<?= base_url('admin/kelolabrand'); ?>" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 								</div>

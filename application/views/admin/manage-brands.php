@@ -118,8 +118,8 @@
 													<td><?php echo $listBrand->status_brand ?></td>
 													<td><?php echo $listBrand->datetime_brand_added ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'Brand/edit_data/' . $listBrand->id_brand; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'Brand/delete_data/' . $listBrand->id_brand; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'admin/edit_data_brand/' . $listBrand->id_brand; ?>">Edit</a> ||
+														<a href="<?php echo base_url() . 'admin/delete_data_brand/' . $listBrand->id_brand; ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php

@@ -81,7 +81,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">Create Brand</div>
 										<div class="panel-body">
-											<?= form_open_multipart('brand/tambahbrand'); ?>
+											<?= form_open_multipart('admin/tambahbrand'); ?>
 
 											<div class="form-group">
 												<label class="col-sm-4 control-label">Brand Name</label>

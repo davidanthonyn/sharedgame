@@ -230,4 +230,57 @@ class M_User extends CI_model
             die;
         }
     }
+
+    function get_admin_by_ajax()
+    {
+        $query = $this->db->get_where('user');
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'detail' => $data->detail
+            );
+        }
+        return $output;
+    }
+
+    function get_customer_by_ajax()
+    {
+        $query = $this->db->get_where('user');
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'detail' => $data->detail
+            );
+        }
+        return $output;
+    }
+
+    function get_member_by_ajax()
+    {
+        $query = $this->db->get_where('pages');
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'detail' => $data->detail
+            );
+        }
+        return $output;
+    }
+
+    function get_subsletter_by_ajax()
+    {
+        $query = $this->db->get_where('newsletter');
+
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'detail' => $data->detail
+            );
+        }
+        return $output;
+    }
 }
