@@ -32,8 +32,14 @@ class Home extends CI_Controller
 
     public function newsletter()
     {
-        $this->load->view('newsletter.php');
+        $this->load->view('emailtemplates/newsletter.php');
     }
+
+    public function confirm()
+    {
+        $this->load->view('emailtemplates/confirm_account.php');
+    }
+
 
     public function error_404()
     {

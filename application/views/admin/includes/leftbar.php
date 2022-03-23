@@ -5,7 +5,7 @@
 			<li><a href="<?= base_url('admin');
 							?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 
-			<li class="ts-label">Resources</li>
+			<li class="ts-label">Assets & Resources</li>
 			<li><a href="#"><i class="fa fa-files-o"></i> Brands</a>
 				<ul>
 					<li><a href="<?= base_url('admin/tambahbrand');
@@ -31,8 +31,8 @@
 
 			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
 
-
-			<li class="ts-label">Users</li>
+			<!--
+			
 			<li><a href="reg-users.php"><i class="fa fa-users"></i>Users</a>
 				<ul>
 					<li><a href="post-avehical.php">Admin</a></li>
@@ -42,6 +42,10 @@
 					<li><a href="manage-vehicles.php">Newsletter</a></li>
 				</ul>
 			</li>
+-->
+			<li class="ts-label">Humans</li>
+			<li><a href="<?= base_url('admin/kelolauser');
+							?>"><i class="fa fa-users"></i>Users</a></li>
 			<li><a href="manage-contactusquery.php"><i class="fa fa-desktop"></i>Customer Service</a></li>
 
 

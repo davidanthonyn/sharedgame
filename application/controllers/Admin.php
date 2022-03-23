@@ -386,10 +386,65 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Add Product | SharedGame';
+            $data['brand'] = $this->M_Brand->getAllBrand()->result();
             $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
 
             $this->load->view('admin/post-aproduct.php', $data);
         } else {
+            $nama_produk = $this->input->post('productname');
+            $id_brand = $this->input->post('id_brand');
+            $deskripsi = $this->input->post('deskripsi');
+            $satuhari = $this->input->post('priceperday');
+            $tigahari = $this->input->post('price3days');
+            $tujuhhari = $this->input->post('price7days');
+
+
+
+
+            $nama_produk = $this->input->post('nama_produk');
+            $brand = $this->input->post('brand');
+            $category = $this->input->post('category');
+            $platform = $this->input->post('platform');
+            $genre = $this->input->post('genre');
+            $tag = $this->input->post('tag');
+            $harga = $this->input->post('harga');
+            $deskripsi = $this->input->post('deskripsi');
+            $gambar = $this->input->post('gambar');
+            $status = $this->input->post('status');
+
+            $data = array(
+                'nama_produk' => $nama_produk,
+                'id_brand' => $brand,
+                'id_category' => $category,
+                'id_platform' => $platform,
+                'id_genre' => $genre,
+                'id_tag' => $tag,
+                'harga' => $harga,
+                'deskripsi' => $deskripsi,
+                'gambar_produk' => $gambar,
+                'status_produk' => $status
+            );
+
+            $this->Modelproduk->insert_record($data, 'produk');
+            redirect('admin/kelolaproduk');
+        }
+    }
+
+    function kelolaUser()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1') {
+            $this->load->model('M_User');
+            $data['title'] = 'Kelola User | SharedGame';
+            $data['user'] = $this->M_User->getAllUser()->result();
+            $this->load->view('admin/reg-users.php', $data);
+        } else {
+            redirect('');
         }
     }
 
@@ -427,5 +482,23 @@ class Admin extends CI_Controller
         //$where = array('id_page' => 1);
         $data = $this->M_User->get_subsletter_by_ajax($where);
         echo json_encode($data);
+    }
+
+    function manageCS()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1') {
+            $this->load->model('M_User');
+            $data['title'] = 'Kelola User | SharedGame';
+            $data['user'] = $this->M_User->getAllUser()->result();
+            $this->load->view('admin/manage-contactusquery.php', $data);
+        } else {
+            redirect('');
+        }
     }
 }
