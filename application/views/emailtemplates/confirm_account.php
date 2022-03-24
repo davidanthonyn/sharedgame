@@ -255,12 +255,17 @@
 									<a href="#"><img src="img/SharedGameController.png" alt="" width="60"></a>
 									-->
 								<a href="#"><img src="https://drive.google.com/thumbnail?id=17fE0j6Uar2mGw-kL8g_D3WzV3PQH2lhv" alt="" width="60"></a>
+								<?php
 
-								<p style="font-size: 8px;Margin-top:9px;">PT. Sharing Time</p>
-								<p style="font-size: 8px;Margin-top:9px;">Mangga Dua, Jakarta, 55555</p>
-								<p style="font-size: 8px;Margin-top:9px;"><a href="mailto:sharedgametech@gmail.com">sharedgametech@gmail.com</a></p>
-								<p style="font-size: 8px;Margin-top:9px;"><a href="tel:021123456">021 123456</a>
-								</p>
+								foreach ($cs as $listCs) { ?>
+									<p style="font-size: 8px;Margin-top:9px;"><?php echo $listCs->pesan_cs ?></p>
+									<p style="font-size: 8px;Margin-top:9px;"><?php echo $listCs->nama_lengkap ?></p>
+									<p style="font-size: 8px;Margin-top:9px;"><a href="mailto:<?php echo $listCs->email_cs ?>"><?php echo $listCs->email_cs ?></a></p>
+									<p style="font-size: 8px;Margin-top:9px;"><a href="tel:<?php echo $listCs->number_cs ?>"><?php echo $listCs->number_cs ?></a>
+									</p>
+								<?php }
+
+								?>
 							</td>
 						</tr>
 					</table>

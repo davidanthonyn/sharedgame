@@ -204,6 +204,7 @@ class M_User extends CI_model
         */
 
         $this->load->library('email');
+        $this->load->model('M_CustomerService');
         $this->email->initialize($config);
         $this->email->set_mailtype("html");
         $this->email->set_newline("\r\n");
@@ -221,6 +222,8 @@ class M_User extends CI_model
             //$this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . urlencode($token) . '">Aktivasi Akun</a>');
             $data['email'] = $email;
             $data['token'] = $token;
+            //Model M_CustomerService pada fungsi index(panggil data CS dari database)
+            $data['cs'] = $this->M_CustomerService->index()->result();
             $message = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
             $this->email->message($message);
 
