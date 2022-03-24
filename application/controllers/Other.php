@@ -7,6 +7,7 @@ class Other extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_Home');
+        $this->load->library('form_validation');
     }
 
     function index()
