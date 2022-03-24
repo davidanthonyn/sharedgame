@@ -30,4 +30,9 @@ class M_Home extends CI_Model
         $query = $this->db->query('SELECT * FROM pages WHERE id_page = 4');
         return $query;
     }
+
+    function insert_record($table, $data)
+    {
+        $this->db->insert($table, $data);
+    }
 }
