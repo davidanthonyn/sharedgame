@@ -160,6 +160,10 @@ class Admin extends CI_Controller
             redirect('');
         }
 
+        $this->form_validation->set_rules('address', 'Address', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+        $this->form_validation->set_rules('contactno', 'Contact Number', 'required|trim');
+
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Contact Info | SharedGame';
             $data['contact'] = $this->M_CustomerService->index()->result();
@@ -172,6 +176,17 @@ class Admin extends CI_Controller
             //Set waktu untuk created at dan updated at
             $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
             $now = date('Y-m-d H:i:s');
+
+            $this->db->set('nama_lengkap', $address);
+            $this->db->set('email_cs', $email);
+            $this->db->set('number_cs', $contactno);
+            $this->db->set('created_at', $now);
+            $this->db->where('id_cs', 1);
+            $this->db->update('customerservice');
+
+            //Alert akun berhasil diaktivasi
+            $this->session->set_flashdata('message', 'Edit Contact Info berhasil');
+            redirect('admin/manage_contact');
         }
     }
 

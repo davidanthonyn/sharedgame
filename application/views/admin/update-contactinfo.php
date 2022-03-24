@@ -131,10 +131,13 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<?php
 												?>
 												<div class="hr-dashed"></div>
+												<?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
+												<?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
+												<?= form_error('contactno', '<small class="text-danger pl-3">', '</small>'); ?>
 
 
 											<?php } ?>
-
+											<br><br>
 											<div class="form-group">
 												<div class="col-sm-8 col-sm-offset-4">
 
