@@ -98,9 +98,14 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
 								$('[name="detail"]').val(data.detail);
 
+								CKupdate();
+								CKEDITOR.instances['detail'].setData(detail);
+
 							});
 
 						}
+
+
 
 					});
 
@@ -108,7 +113,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
 			});
 
-			JSONInPrettyFormat;
+			//JSONInPrettyFormat;
 		</script>
 		<style>
 			.errorWrap {
@@ -194,7 +199,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 												<div class="form-group">
 													<label class="col-sm-4 control-label">Page Details </label>
 													<div class="col-sm-8">
-														<textarea name="detail" id=detail" class="form-control" rows="5" cols="50">
+														<textarea name="detail" id="detail" class="form-control" rows="5" cols="50">
 										<?php
 										/*
 										$pagetype = $_GET['type'];
@@ -212,11 +217,20 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 										?>
 
 										</textarea>
+
 														<?= form_error('detail', '<small class="text-danger pl-3">', '</small>'); ?>
 														<script>
 															// Replace the <textarea id="editor1"> with a CKEditor 4
 															// instance, using default configuration.
 															CKEDITOR.replace('detail');
+															//var editor = CKEDITOR.replace('detail');
+															//var detail = CKEDITOR.instances.editor.getData();
+
+															function CKUpdate() {
+																for (instance in CKEDITOR.instances) {
+																	CKEDITOR.instances['detail'].updateElement();
+																}
+															}
 														</script>
 													</div>
 												</div>
@@ -247,7 +261,13 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 		</div>
 
 		<!-- Loading Scripts -->
-
+		<script>
+			function CKupdate() {
+				for (instance in CKEDITOR.instance) {
+					CKEDITOR.instances[''].updateElement();
+				}
+			}
+		</script>
 
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap-select.min.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap.min.js"></script>
