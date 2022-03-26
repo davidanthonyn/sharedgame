@@ -82,4 +82,65 @@ class Home extends CI_Controller
         redirect(base_url());
         //}
     }
+
+    public function kirimEmail()
+    {
+        require_once APPPATH . 'smtp\PHPMailerAutoload.php';
+
+        $html = 'Msg';
+        echo smtp_mailer('danthonynathanael@gmail.com', 'Test Email', $html);
+        function smtp_mailer($to, $subject, $msg)
+        {
+            $mail = new PHPMailer();
+            $mail->SMTPDebug  = 3;
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Host = "ns02.000webhost.com";
+            $mail->Port = 587;
+            $mail->IsHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Username = "noreply@sharedgame.tech";
+            $mail->Password = "qmSgTyH6";
+            $mail->SetFrom("SMTP_EMAIL_ID");
+            $mail->Subject = $subject;
+            $mail->Body = $msg;
+            $mail->AddAddress($to);
+            $mail->SMTPOptions = array('ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => false
+            ));
+            if (!$mail->Send()) {
+                echo $mail->ErrorInfo;
+            } else {
+                return 'Sent';
+            }
+        }
+    }
+
+    public function sendEmailHery()
+    {
+        $this->load->library('Phpmailer_lib');
+
+        $mail = $this->phpmailer_lib->load();
+        // SMTP configuration
+        $mail->Host       = "ns02.000webhost.com";      // setting GMail as our SMTP server
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = "tls";  // prefix for secure protocol to connect to the server
+        $mail->Port       = 587;                   // SMTP port to connect to GMail
+        $mail->Username   = "noreply@sharedgame.tech";  // alamat email kamu
+        $mail->Password   = "qmSgTyH6";            // password GMail
+        $mail->setFrom('noreply@sharedgame.tech', 'David'); //email alias
+        $mail->addAddress('kontolbinatang@protonmail.com');     // Add a recipient
+        $mail->Subject = 'Hallo';                    // Email subject
+        $mail->Body       = 'Selamat Registrasi Anda berhasil ';                    // Set email Body
+
+
+        if (!$mail->Send()) {
+            echo "Eror: " . $mail->ErrorInfo;
+        } else {
+            return 'Sent';
+        }
+    }
 }

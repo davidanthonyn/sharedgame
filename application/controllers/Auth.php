@@ -76,6 +76,12 @@ class Auth extends CI_Controller
                     );
                     */
 
+                    //Cookie
+                    if ($this->input->post('remember')) {
+                        set_cookie("email", $email, 2 * 60);
+                        set_cookie("password", $password, 2 * 60);
+                    }
+
                     //Jika user adalah customer
                     if ($user['id_role'] == '3') {
                         //Membuat session customer
@@ -389,6 +395,9 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_role');
 
         $this->session->sess_destroy();
+
+        delete_cookie('email');
+        delete_cookie('password');
 
         //Alert akun berhasil logout
         $this->session->set_flashdata('message', '<div class="alert 

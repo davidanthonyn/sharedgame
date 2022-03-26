@@ -26,6 +26,10 @@
                                         <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?></div>
                                     <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Enter Password" name="password">
                                         <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?></div>
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" class="custom-control-input" id="remember" name="remember" value="1">
+                                        <label class="custom-control-label" for="remember">Remember Me</label>
+                                    </div>
                                     <div class="mb-3">
                                     </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
                                     <hr>
@@ -44,3 +48,15 @@
         </div>
     </div>
 </div>
+
+<?php
+if ((get_cookie("email") && get_cookie("password"))) {
+    $email = get_cookie("email");
+    $password = get_cookie("password");
+
+    echo "<script>
+    document.getElementById('email').value='$email';
+    document.getElementById('password').value='$password';
+    </script>";
+}
+?>

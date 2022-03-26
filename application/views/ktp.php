@@ -131,75 +131,80 @@
                                                                           ?>
 
 
-              <?= form_open_multipart('user/edit'); ?>
+              <?= form_open_multipart('user/identity'); ?>
               <div class="form-group">
-                <label class="control-label">Reg Date -</label>
-                <?= $user['created_at'];
-                ?>
+                <label class="control-label">Status KTP -</label>
+                <?php if ($identity['foto_selfie_ktp'] != "") { ?>
+                  <?= $identity['status_ktp'];
+                  ?>
+                <?php } else { ?>
+                  Belum
+                <?php } ?>
               </div>
 
-              <div class="form-group">
-                <label class="control-label">Last Update at -</label>
-                <?= $user['updated_at'];
-                ?>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label">Nama Lengkap</label>
-                <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
-                                                                            ?>" id="fullname" type="text">
-                <?= form_error('fullname', '<small class="text-danger pl-3">', '</small>'); ?>
-              </div>
-              <div class="form-group">
-                <label class="control-label">Email</label>
-                <input class="form-control white_bg" value="<?= $user['email'];
-                                                            ?>" name="email" id="email" type="email" readonly>
-              </div>
-              <div class="form-group">
-                <label class="control-label">Nomor HP (08xxx)</label>
-                <input class="form-control white_bg" type="text" name="mobilenumber" id="mobilenumber" value="<?= $user['no_hp'];
-                                                                                                              ?>" onkeypress="return onlyNumberKey(event)">
-                <?= form_error('mobilenumber', '<small class="text-danger pl-3">', '</small>'); ?>
-              </div>
-              <div class="form-group">
-                <label class="control-label">Nomor HP Cadangan (08xxx) (berbeda dengan Nomor HP Utama)</label>
-                <input class="form-control white_bg" type="text" name="mobilenumbertwo" id="mobilenumbertwo" value="<?= $user['no_hp_dua'];
-                                                                                                                    ?>" onkeypress="return onlyNumberKey(event)">
-                <?= form_error('mobilenumbertwo', '<small class="text-danger pl-3">', '</small>'); ?>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
-                <br>
-                <input class="form-control white_bg" name="dob" value="<?= $user['tgl_lahir'];
-                                                                        ?>" id="dob">
-              </div>
-              <script type="text/javascript">
-                flatpickr("#dob", {
-                  minDate: "1980-01-01",
-                  maxDate: "2021-12-31"
-                });
-              </script>
+              <div class="form-group row">
+                <label class="control-label">KTP</label><br>
+                <div class="col-sm-1">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <?php if ($identity['foto_selfie_ktp'] != "") { ?>
+                        <img src="<?= base_url('assets/img/ktp/') . $identity['foto_ktp']; ?>" class="card-img" width="200" height="200">
+                    </div>
+                  <?php } ?>
+                  </div class="col-sm-1">
+                  <div class="custom-file">
+                    <br>
+                    <input type="file" class="custom-file-input" id="ktp" name="ktp">
+                    <label class="custom-file-label" for="ktp"></label>
 
 
-              <br>
-              <div class="form-group">
-                <label class="control-label">Alamat Lengkap</label>
-                <textarea class="form-control white_bg" name="address" id="address" rows="4"><?= $user['alamat_lengkap'];
-                                                                                              ?></textarea>
-                <?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
-              </div>
-              <hr>
-              <br><br>
 
-              <div class="form-group">
-                <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                  </div>
+                  <br><br>
+                  <!--<p>Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</p>-->
+
+                  <hr>
+                  <div class="form-group row">
+                    <label class="control-label">Selfie KTP</label>
+                    <div class="col-sm-1">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <?php if ($identity['foto_selfie_ktp'] != "") { ?>
+                            <img src="<?= base_url('assets/img/selfiektp/') . $identity['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
+                        </div>
+                      <?php } ?>
+                      </div class="col-sm-1">
+                      <div class="custom-file">
+                        <br>
+
+                        <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
+                        <label class="custom-file-label" for="selfiektp"></label>
+                        <!--
+                    <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
+
+                    <label class="control-label">Sedang diverifikasi.</label>
+
+                    <label class="control-label">Dinyatakan valid.</label>
+
+                    <label class="control-label">Non-Customer</label>
+                      -->
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <br><br>
+
+                  <div class="form-group">
+                    <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                  </div>
+                  </form>
+                </div>
               </div>
-              </form>
             </div>
           </div>
-        </div>
-      </div>
   </section>
   <!--/Profile-setting-->
 
@@ -226,16 +231,6 @@
   var todayDate = String(date.getDate()).padStart(2, '0');
   var datePattern = year + '-' + month + '-' + todayDate;
   document.getElementById("dob").value = datePattern;*/
-  </script>
-  <script>
-    function onlyNumberKey(evt) {
-
-      // Only ASCII character in that range allowed
-      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
-        return false;
-      return true;
-    }
   </script>
 
 </body>
