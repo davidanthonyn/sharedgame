@@ -10,9 +10,10 @@ class Admin extends CI_Controller
         $this->load->model('M_Admin');
         $this->load->model('M_Brand');
         $this->load->model('M_CustomerService');
-        $this->load->model('M_Brand');
         //$this->load->model('M_Page');
         $this->load->model('M_Page');
+        $this->load->model('M_User');
+        $this->load->model('Modelproduk');
         $this->load->library('form_validation');
         $this->load->library('session');
 
@@ -94,10 +95,12 @@ class Admin extends CI_Controller
 
         if ($data['user']['id_role'] == '2') {
             //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur About / FAQ / Privacy / Terms hanya bisa diakses oleh admin!');
             redirect('admin');
         } else if ($data['user']['id_role'] == '3') {
             redirect('');
         }
+
 
         $tangkapId = $this->input->post('id_page');
         $tangkapDetail = $this->input->post('detail');
@@ -155,6 +158,7 @@ class Admin extends CI_Controller
 
         if ($data['user']['id_role'] == '2') {
             //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Contact hanya bisa diakses oleh admin!');
             redirect('admin');
         } else if ($data['user']['id_role'] == '3') {
             redirect('');
@@ -196,6 +200,14 @@ class Admin extends CI_Controller
             redirect('');
         } else {
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Tambah Brand hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
         }
 
         $this->form_validation->set_rules('brand', 'text', 'trim|required', [
@@ -260,11 +272,15 @@ class Admin extends CI_Controller
         }
 
         if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_Brand');
             $data['title'] = 'Kelola Brand | SharedGame';
+            $data['smalltitle'] = 'Daftar Brand';
             $data['brand'] = $this->M_Brand->getAllBrand()->result();
             $this->load->view('admin/manage-brands', $data);
-        } else {
+        } else if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola Brand hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
             redirect('');
         }
     }
@@ -278,7 +294,6 @@ class Admin extends CI_Controller
         }
 
         if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_Brand');
             $data['title'] = 'Edit Brand | SharedGame';
             $where = array('id_brand' => $id_brand);
             $data['brandEdit'] = $this->M_Brand->edit_record('brand', $where)->result();
@@ -350,7 +365,6 @@ class Admin extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
         if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_Brand');
             $where = array('id_brand' => $id_brand);
             $this->M_Brand->delete_record($where, 'brand');
             redirect('admin/kelolabrand');
@@ -367,14 +381,23 @@ class Admin extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
 
-        if ($data['user']['id_role'] == '1') {
-            $this->load->model('Modelproduk');
-            $data['title'] = 'Kelola Produk | SharedGame';
-            $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
-            $this->load->view('admin/manage-products.php', $data);
-        } else {
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola Produk hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
             redirect('');
         }
+
+        $data['title'] = 'Kelola Produk | SharedGame';
+        $data['smalltitle'] = 'Daftar Produk';
+        $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
+        $this->load->view('admin/manage-products.php', $data);
+
+
+
+        //Title Dashboard Admin saat halaman dibuka
+        $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
     }
 
     //contoh
@@ -401,6 +424,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Add Product | SharedGame';
+            $data['smalltitle'] = 'Basic Info';
             $data['brand'] = $this->M_Brand->getAllBrand()->result();
             $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
 
@@ -412,35 +436,63 @@ class Admin extends CI_Controller
             $satuhari = $this->input->post('priceperday');
             $tigahari = $this->input->post('price3days');
             $tujuhhari = $this->input->post('price7days');
+            $gametype = $this->input->post('gametype');
+            $serialproduk = $this->input->post('serialnumber');
+            $avail = $this->input->post('stock');
+            $color = $this->input->post('favcolor');
+            $img = $this->input->post('img');
 
-
-
-
-            $nama_produk = $this->input->post('nama_produk');
-            $brand = $this->input->post('brand');
-            $category = $this->input->post('category');
-            $platform = $this->input->post('platform');
-            $genre = $this->input->post('genre');
-            $tag = $this->input->post('tag');
-            $harga = $this->input->post('harga');
-            $deskripsi = $this->input->post('deskripsi');
-            $gambar = $this->input->post('gambar');
-            $status = $this->input->post('status');
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
 
             $data = array(
                 'nama_produk' => $nama_produk,
-                'id_brand' => $brand,
-                'id_category' => $category,
-                'id_platform' => $platform,
-                'id_genre' => $genre,
-                'id_tag' => $tag,
-                'harga' => $harga,
-                'deskripsi' => $deskripsi,
-                'gambar_produk' => $gambar,
-                'status_produk' => $status
+                'id_brand' => $id_brand,
+                'deskripsi_produk' => $deskripsi,
+                'kategori_produk' => $gametype,
+                'serial_produk' => $serialproduk,
+                'jumlah_tersedia' => $avail,
+                'warna_produk' => $color,
+                'gambar_produk' => $img
             );
 
-            $this->Modelproduk->insert_record($data, 'produk');
+            //Memasukkan data produk ke tabel
+            $this->db->insert('produk', $data);
+
+            //Mengambil insert id, untuk taruh data di tabel tarifsewa
+            $insertId = $this->db->insert_id();
+
+            $hargasatuhari = array(
+                'id_produk' => $insertId,
+                'tarif_harga' => $satuhari,
+                'lama_sewa_hari' => '1',
+                'updated_at' => $now
+            );
+
+            $hargatigahari = array(
+                'id_produk' => $insertId,
+                'tarif_harga' => $tigahari,
+                'lama_sewa_hari' => '3',
+                'updated_at' => $now
+            );
+
+            $hargatujuhhari = array(
+                'id_produk' => $insertId,
+                'tarif_harga' => $tujuhhari,
+                'lama_sewa_hari' => '7',
+                'updated_at' => $now
+            );
+
+            //Memasukkan data tarifsewa
+            $this->db->insert('tarifsewa', $hargasatuhari);
+            $this->db->insert('tarifsewa', $hargatigahari);
+            $this->db->insert('tarifsewa', $hargatujuhhari);
+
+            //$this->Modelproduk->insert_record($data, 'produk');
+
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('message', 'Tambah produk berhasil!');
             redirect('admin/kelolaproduk');
         }
     }
@@ -453,14 +505,18 @@ class Admin extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
 
-        if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_User');
-            $data['title'] = 'Kelola User | SharedGame';
-            $data['user'] = $this->M_User->getAllUser()->result();
-            $this->load->view('admin/reg-users.php', $data);
-        } else {
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
             redirect('');
         }
+
+        $data['title'] = 'Kelola User | SharedGame';
+        $data['smalltitle'] = 'Daftar User';
+        $data['user'] = $this->M_User->getAllUser()->result();
+        $this->load->view('admin/reg-users.php', $data);
     }
 
     function getAdminByAjax()
@@ -508,8 +564,8 @@ class Admin extends CI_Controller
         }
 
         if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_User');
-            $data['title'] = 'Kelola User | SharedGame';
+            $data['title'] = 'Kelola Customer Service | SharedGame';
+            $data['smalltitle'] = 'Daftar Kritik/Saran';
             $data['user'] = $this->M_User->getAllUser()->result();
             $this->load->view('admin/manage-contactusquery.php', $data);
         } else {

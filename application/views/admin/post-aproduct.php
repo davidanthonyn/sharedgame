@@ -221,11 +221,11 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Serial Produk<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="modelyear" class="form-control" required>
+													<input type="text" name="serialnumber" class="form-control" required>
 												</div>
 												<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="seatingcapacity" class="form-control" required>
+													<input type="text" name="stock" class="form-control" required>
 												</div>
 											</div>
 											<div class="hr-dashed"></div>
@@ -248,7 +248,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 											<div class="form-group">
 												<div class="col-sm-4">
-													Image 1 <span style="color:red">*</span><input type="file" name="img1" required>
+													Product Image<span style="color:red">*</span><input type="file" name="img" required>
 												</div>
 												<!--
 												<div class="col-sm-4">

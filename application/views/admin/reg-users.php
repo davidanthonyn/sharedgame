@@ -27,6 +27,8 @@
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+
+	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
 </head>
 <style>
 	table {
@@ -78,10 +80,7 @@
 											<th>Nomor HP</th>
 											<th>Nomor HP Cadangan</th>
 											<th>Tanggal Lahir</th>
-											<th>Foto KTP</th>
-											<th>Foto Selfie KTP</th>
 											<th>ID Role</th>
-											<th>Status KTP</th>
 											<th>Status Akun</th>
 											<th>Dibuat Pada</th>
 											<th>Terakhir Update</th>
@@ -97,10 +96,7 @@
 											<th>Nomor HP</th>
 											<th>Nomor HP Cadangan</th>
 											<th>Tanggal Lahir</th>
-											<th>Foto KTP</th>
-											<th>Foto Selfie KTP</th>
 											<th>ID Role</th>
-											<th>Status KTP</th>
 											<th>Status Akun</th>
 											<th>Dibuat Pada</th>
 											<th>Terakhir Update</th>
@@ -125,14 +121,11 @@
 												<td><?php echo $listUser->no_hp ?></td>
 												<td><?php echo $listUser->no_hp_dua ?></td>
 												<td><?php echo $listUser->tgl_lahir ?></td>
-												<td><?php echo $listUser->foto_ktp ?></td>
-												<td><?php echo $listUser->foto_selfie_ktp ?></td>
-												<td><?php echo $listUser->id_role ?></td>
-												<td><?php echo $listUser->status_ktp ?></td>
+												<td><?php echo $listUser->role ?></td>
 												<td><?php echo $listUser->is_active ?></td>
 												<td><?php echo $listUser->created_at ?></td>
 												<td><?php echo $listUser->updated_at ?></td>
-
+												<td>Edit</td>
 											</tr>
 										<?php //$id_user = $id_user + 1;
 											//}

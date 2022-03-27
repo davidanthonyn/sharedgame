@@ -62,7 +62,7 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Manage Brands</h2>
+							<h2 class="page-title"><?= $title ?></h2>
 
 							<?php
 							if ($this->session->flashdata('message')) {
@@ -80,7 +80,7 @@
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
-								<div class="panel-heading">Listed Brands</div>
+								<div class="panel-heading"><?= $smalltitle ?></div>
 								<div class="panel-body">
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>

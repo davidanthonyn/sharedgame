@@ -35,6 +35,26 @@ error_reporting(0);
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
 
 	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
+
+	<style>
+		.errorWrap {
+			padding: 10px;
+			margin: 0 0 20px 0;
+			background: #fff;
+			border-left: 4px solid #dd3d36;
+			-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+		}
+
+		.succWrap {
+			padding: 10px;
+			margin: 0 0 20px 0;
+			background: #fff;
+			border-left: 4px solid #5cb85c;
+			-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+		}
+	</style>
 </head>
 
 <body>
@@ -68,7 +88,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Customer</div>
 												</div>
 											</div>
-											<a href="reg-users.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+											<a href="reg-users.php" class="block-anchor panel-footer">Kelola <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -86,7 +106,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Listed Products</div>
 												</div>
 											</div>
-											<a href="manage-vehicles.php" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-vehicles.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -105,7 +125,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Total Bookings</div>
 												</div>
 											</div>
-											<a href="manage-bookings.php" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-bookings.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -123,7 +143,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Listed Brands</div>
 												</div>
 											</div>
-											<a href="<?= base_url('admin/kelolabrand'); ?>" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="<?= base_url('admin/kelolabrand'); ?>" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -156,7 +176,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Subscribers</div>
 												</div>
 											</div>
-											<a href="manage-subscribers.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-subscribers.php" class="block-anchor panel-footer">Kelola <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -174,7 +194,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Keluhan Customer Service</div>
 												</div>
 											</div>
-											<a href="manage-conactusquery.php" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-conactusquery.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<!---
@@ -194,27 +214,37 @@ error_reporting(0);
 														<div class="stat-panel-title text-uppercase">Testimonials</div>
 													</div>
 												</div>
-												<a href="testimonials.php" class="block-anchor panel-footer text-center">Full Detail &nbsp; <i class="fa fa-arrow-right"></i></a>
+												<a href="testimonials.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 											</div>
 										</div>
 										--->
+
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-
-
-
-
-
-
-
+				<!--Pesan berhasil/gagal-->
+				<?php
+				if ($this->session->flashdata('messagesuccess')) {
+				?>
+					<div class="succWrap" role="alert"><?= $this->session->flashdata('messagesuccess'); ?></div>
+				<?php
+					$this->session->unset_userdata('messagesuccess');
+				} else if ($this->session->flashdata('messagefailed')) {
+				?>
+					<div class="errorWrap" role="alert"><?= $this->session->flashdata('messagefailed'); ?></div>
+				<?php
+					$this->session->unset_userdata('messagefailed');
+				}
+				?>
 
 			</div>
 		</div>
 	</div>
+
 
 	<!-- Loading Scripts -->
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>

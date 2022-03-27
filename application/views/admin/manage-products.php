@@ -60,11 +60,11 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Manage Brands</h2>
+							<h2 class="page-title"><?= $title ?></h2>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
-								<div class="panel-heading">Listed Brands</div>
+								<div class="panel-heading"><?= $smalltitle ?></div>
 								<div class="panel-body">
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
@@ -104,7 +104,7 @@
 											foreach ($product as $listProduct) { ?>
 												<tr>
 													<td><?php echo $listProduct->id_produk ?></td>
-													<td><?php echo $listProduct->id_brand ?></td>
+													<td><?php echo $listProduct->nama_brand ?></td>
 													<td><?php echo $listProduct->nama_produk ?></td>
 													<td><?php echo $listProduct->kategori_produk ?></td>
 													<td><?php echo $listProduct->warna_produk ?></td>

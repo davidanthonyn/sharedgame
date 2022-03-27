@@ -4,11 +4,8 @@ class M_User extends CI_model
 {
     public function getAllUser()
     {
-        $query = $this->db->query('SELECT * FROM user');
+        $query = $this->db->query('SELECT * FROM user JOIN user_role ON user_role.id_role = user.id_role');
         return $query;
-
-
-        return $this->db->get('user')->result_array();
     }
 
     public function tambahDataCustomer()

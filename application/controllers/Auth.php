@@ -19,6 +19,10 @@ class Auth extends CI_Controller
             redirect('');
         }
 
+        if (get_cookie('email') && get_cookie('password')) {
+            $this->_login();
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Email harus diisi!',
             'valid_email' => 'Mohon memasukkan email yang valid!'
@@ -78,8 +82,8 @@ class Auth extends CI_Controller
 
                     //Cookie
                     if ($this->input->post('remember')) {
-                        set_cookie("email", $email, 2 * 60);
-                        set_cookie("password", $password, 2 * 60);
+                        set_cookie("email", htmlspecialchars($email), 2 * 60);
+                        set_cookie("password", password_hash($password, PASSWORD_DEFAULT), 2 * 60);
                     }
 
                     //Jika user adalah customer
