@@ -9,6 +9,7 @@ class Contact extends CI_Controller
         parent::__construct();
         $this->load->model(array('M_CustomerService'));
         $this->load->library('form_validation');
+        $this->load->model('M_Page');
     }
 
     function index()
@@ -30,7 +31,8 @@ class Contact extends CI_Controller
             $data['title'] = 'Contact Us | SharedGame';
             $this->load->view('includes/header.php', $data);
             $this->load->view('contact-us.php', $data);
-            $this->load->view('includes/footer.php', $data);
+            //$this->load->view('includes/footer.php', $data);
+            $this->footer();
         } else {
             $name = htmlspecialchars($this->input->post('fullname', true));
             $email = htmlspecialchars($this->input->post('emailaddress', true));
@@ -95,5 +97,11 @@ class Contact extends CI_Controller
         $this->email->from('sharedgametech@gmail.com', 'SharedGame | Do Not Reply');
 
         $this->email->to($email);
+    }
+
+    public function footer()
+    {
+        $data['pages'] = $this->M_Page->getAllRowPages()->result();
+        $this->load->view('includes/footer.php', $data);
     }
 }

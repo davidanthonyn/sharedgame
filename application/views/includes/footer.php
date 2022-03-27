@@ -6,12 +6,16 @@
         <div class="col-md-6">
           <h6>Others</h6>
           <ul>
-
-
+            <?php
+            foreach ($pages as $page) { ?>
+              <li><a href="<?php echo base_url('other/' . $page->type) ?>"><?php echo $page->page_name ?></a></li>
+            <?php } ?>
+            <!--
             <li><a href="<?php echo base_url() . 'other/aboutus' ?>">About Us</a></li>
             <li><a href="<?php echo base_url() . "other/faq"; ?>">FAQs</a></li>
             <li><a href="<?php echo base_url() . 'other/privacypolicy' ?>">Privacy Policy</a></li>
             <li><a href="<?php echo base_url() . 'other/termsofservices' ?>">Terms of Service</a></li>
+            -->
           </ul>
         </div>
 

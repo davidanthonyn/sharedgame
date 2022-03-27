@@ -8,6 +8,7 @@ class Product extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model('M_Page');
         /*if (empty($this->session->userdata('admin'))) {
             redirect('auth');
         }*/
@@ -22,7 +23,8 @@ class Product extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->view('includes/header.php', $data);
         $this->load->view('game-listing.php', $data);
-        $this->load->view('includes/footer.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
     }
 
     function detail($id)
@@ -37,6 +39,13 @@ class Product extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->view('includes/header.php', $data);
         $this->load->view('detailproduk.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
+    }
+
+    public function footer()
+    {
+        $data['pages'] = $this->M_Page->getAllRowPages()->result();
         $this->load->view('includes/footer.php', $data);
     }
 }

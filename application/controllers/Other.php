@@ -8,6 +8,7 @@ class Other extends CI_Controller
         parent::__construct();
         $this->load->model('M_Home');
         $this->load->library('form_validation');
+        $this->load->model('M_Page');
     }
 
     function index()
@@ -21,7 +22,8 @@ class Other extends CI_Controller
         $data['page'] = $this->M_Home->getAboutUs()->result();
         $this->load->view('includes/header.php', $data);
         $this->load->view('page.php', $data);
-        $this->load->view('includes/footer.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
     }
 
     function faq()
@@ -30,7 +32,8 @@ class Other extends CI_Controller
         $data['page'] = $this->M_Home->getFaq()->result();
         $this->load->view('includes/header.php', $data);
         $this->load->view('page.php', $data);
-        $this->load->view('includes/footer.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
     }
 
     function privacypolicy()
@@ -39,7 +42,8 @@ class Other extends CI_Controller
         $data['page'] = $this->M_Home->getPrivacy()->result();
         $this->load->view('includes/header.php', $data);
         $this->load->view('page.php', $data);
-        $this->load->view('includes/footer.php', $data);
+        // $this->load->view('includes/footer.php', $data);
+        $this->footer();
     }
 
     function termsofservices()
@@ -48,8 +52,17 @@ class Other extends CI_Controller
         $data['page'] = $this->M_Home->getTerms()->result();
         $this->load->view('includes/header.php', $data);
         $this->load->view('page.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
+    }
+
+    public function footer()
+    {
+        $data['pages'] = $this->M_Page->getAllRowPages()->result();
         $this->load->view('includes/footer.php', $data);
     }
+
+
 
 
     /*

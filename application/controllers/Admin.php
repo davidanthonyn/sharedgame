@@ -109,6 +109,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Kelola Halaman | SharedGame';
+            $data['smalltitle'] = 'Ubah Halaman';
             $data['page'] = $this->M_Page->tampilkan_halaman()->result();
             $this->load->view('admin/manage-pages.php', $data);
         } else if ($tangkapId == '-- Pilih Halaman --') {
@@ -170,6 +171,8 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Contact Info | SharedGame';
+            $data['smalltitle'] = 'Ubah Kontak';
+
             $data['contact'] = $this->M_CustomerService->index()->result();
             $this->load->view('admin/update-contactinfo.php', $data);
         } else {

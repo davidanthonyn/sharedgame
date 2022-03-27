@@ -9,6 +9,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('M_User');
         $this->load->library('form_validation');
+        $this->load->model('M_Page');
     }
 
     public function index()
@@ -76,7 +77,8 @@ class User extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('includes/header.php', $data);
             $this->load->view('profile.php', $data);
-            $this->load->view('includes/footer.php', $data);
+            //$this->load->view('includes/footer.php', $data);
+            $this->footer();
         } else {
             $name = $this->input->post('fullname');
             $email = $this->input->post('email', true);
@@ -139,7 +141,8 @@ class User extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('includes/header.php', $data);
             $this->load->view('ktp.php', $data);
-            $this->load->view('includes/footer.php', $data);
+            //$this->load->view('includes/footer.php', $data);
+            $this->footer();
         } else {
             //Cek jika ada ktp dan/atau selfie ktp yang diupload
             $upload_ktp = $_FILES['image']['ktp'];
@@ -209,7 +212,8 @@ class User extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('includes/header.php', $data);
             $this->load->view('update-password.php', $data);
-            $this->load->view('includes/footer.php', $data);
+            //$this->load->view('includes/footer.php', $data);
+            $this->footer();
         } else {
             $current_password = $this->input->post('currentpassword');
             $new_password = $this->input->post('newpassword');
@@ -237,5 +241,11 @@ class User extends CI_Controller
                 }
             }
         }
+    }
+
+    public function footer()
+    {
+        $data['pages'] = $this->M_Page->getAllRowPages()->result();
+        $this->load->view('includes/footer.php', $data);
     }
 }
