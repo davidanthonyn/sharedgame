@@ -94,14 +94,18 @@ class Home extends CI_Controller
 
     public function kirimEmail()
     {
-        require_once APPPATH . 'smtp\PHPMailerAutoload.php';
+        require APPPATH . 'smtp\PHPMailerAutoload.php';
+
+        //require APPPATH . 'phpmailer\src\Exception.php';
+        //require APPPATH . 'phpmailer\src\PHPMailer.php';
+        //require APPPATH . 'phpmailer\src\SMTP.php';
 
         $html = 'Msg';
-        echo smtp_mailer('danthonynathanael@gmail.com', 'Test Email', $html);
+
         function smtp_mailer($to, $subject, $msg)
         {
             $mail = new PHPMailer();
-            $mail->SMTPDebug  = 3;
+            $mail->SMTPDebug  = 2;
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'tls';
@@ -111,7 +115,7 @@ class Home extends CI_Controller
             $mail->CharSet = 'UTF-8';
             $mail->Username = "noreply@sharedgame.tech";
             $mail->Password = "qmSgTyH6";
-            $mail->SetFrom("SMTP_EMAIL_ID");
+            $mail->SetFrom("noreply@sharedgame.tech");
             $mail->Subject = $subject;
             $mail->Body = $msg;
             $mail->AddAddress($to);
@@ -126,6 +130,7 @@ class Home extends CI_Controller
                 return 'Sent';
             }
         }
+        echo smtp_mailer('danthonynathanael@gmail.com', 'Test Email', $html);
     }
 
     public function sendEmailHery()
@@ -147,7 +152,7 @@ class Home extends CI_Controller
 
 
         if (!$mail->Send()) {
-            echo "Eror: " . $mail->ErrorInfo;
+            echo "Error: " . $mail->ErrorInfo;
         } else {
             return 'Sent';
         }
