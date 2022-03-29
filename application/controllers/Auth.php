@@ -408,6 +408,7 @@ class Auth extends CI_Controller
         alert-success" role="alert">Berhasil logout!</div>');
 
         //Redirect ke Login
-        redirect(base_url());
+        //redirect(base_url());
+        redirect($_SERVER['REQUEST_URI'], 'refresh');
     }
 }

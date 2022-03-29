@@ -131,7 +131,7 @@
                                                                           ?>
 
 
-              <?= form_open_multipart('user/identity'); ?>
+              <?= form_open_multipart('user/upload_identity'); ?>
               <div class="form-group">
                 <label class="control-label">Status KTP -</label>
                 <?php if ($identity['foto_selfie_ktp'] != "") { ?>
