@@ -558,7 +558,7 @@ class Admin extends CI_Controller
         echo json_encode($data);
     }
 
-    function manageCS()
+    function managecs()
     {
         if (!$this->session->userdata('email')) {
             redirect('');
@@ -569,7 +569,7 @@ class Admin extends CI_Controller
         if ($data['user']['id_role'] == '1') {
             $data['title'] = 'Kelola Customer Service | SharedGame';
             $data['smalltitle'] = 'Daftar Kritik/Saran';
-            $data['user'] = $this->M_User->getAllUser()->result();
+            $data['cs'] = $this->M_CustomerService->tampilkanDataCS()->result();
             $this->load->view('admin/manage-contactusquery.php', $data);
         } else {
             redirect('');

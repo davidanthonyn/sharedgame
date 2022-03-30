@@ -44,6 +44,6 @@ class M_CustomerService extends CI_Model
     function tampilkanDataCS()
     {
         $query = $this->db->query('SELECT * FROM customerservice WHERE id_cs != 1');
-        return $query->result_array();
+        return $query;
     }
 }

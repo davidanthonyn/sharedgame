@@ -70,7 +70,8 @@
 			<li class="ts-label">Humans</li>
 			<li><a href="<?= base_url('admin/kelolauser');
 							?>"><i class="fa fa-users"></i>Users</a></li>
-			<li><a href="manage-contactusquery.php"><i class="fa fa-desktop"></i>Customer Service</a></li>
+			<li><a href="<?= base_url('admin/managecs');
+							?>"><i class="fa fa-users"></i>Customer Service</a></li>
 
 
 			<li class="ts-label">Pages</li>

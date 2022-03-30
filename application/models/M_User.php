@@ -325,4 +325,12 @@ class M_User extends CI_model
         }
         return $output;
     }
-}
+    public function getAllCS()
+    {
+        $query = $this->db->query('SELECT * FROM customerservice');
+        return $query;
+
+
+        return $this->db->get('customerservice')->result_array();
+    }
+} 

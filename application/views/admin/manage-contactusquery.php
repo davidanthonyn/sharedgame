@@ -1,26 +1,3 @@
-<?php
-//session_start();
-error_reporting(0);
-//include('includes/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	if (isset($_REQUEST['eid'])) {
-		$eid = intval($_GET['eid']);
-		$status = 1;
-		$sql = "UPDATE tblcontactusquery SET status=:status WHERE  id=:eid";
-		$query = $dbh->prepare($sql);
-		$query->bindParam(':status', $status, PDO::PARAM_STR);
-		$query->bindParam(':eid', $eid, PDO::PARAM_STR);
-		$query->execute();
-
-		$msg = "Testimonial Successfully Inacrive";
-	}
-
-
-
-?>
-
 	<!doctype html>
 	<html lang="en" class="no-js">
 
@@ -35,21 +12,21 @@ if (strlen($_SESSION['alogin']) == 0) {
 		<title>Game Rental Portal |Admin Manage Queries </title>
 
 		<!-- Font awesome -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/font-awesome.min.css">
 		<!-- Sandstone Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap.min.css">
 		<!-- Bootstrap Datatables -->
-		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/dataTables.bootstrap.min.css">
 		<!-- Bootstrap social button library -->
-		<link rel="stylesheet" href="css/bootstrap-social.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap-social.css">
 		<!-- Bootstrap select -->
-		<link rel="stylesheet" href="css/bootstrap-select.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/bootstrap-select.css">
 		<!-- Bootstrap file input -->
-		<link rel="stylesheet" href="css/fileinput.min.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/fileinput.min.css">
 		<!-- Awesome Bootstrap checkbox -->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -89,56 +66,40 @@ if (strlen($_SESSION['alogin']) == 0) {
 							<div class="panel panel-default">
 								<div class="panel-heading">User queries</div>
 								<div class="panel-body">
-									<?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+									
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Name</th>
-												<th>Email</th>
-												<th>Contact No</th>
-												<th>Message</th>
-												<th>Posting date</th>
+												<th>Nama Lengkap</th>
+												<th>Create at</th>
+												<th>Status</th>
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tfoot>
 											<tr>
 												<th>#</th>
-												<th>Name</th>
-												<th>Email</th>
-												<th>Contact No</th>
-												<th>Message</th>
-												<th>Posting date</th>
+												<th>Nama Lengkap</th>
+												<th>Create at</th>
+												<th>Status</th>
 												<th>Action</th>
 											</tr>
 											</tr>
 										</tfoot>
 										<tbody>
 
-											<?php $sql = "SELECT * from  tblcontactusquery ";
-											$query = $dbh->prepare($sql);
-											$query->execute();
-											$results = $query->fetchAll(PDO::FETCH_OBJ);
-											$cnt = 1;
-											if ($query->rowCount() > 0) {
-												foreach ($results as $result) {				?>
+										<?php 
+											if (!empty($cs)) {	
+												foreach ($cs as $listcs) {				?>
 													<tr>
-														<td><?php echo htmlentities($cnt); ?></td>
-														<td><?php echo htmlentities($result->name); ?></td>
-														<td><?php echo htmlentities($result->EmailId); ?></td>
-														<td><?php echo htmlentities($result->ContactNumber); ?></td>
-														<td><?php echo htmlentities($result->Message); ?></td>
-														<td><?php echo htmlentities($result->PostingDate); ?></td>
-														<?php if ($result->status == 1) {
-														?><td>Read</td>
-														<?php } else { ?>
-
-															<td><a href="manage-conactusquery.php?eid=<?php echo htmlentities($result->id); ?>" onclick="return confirm('Do you really want to read')">Pending</a>
-															</td>
-														<?php } ?>
+													<td><?php echo $listcs->id_cs; ?></td>
+														<td><?php echo $listcs->nama_lengkap; ?></td>
+														<td><?php echo $listcs->created_at; ?></td>
+														<td><?php echo $listcs->status; ?></td>
+														
 													</tr>
-											<?php $cnt = $cnt + 1;
+											<?php //$cnt = $cnt + 1;
 												}
 											} ?>
 
@@ -160,16 +121,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 		</div>
 
 		<!-- Loading Scripts -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap-select.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap.min.js"></script>
-		<script src="js/Chart.min.js"></script>
-		<script src="js/fileinput.js"></script>
-		<script src="js/chartData.js"></script>
-		<script src="js/main.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap-select.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.dataTables.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/dataTables.bootstrap.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/Chart.min.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
+		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
 	</body>
 
 	</html>
-<?php } ?>
