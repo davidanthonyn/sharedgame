@@ -111,24 +111,25 @@
 										$query->execute();
 										$results = $query->fetchAll(PDO::FETCH_OBJ);
 										$cnt = 1; */
-										//if ($user->num_rows() > 0) {
-										foreach ($user as $listUser) {				?>
-											<tr>
-												<td><?php echo $listUser->id_user ?></td>
-												<td><?php echo $listUser->nama_lengkap ?></td>
-												<td><?php echo $listUser->email ?></td>
-												<td><?php echo $listUser->alamat_lengkap ?></td>
-												<td><?php echo $listUser->no_hp ?></td>
-												<td><?php echo $listUser->no_hp_dua ?></td>
-												<td><?php echo $listUser->tgl_lahir ?></td>
-												<td><?php echo $listUser->role ?></td>
-												<td><?php echo $listUser->is_active ?></td>
-												<td><?php echo $listUser->created_at ?></td>
-												<td><?php echo $listUser->updated_at ?></td>
-												<td>Edit</td>
-											</tr>
+										if (!empty($user)) {
+											foreach ($user as $listUser) {				?>
+												<tr>
+													<td><?php echo $listUser->id_user ?></td>
+													<td><?php echo $listUser->nama_lengkap ?></td>
+													<td><?php echo $listUser->email ?></td>
+													<td><?php echo $listUser->alamat_lengkap ?></td>
+													<td><?php echo $listUser->no_hp ?></td>
+													<td><?php echo $listUser->no_hp_dua ?></td>
+													<td><?php echo $listUser->tgl_lahir ?></td>
+													<td><?php echo $listUser->role ?></td>
+													<td><?php echo $listUser->is_active ?></td>
+													<td><?php echo $listUser->created_at ?></td>
+													<td><?php echo $listUser->updated_at ?></td>
+													<td>Edit</td>
+												</tr>
 										<?php //$id_user = $id_user + 1;
-											//}
+												//}
+											}
 										}
 										?>
 

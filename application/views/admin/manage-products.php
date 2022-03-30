@@ -101,23 +101,25 @@
 										<tbody>
 
 											<?php
-											foreach ($product as $listProduct) { ?>
-												<tr>
-													<td><?php echo $listProduct->id_produk ?></td>
-													<td><?php echo $listProduct->nama_brand ?></td>
-													<td><?php echo $listProduct->nama_produk ?></td>
-													<td><?php echo $listProduct->kategori_produk ?></td>
-													<td><?php echo $listProduct->warna_produk ?></td>
-													<td><img src="<?= base_url('assets/img/product/') . $listProduct->gambar_produk ?>" class="card-img" width="100" height="100"></td>
-													<td><?php echo $listProduct->deskripsi_produk ?></td>
-													<td><?php echo $listProduct->serial_produk ?></td>
-													<td><?php echo $listProduct->jumlah_tersedia ?></td>
-													<td>
-														<a href="<?php echo base_url() . 'Brand/edit_data/' . $listProduct->id_produk; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'Brand/delete_data/' . $listProduct->id_produk; ?>">Hapus</a>
-													</td>
-												</tr>
+											if (!empty($product)) {
+												foreach ($product as $listProduct) { ?>
+													<tr>
+														<td><?php echo $listProduct->id_produk ?></td>
+														<td><?php echo $listProduct->nama_brand ?></td>
+														<td><?php echo $listProduct->nama_produk ?></td>
+														<td><?php echo $listProduct->kategori_produk ?></td>
+														<td><?php echo $listProduct->warna_produk ?></td>
+														<td><img src="<?= base_url('assets/img/product/') . $listProduct->gambar_produk ?>" class="card-img" width="100" height="100"></td>
+														<td><?php echo $listProduct->deskripsi_produk ?></td>
+														<td><?php echo $listProduct->serial_produk ?></td>
+														<td><?php echo $listProduct->jumlah_tersedia ?></td>
+														<td>
+															<a href="<?php echo base_url() . 'Brand/edit_data/' . $listProduct->id_produk; ?>">Edit</a> ||
+															<a href="<?php echo base_url() . 'Brand/delete_data/' . $listProduct->id_produk; ?>">Hapus</a>
+														</td>
+													</tr>
 											<?php
+												}
 											}
 											?>
 

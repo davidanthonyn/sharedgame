@@ -109,20 +109,22 @@
 										<tbody>
 
 											<?php
-											foreach ($brand as $listBrand) { ?>
-												<tr>
-													<td><?php echo $listBrand->id_brand ?></td>
-													<td><?php echo $listBrand->nama_brand ?></td>
+											if (!empty($brand)) {
+												foreach ($brand as $listBrand) { ?>
+													<tr>
+														<td><?php echo $listBrand->id_brand ?></td>
+														<td><?php echo $listBrand->nama_brand ?></td>
 
-													<td><img src="<?= base_url('assets/img/brandlogo/') . $listBrand->gambar_brand ?>" class="card-img" width="100" height="100"></td>
-													<td><?php echo $listBrand->status_brand ?></td>
-													<td><?php echo $listBrand->datetime_brand_added ?></td>
-													<td>
-														<a href="<?php echo base_url() . 'admin/edit_data_brand/' . $listBrand->id_brand; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'admin/delete_data_brand/' . $listBrand->id_brand; ?>">Hapus</a>
-													</td>
-												</tr>
+														<td><img src="<?= base_url('assets/img/brandlogo/') . $listBrand->gambar_brand ?>" class="card-img" width="100" height="100"></td>
+														<td><?php echo $listBrand->status_brand ?></td>
+														<td><?php echo $listBrand->datetime_brand_added ?></td>
+														<td>
+															<a href="<?php echo base_url() . 'admin/edit_data_brand/' . $listBrand->id_brand; ?>">Edit</a> ||
+															<a href="<?php echo base_url() . 'admin/delete_data_brand/' . $listBrand->id_brand; ?>">Hapus</a>
+														</td>
+													</tr>
 											<?php
+												}
 											}
 											?>
 

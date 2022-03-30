@@ -239,10 +239,12 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 													<div class="col-sm-8 col-sm-offset-4">
 
 														<button type="submit" name="submit" value="Update" id="submit" class="btn-primary btn">Update</button>
+
 													</div>
 												</div>
 
 											</form>
+											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/add_page"; ?>">Tambah</a></button>
 
 										</div>
 									</div>
