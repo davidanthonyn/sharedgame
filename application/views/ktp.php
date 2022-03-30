@@ -147,7 +147,7 @@
                 <div class="col-sm-1">
                   <div class="row">
                     <div class="col-sm-3">
-                      <?php if ($identity['foto_selfie_ktp'] != "") { ?>
+                      <?php if ($identity['foto_selfie_ktp'] != NULL) { ?>
                         <img src="<?= base_url('assets/img/ktp/') . $identity['foto_ktp']; ?>" class="card-img" width="200" height="200">
                     </div>
                   <?php } ?>
@@ -169,7 +169,7 @@
                     <div class="col-sm-1">
                       <div class="row">
                         <div class="col-sm-3">
-                          <?php if ($identity['foto_selfie_ktp'] != "") { ?>
+                          <?php if ($identity['foto_selfie_ktp'] != NULL) { ?>
                             <img src="<?= base_url('assets/img/selfiektp/') . $identity['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
                         </div>
                       <?php } ?>

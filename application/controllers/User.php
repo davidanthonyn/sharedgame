@@ -114,6 +114,21 @@ class User extends CI_Controller
             redirect('auth');
         }
 
+        $data['identity'] = $this->db->get_where('usercard', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        if ($data['identity'] == null) {
+            $data = [
+                'id_user' => $this->session->userdata('id_user'),
+                'foto_ktp' => NULL,
+                'foto_selfie_ktp' => NULL,
+                'status_ktp' => "belum",
+                'note_user' => ""
+            ];
+
+            //Kirim ke tabel user
+            $this->db->insert('usercard', $data);
+        }
+
         $data['title'] = 'Identitas | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['identity'] = $this->db->get_where('usercard', ['id_user' => $this->session->userdata('id_user')])->row_array();
@@ -138,21 +153,6 @@ class User extends CI_Controller
         //Set waktu untuk created at dan updated at
         $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
-
-        $data['identity'] = $this->db->get_where('usercard', ['id_user' => $this->session->userdata('id_user')])->row_array();
-
-        if ($data['identity'] == null) {
-            $data = [
-                'id_user' => $this->session->userdata('id_user'),
-                'foto_ktp' => "",
-                'foto_selfie_ktp' => "",
-                'status_ktp' => "belum",
-                'note_user' => ""
-            ];
-
-            //Kirim ke tabel user
-            $this->db->insert('usercard', $data);
-        }
 
 
         //Cek jika ada ktp dan/atau selfie ktp yang diupload
