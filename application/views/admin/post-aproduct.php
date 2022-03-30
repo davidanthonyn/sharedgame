@@ -104,6 +104,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
 	<style>
 		.errorWrap {
 			padding: 10px;
@@ -157,69 +158,82 @@ if (strlen($_SESSION['alogin']) == 0) {
 																									?>
 
 									<div class="panel-body">
-										<form method="post" class="form-horizontal" enctype="multipart/form-data">
+										<form method="post" action="<?php echo base_url() . 'Admin/tambahproduk'; ?>" class="form-horizontal" enctype="multipart/form-data">
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Vehicle Title<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="vehicletitle" class="form-control" required>
+													<input type="text" name="productname" class="form-control">
 												</div>
 												<label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<select class="selectpicker" name="brandname" required>
-														<option value=""> Select </option>
-														<?php /*$ret = "select id,BrandName from tblbrands";
-														$query = $dbh->prepare($ret);
-														$query->bindParam(':id',$id, PDO::PARAM_STR);
-														$query->execute();
-														$results = $query->fetchAll(PDO::FETCH_OBJ);
-														if ($query->rowCount() > 0) {
-															foreach ($results as $result) { */
-														?>
-														<option value="<?php //echo htmlentities($result->id); 
-																		?>"><?php //echo htmlentities($result->BrandName); 
-																			?></option>
-														<?php //}
-														//} 
-														?>
 
+													<select class="selectpicker" name="id_brand" required>
+
+														<?php foreach ($brand as $listBrand) { ?>
+
+															<option value="<?php echo $listBrand->id_brand ?>">
+
+																<?php echo $listBrand->nama_brand ?>
+
+															</option>
+
+														<?php } ?>
 													</select>
 												</div>
 											</div>
 
 											<div class="hr-dashed"></div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Vehical Overview<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Deskripsi Produk<span style="color:red">*</span></label>
 												<div class="col-sm-10">
-													<textarea class="form-control" name="vehicalorcview" rows="3" required></textarea>
+													<textarea class="form-control" name="deskripsi" rows="3" required></textarea>
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Price Per Day(in USD)<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
 												<div class="col-sm-4">
 													<input type="text" name="priceperday" class="form-control" required>
 												</div>
-												<label class="col-sm-2 control-label">Select Fuel Type<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<select class="selectpicker" name="fueltype" required>
-														<option value=""> Select </option>
+													<input type="text" name="price3days" class="form-control" required>
+												</div>
+											</div>
 
-														<option value="Petrol">Petrol</option>
-														<option value="Diesel">Diesel</option>
-														<option value="CNG">CNG</option>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
+												<div class="col-sm-4">
+													<input type="text" name="price7days" class="form-control" required>
+
+												</div>
+												<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
+												<div class="col-sm-4">
+													<select class="selectpicker" name="gametype" required>
+
+														<option value="console">Console</option>
+														<option value="game_physics">Game Physics</option>
+														<option value="CNG">Game Gear</option>
 													</select>
 												</div>
 											</div>
 
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Serial Produk<span style="color:red">*</span></label>
+												<div class="col-sm-4">
+													<input type="text" name="serialnumber" class="form-control" required>
+												</div>
+												<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
+												<div class="col-sm-4">
+													<input type="text" name="stock" class="form-control" required>
+												</div>
+											</div>
+											<div class="hr-dashed"></div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Model Year<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Warna Produk<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="modelyear" class="form-control" required>
-												</div>
-												<label class="col-sm-2 control-label">Seating Capacity<span style="color:red">*</span></label>
-												<div class="col-sm-4">
-													<input type="text" name="seatingcapacity" class="form-control" required>
+													<input type="color" id="favcolor" name="favcolor" value="#ff0000"><br><br>
 												</div>
 											</div>
 											<div class="hr-dashed"></div>
@@ -234,17 +248,19 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 											<div class="form-group">
 												<div class="col-sm-4">
-													Image 1 <span style="color:red">*</span><input type="file" name="img1" required>
+													Product Image<span style="color:red">*</span><input type="file" name="img" required>
 												</div>
+												<!--
 												<div class="col-sm-4">
 													Image 2<span style="color:red">*</span><input type="file" name="img2" required>
 												</div>
 												<div class="col-sm-4">
 													Image 3<span style="color:red">*</span><input type="file" name="img3" required>
 												</div>
+														-->
 											</div>
 
-
+											<!---
 											<div class="form-group">
 												<div class="col-sm-4">
 													Image 4<span style="color:red">*</span><input type="file" name="img4" required>
@@ -254,13 +270,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 												</div>
 
 											</div>
+														-->
+
 											<div class="hr-dashed"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-
+						<!--
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
@@ -348,32 +366,32 @@ if (strlen($_SESSION['alogin']) == 0) {
 												</div>
 											</div>
 										</div>
+														-->
 
 
 
-
-										<div class="form-group">
-											<div class="col-sm-8 col-sm-offset-2">
-												<button class="btn btn-default" type="reset">Cancel</button>
-												<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
-											</div>
-										</div>
-
-										</form>
-									</div>
-								</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-2">
+								<button class="btn btn-default" type="reset">Cancel</button>
+								<button class="btn btn-primary" name="submit" type="submit">Save</button>
 							</div>
 						</div>
 
-
-
+						</form>
 					</div>
 				</div>
-
-
-
 			</div>
 		</div>
+
+
+
+	</div>
+	</div>
+
+
+
+	</div>
+	</div>
 	</div>
 
 	<!-- Loading Scripts -->

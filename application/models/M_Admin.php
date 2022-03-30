@@ -56,6 +56,7 @@ class M_Admin extends CI_model
     //Fungsi Menghitung Row Customer Service Query
     public function getRowCustomerService()
     {
-        return $this->db->count_all('customerservice');
+        //Minus 1, karena salah satu row adalah informasi kontak CS Perusahaan
+        return $this->db->count_all('customerservice') - 1;
     }
 }

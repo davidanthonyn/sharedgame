@@ -137,11 +137,12 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" type="tex
           </div>
         </div>
         <div class="col-md-6">
-          <h3>Contact Info</h3>
-          <div class="contact_detail">
-            <?php
+          <?php
 
-            foreach ($cs as $listCs) { ?>
+          foreach ($cs as $listCs) { ?>
+            <h3><?php echo $listCs->pesan_cs ?></h3>
+            <div class="contact_detail">
+
               <ul>
                 <li>
                   <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
@@ -159,7 +160,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" type="tex
             <?php }
 
             ?>
-          </div>
+            </div>
         </div>
       </div>
     </div>

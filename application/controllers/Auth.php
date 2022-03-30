@@ -19,6 +19,10 @@ class Auth extends CI_Controller
             redirect('');
         }
 
+        if (get_cookie('email') && get_cookie('password')) {
+            $this->_login();
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'required' => 'Email harus diisi!',
             'valid_email' => 'Mohon memasukkan email yang valid!'
@@ -75,6 +79,12 @@ class Auth extends CI_Controller
                         'user_level' => $user['user_level']
                     );
                     */
+
+                    //Cookie
+                    if ($this->input->post('remember')) {
+                        set_cookie("email", htmlspecialchars($email), 2 * 60);
+                        set_cookie("password", password_hash($password, PASSWORD_DEFAULT), 2 * 60);
+                    }
 
                     //Jika user adalah customer
                     if ($user['id_role'] == '3') {
@@ -390,11 +400,15 @@ class Auth extends CI_Controller
 
         $this->session->sess_destroy();
 
+        delete_cookie('email');
+        delete_cookie('password');
+
         //Alert akun berhasil logout
         $this->session->set_flashdata('message', '<div class="alert 
         alert-success" role="alert">Berhasil logout!</div>');
 
         //Redirect ke Login
-        redirect(base_url());
+        //redirect(base_url());
+        redirect($_SERVER['REQUEST_URI'], 'refresh');
     }
 }

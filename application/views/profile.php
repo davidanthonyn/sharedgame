@@ -145,12 +145,6 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label">Status KTP -</label>
-                <?= $user['status_ktp'];
-                ?>
-              </div>
-
-              <div class="form-group">
                 <label class="control-label">Nama Lengkap</label>
                 <input class="form-control white_bg" name="fullname" value="<?= $user['nama_lengkap'];
                                                                             ?>" id="fullname" type="text">
@@ -165,11 +159,13 @@
                 <label class="control-label">Nomor HP (08xxx)</label>
                 <input class="form-control white_bg" type="text" name="mobilenumber" id="mobilenumber" value="<?= $user['no_hp'];
                                                                                                               ?>" onkeypress="return onlyNumberKey(event)">
+                <?= form_error('mobilenumber', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label class="control-label">Nomor HP Cadangan (08xxx) (berbeda dengan Nomor HP Utama)</label>
                 <input class="form-control white_bg" type="text" name="mobilenumbertwo" id="mobilenumbertwo" value="<?= $user['no_hp_dua'];
                                                                                                                     ?>" onkeypress="return onlyNumberKey(event)">
+                <?= form_error('mobilenumbertwo', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
 
               <div class="form-group">
@@ -191,91 +187,7 @@
                 <label class="control-label">Alamat Lengkap</label>
                 <textarea class="form-control white_bg" name="address" id="address" rows="4"><?= $user['alamat_lengkap'];
                                                                                               ?></textarea>
-              </div>
-              <hr>
-              <div class="form-group row">
-                <label class="control-label">KTP</label>
-                <div class="col-sm-1">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <img src="<?= base_url('assets/img/ktp/') . $user['foto_ktp']; ?>" class="card-img" width="200" height="200">
-                    </div>
-                  </div class="col-sm-1">
-                  <div class="custom-file">
-                    <br>
-                    <?php
-                    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-                    //Mengecek apakah user adalah customer atau bukan
-                    if ($data['user']['id_role'] == '3') {
-                      //Membuat if ktp customer
-                      if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak' || $data['user']['status_ktp'] == 'selfie_ktp_saja' || $data['user']['status_ktp'] == 'ktp_saja') {
-                    ?>
-                        <input type="file" class="custom-file-input" id="ktp" name="ktp">
-                        <label class="custom-file-label" for="ktp"></label>
-                        <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
-                      <?php
-                      } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
-                      ?>
-                        <label class="control-label">Sedang diverifikasi.</label>
-                      <?php
-                      } else if ($data['user']['status_ktp'] == 'diterima') {
-                      ?>
-                        <label class="control-label">Dinyatakan valid.</label>
-                      <?php
-                      }
-                    } else {
-                      ?>
-                      <label class="control-label">Non-Customer</label>
-                    <?php
-                    }
-                    ?>
-                  </div>
-                </div>
-              </div>
-
-              <hr>
-              <br><br>
-              <div class="form-group row">
-                <label class="control-label">Selfie KTP</label>
-                <div class="col-sm-1">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <hr>
-                      <img src="<?= base_url('assets/img/selfiektp/') . $user['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
-                    </div>
-                  </div class="col-sm-1">
-                  <div class="custom-file">
-                    <br>
-                    <?php
-                    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-                    //Mengecek apakah user adalah customer atau bukan
-                    if ($data['user']['id_role'] == '3') {
-                      //Membuat if ktp customer
-                      if ($data['user']['status_ktp'] == 'belum' || $data['user']['status_ktp'] == 'ditolak' || $data['user']['status_ktp'] == 'ktp_saja' || $data['user']['status_ktp'] == 'selfie_ktp_saja') {
-                    ?>
-                        <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
-                        <label class="custom-file-label" for="selfiektp"></label>
-                        <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
-                      <?php
-                      } else if ($data['user']['status_ktp'] == 'sedang_verifikasi') {
-                      ?>
-                        <label class="control-label">Sedang diverifikasi.</label>
-                      <?php
-                      } else if ($data['user']['status_ktp'] == 'diterima') {
-                      ?>
-                        <label class="control-label">Dinyatakan valid.</label>
-                      <?php
-                      }
-                    } else {
-                      ?>
-                      <label class="control-label">Non-Customer</label>
-                    <?php
-                    }
-                    ?>
-
-
-                  </div>
-                </div>
+                <?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <hr>
               <br><br>

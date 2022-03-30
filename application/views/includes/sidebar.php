@@ -2,6 +2,7 @@
   <ul>
     <li><a href="<?= base_url('user/edit'); ?>">Profile Settings</a></li>
     <li><a href="<?= base_url('user/updateemail'); ?>">Update Email</a></li>
+    <li><a href="<?= base_url('user/identity'); ?>">Update Identity</a></li>
     <li><a href="<?= base_url('user/changepassword'); ?>">Update Password</a></li>
     <li><a href="my-booking.php">My Booking</a></li>
     <!---

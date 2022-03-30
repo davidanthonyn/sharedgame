@@ -4,7 +4,8 @@ class M_User extends CI_model
 {
     public function getAllUser()
     {
-        return $this->db->get('user')->result_array();
+        $query = $this->db->query('SELECT * FROM user JOIN user_role ON user_role.id_role = user.id_role');
+        return $query;
     }
 
     public function tambahDataCustomer()
@@ -19,14 +20,11 @@ class M_User extends CI_model
             'nama_lengkap' => htmlspecialchars($this->input->post('name', true)),
             'email' => htmlspecialchars($email),
             'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-            'alamat_lengkap' => "empty",
-            'no_hp' => "empty",
-            'no_hp_dua' => "emptysecond",
+            'alamat_lengkap' => "",
+            'no_hp' => "",
+            'no_hp_dua' => "",
             'tgl_lahir' => "0000-00-00",
-            'foto_ktp' => "emptyktp.png",
-            'foto_selfie_ktp' => "emptyselfiektp.png",
             'id_role' => 3,
-            'status_ktp' => "belum",
             'is_active' => "not_yet_activated",
             'created_at' => $now,
             'updated_at' => $now
@@ -180,10 +178,10 @@ class M_User extends CI_model
             'smtp_user' => 'sharedgametech@gmail.com',
             'smtp_pass' => 'sukamaingame',
             'smtp_port' => 465,
-            'mail_type' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
+            //'mail_type' => 'html',
+            'charset' => 'iso-8859-1'
         ];
+
 
         /*
         //Config 000WebHost
@@ -200,7 +198,10 @@ class M_User extends CI_model
         */
 
         $this->load->library('email');
+        $this->load->model('M_CustomerService');
         $this->email->initialize($config);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
 
         $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
@@ -212,7 +213,13 @@ class M_User extends CI_model
         if ($type == 'verify') {
             $this->email->subject('Verifikasi Akun | SharedGame');
 
-            $this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . urlencode($token) . '">Aktivasi Akun</a>');
+            //$this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . urlencode($token) . '">Aktivasi Akun</a>');
+            $data['email'] = $email;
+            $data['token'] = $token;
+            //Model M_CustomerService pada fungsi index(panggil data CS dari database)
+            $data['cs'] = $this->M_CustomerService->index()->result();
+            $message = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
+            $this->email->message($message);
 
             //$this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : 
             //<a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
@@ -229,5 +236,93 @@ class M_User extends CI_model
             echo $this->email->print_debugger();
             die;
         }
+    }
+
+    function get_admin_by_ajax()
+    {
+        //$query = $this->db->get_where('user');
+        $query = $this->db->select('SELECT id_user, nama_lengkap, email, is_active FROM user WHERE id_role = 1', FALSE);
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                'id_user' => $data->id_user,
+                'nama_lengkap' => $data->nama_lengkap,
+                'email' => $data->email,
+                'is_active' => $data->is_active
+            );
+        }
+
+        return $output;
+    }
+
+    function get_karyawan_by_ajax()
+    {
+        //$query = $this->db->get_where('user');
+        $query = $this->db->select('SELECT id_user, nama_lengkap, email, is_active FROM user WHERE id_role = 2', FALSE);
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                'id_user' => $data->id_user,
+                'nama_lengkap' => $data->nama_lengkap,
+                'email' => $data->email,
+                'is_active' => $data->is_active
+            );
+        }
+
+        return $output;
+    }
+
+    function get_customer_by_ajax()
+    {
+        //$query = $this->db->get_where('user');
+        $query = $this->db->select('SELECT id_user, nama_lengkap, email, alamat_lengkap, no_hp, no_hp_dua, tgl_lahir, foto_ktp, foto_selfie_ktp, status_ktp, is_active, created_at,updated_at FROM user WHERE id_role = 3', FALSE);
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                'id_user' => $data->id_user,
+                'nama_lengkap' => $data->nama_lengkap,
+                'email' => $data->email,
+                'alamat_lengkap' => $data->alamat_lengkap,
+                'no_hp' => $data->no_hp,
+                'no_hp' => $data->no_hp_dua,
+                'tgl_lahir' => $data->tgl_lahir,
+                'foto_ktp' => $data->foto_ktp,
+                'foto_selfie_ktp' => $data->foto_selfie_ktp,
+                'status_ktp' => $data->status_ktp,
+                'is_active' => $data->is_active,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at
+            );
+        }
+
+        return $output;
+    }
+
+    function get_member_by_ajax()
+    {
+        $query = $this->db->get_where('pages');
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'detail' => $data->detail
+            );
+        }
+        return $output;
+    }
+
+    function get_subsletter_by_ajax()
+    {
+        $query = $this->db->get_where('newsletter');
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                'id_newsletter' => $data->id_newsletter,
+                'email' => $data->email,
+                'is_active' => $data->is_active,
+                'joined_at' => $data->last_updated_at,
+            );
+        }
+        return $output;
     }
 }

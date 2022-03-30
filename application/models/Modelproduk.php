@@ -38,11 +38,8 @@ class Modelproduk extends CI_Model
 
     public function getAllRowProducts()
     {
-        $query = $this->db->query('SELECT * FROM produk');
+        $query = $this->db->query('SELECT * FROM produk JOIN brand ON brand.id_brand = produk.id_brand');
         return $query;
-
-
-        return $this->db->get('produk')->result_array();
     }
 
     function tarif_sewa($where, $table)

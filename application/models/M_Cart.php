@@ -41,4 +41,10 @@ class M_Cart extends CI_model
     {
         return $this->db->get_where('produk', ['id_produk' => $id])->row_array();
     }
+
+    public function get_brand_all()
+    {
+        $query = $this->db->get('brand');
+        return $query->result_array();
+    }
 }

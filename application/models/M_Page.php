@@ -59,4 +59,10 @@ class M_Page extends CI_Model
 		$this->db->where($where);
 		$this->db->update($table, $data);
 	}
+
+	public function getAllRowPages()
+	{
+		$query = $this->db->query('SELECT * FROM pages');
+		return $query;
+	}
 }
