@@ -65,6 +65,11 @@ class Modelproduk extends CI_Model
         return $this->db->get_where($table, $where);
     }
 
+    function edit_record($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
+
     /*
     public function getProdukById($id)
     {

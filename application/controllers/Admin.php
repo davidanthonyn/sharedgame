@@ -31,10 +31,9 @@ class Admin extends CI_Controller
     4. manage_contact()
     5. tambahbrand()
     6. kelolabrand()
-    7. proses_edit_data_brand()
-    8. delete_data_brand($id_brand)
-    9. tambahproduk
-    10. kelolaproduk
+    7. delete_data_brand($id_brand)
+    8. tambahproduk
+    9. kelolaproduk
 
     */
 
@@ -365,64 +364,7 @@ class Admin extends CI_Controller
         }
     }
 
-    function proses_edit_data_brand()
-    {
-        $this->form_validation->set_rules('brand', 'text', 'trim|required', [
-            'required' => 'Brand harus diisi!'
-        ]);
 
-        if ($this->form_validation->run() == false) {
-            $data['title'] = 'Edit Brand | SharedGame';
-            $where = array('id_brand' => $id_brand);
-            $data['brandEdit'] = $this->M_Brand->edit_record('brand', $where)->result();
-            $data['status'] = $this->M_Brand->getAllBrand()->result();
-            $this->load->view('admin/edit-brand', $data);
-        } else {
-            $id = $this->input->post('idbrand');
-            $brand = $this->input->post('brand');
-            $status = $this->input->post('status');
-
-            //Cek jika ada gambar brand yang diupload
-            $reupload_logo = $_FILES['rebrandlogo']['name'];
-
-            //If user upload logo ulang
-            if (!empty($reupload_logo)) {
-                $config['allowed_types'] = 'jpg|png';
-                $config['max_size']     = '5120';
-                $config['upload_path']     = './assets/img/brandlogo/';
-
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload('rebrandlogo')) {
-                    $data['brand'] = $this->db->get_where('brand', ['id_brand' => $id])->row_array();
-                    $old_image = $data['brand']['gambar_brand'];
-
-                    if ($old_image != "") {
-                        unlink(FCPATH . 'assets/img/brandlogo/' . $old_image);
-                    }
-
-                    //Jika upload logo rebrand berhasil
-                    $new_image = $this->upload->data('file_name');
-                    $this->db->set('gambar_brand', $new_image);
-                } else {
-                    //Jika upload logo gagal
-                    $this->session->set_flashdata('message_error', 'Upload Logo Gagal.');
-                }
-            }
-
-            $data = array(
-                'nama_brand' => $brand,
-                'status_brand' => $status
-            );
-
-            $where = array(
-                'id_brand' => $id
-            );
-
-            $this->M_Brand->update_record($where, $data, 'brand');
-            redirect('admin/kelolabrand');
-        }
-    }
 
     function delete_data_brand($id_brand)
     {
@@ -468,6 +410,59 @@ class Admin extends CI_Controller
 
         //Title Dashboard Admin saat halaman dibuka
         $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
+    }
+
+    function edit_data_produk($id_produk)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $this->form_validation->set_rules('productname', 'Product Name', 'trim|required', [
+            'required' => 'Nama Produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('deskripsi', 'Description', 'trim|required', [
+            'required' => 'Deskripsi Produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('priceperday', 'Price Per Day', 'trim|required', [
+            'required' => 'Tarif satu hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('price3days', 'Price 3 Days', 'trim|required', [
+            'required' => 'Tarif tiga hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('price7days', 'Price 7 Days', 'trim|required', [
+            'required' => 'Tarif tujuh hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('serialnumber', 'Serial Number', 'trim|required', [
+            'required' => 'Serial number produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('stock', 'Stock', 'trim|required', [
+            'required' => 'Stok produk harus diisi!'
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Add Product | SharedGame';
+            $data['smalltitle'] = 'Basic Info';
+            $where = array('id_produk' => $id_produk);
+            $data['productEdit'] = $this->Modelproduk->edit_record('produk', $where)->result();
+
+            $data['brand'] = $this->M_Brand->getAllBrand()->result();
+            $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
+
+            $this->load->view('admin/edit-product.php', $data);
+        }
     }
 
     //contoh
