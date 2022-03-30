@@ -224,7 +224,7 @@ class Admin extends CI_Controller
             $this->load->view('admin/create-brand', $data);
         } else {
             //Cek nama brand
-            $brand = $this->input->post('brandlogo');
+            $brand = $this->input->post('brand');
 
             //Cek jika ada gambar brand yang diupload
             $upload_logo = $_FILES['brandlogo']['name'];
@@ -234,7 +234,7 @@ class Admin extends CI_Controller
             $now = date('Y-m-d H:i:s');
 
             //Pengecekan gambar upload & nama brand
-            if ($brand && $upload_logo) {
+            if ($upload_logo) {
                 $config['allowed_types'] = 'jpg|png';
                 $config['max_size']     = '5120';
                 $config['upload_path']     = './assets/img/brandlogo/';
@@ -256,13 +256,15 @@ class Admin extends CI_Controller
                     $this->M_Brand->insert_record('brand', $data);
 
                     $this->session->set_flashdata('message', 'Brand berhasil ditambahkan');
-                    redirect('admin/tambahbrand');
+                    redirect('admin/kelolabrand');
                 } else {
                     //Jika upload brand gagal
                     $this->session->set_flashdata('message_error', 'Brand gagal ditambahkan');
-                    redirect('admin/tambahbrand');
+                    redirect('admin/kelolabrand');
                 }
-            }
+            } //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Logo harus ditambahkan');
+            redirect('admin/tambahbrand');
         }
     }
 
@@ -315,6 +317,10 @@ class Admin extends CI_Controller
             $brand = $this->input->post('brand');
             $status = $this->input->post('status');
 
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
             //Cek jika ada gambar brand yang diupload
             $reupload_logo = $_FILES['rebrandlogo']['name'];
 
@@ -345,7 +351,8 @@ class Admin extends CI_Controller
 
             $data = array(
                 'nama_brand' => $brand,
-                'status_brand' => $status
+                'status_brand' => $status,
+                'datetime_brand_added' => $now
             );
 
             $where = array(
