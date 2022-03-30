@@ -123,10 +123,12 @@
 															<a href="<?php echo base_url() . 'admin/delete_data_brand/' . $listBrand->id_brand; ?>">Hapus</a>
 														</td>
 													</tr>
-											<?php
+												<?php
 												}
-											}
-											?>
+											} else {
+												?>
+												<td colspan="4" align="center">Tidak ada Data</td>
+											<?php } ?>
 
 										</tbody>
 									</table>

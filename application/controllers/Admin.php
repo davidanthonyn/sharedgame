@@ -296,14 +296,64 @@ class Admin extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
 
-        if ($data['user']['id_role'] == '1') {
+        if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $this->form_validation->set_rules('brand', 'text', 'trim|required', [
+            'required' => 'Brand harus diisi!'
+        ]);
+
+        if ($this->form_validation->run() == false) {
             $data['title'] = 'Edit Brand | SharedGame';
             $where = array('id_brand' => $id_brand);
             $data['brandEdit'] = $this->M_Brand->edit_record('brand', $where)->result();
             $data['status'] = $this->M_Brand->getAllBrand()->result();
             $this->load->view('admin/edit-brand', $data);
         } else {
-            redirect('');
+            $id = $this->input->post('idbrand');
+            $brand = $this->input->post('brand');
+            $status = $this->input->post('status');
+
+            //Cek jika ada gambar brand yang diupload
+            $reupload_logo = $_FILES['rebrandlogo']['name'];
+
+            //If user upload logo ulang
+            if (!empty($reupload_logo)) {
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size']     = '5120';
+                $config['upload_path']     = './assets/img/brandlogo/';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('rebrandlogo')) {
+                    $data['brand'] = $this->db->get_where('brand', ['id_brand' => $id])->row_array();
+                    $old_image = $data['brand']['gambar_brand'];
+
+                    if ($old_image != "") {
+                        unlink(FCPATH . 'assets/img/brandlogo/' . $old_image);
+                    }
+
+                    //Jika upload logo rebrand berhasil
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('gambar_brand', $new_image);
+                } else {
+                    //Jika upload logo gagal
+                    $this->session->set_flashdata('message_error', 'Upload Logo Gagal.');
+                }
+            }
+
+            $data = array(
+                'nama_brand' => $brand,
+                'status_brand' => $status
+            );
+
+            $where = array(
+                'id_brand' => $id
+            );
+
+            $this->M_Brand->update_record($where, $data, 'brand');
+            redirect('admin/kelolabrand');
         }
     }
 
@@ -315,9 +365,10 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Edit Brand | SharedGame';
-            //Jika validasi salah
-            $this->session->set_flashdata('message_error', 'Edit Brand Gagal.');
-            redirect('admin/kelolabrand');
+            $where = array('id_brand' => $id_brand);
+            $data['brandEdit'] = $this->M_Brand->edit_record('brand', $where)->result();
+            $data['status'] = $this->M_Brand->getAllBrand()->result();
+            $this->load->view('admin/edit-brand', $data);
         } else {
             $id = $this->input->post('idbrand');
             $brand = $this->input->post('brand');
@@ -327,7 +378,7 @@ class Admin extends CI_Controller
             $reupload_logo = $_FILES['rebrandlogo']['name'];
 
             //If user upload logo ulang
-            if ($reupload_logo) {
+            if (!empty($reupload_logo)) {
                 $config['allowed_types'] = 'jpg|png';
                 $config['max_size']     = '5120';
                 $config['upload_path']     = './assets/img/brandlogo/';
@@ -335,11 +386,16 @@ class Admin extends CI_Controller
                 $this->load->library('upload', $config);
 
                 if ($this->upload->do_upload('rebrandlogo')) {
+                    $data['brand'] = $this->db->get_where('brand', ['id_brand' => $id])->row_array();
+                    $old_image = $data['brand']['gambar_brand'];
+
+                    if ($old_image != "") {
+                        unlink(FCPATH . 'assets/img/brandlogo/' . $old_image);
+                    }
+
                     //Jika upload logo rebrand berhasil
-                    $new_rebrand_logo = $this->upload->data('file_name');
-                    $this->db->set('gambar_brand', $new_rebrand_logo);
-                    $this->db->where('id_brand', $id);
-                    $this->db->update('brand');
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('gambar_brand', $new_image);
                 } else {
                     //Jika upload logo gagal
                     $this->session->set_flashdata('message_error', 'Upload Logo Gagal.');

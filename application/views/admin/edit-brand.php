@@ -79,65 +79,68 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">Form fields</div>
 										<div class="panel-body">
-											<?php foreach ($brandEdit as $listBrandEdit) { ?>
-												<form method="post" class="form-horizontal" action="<?= base_url('admin/proses_edit_data_brand'); ?>">
+											<?php
+											foreach ($brandEdit as $listBrandEdit) { ?>
+												<!--
+												<form method="post" class="form-horizontal" action="//base_url('admin/edit_data_brand/$listBrandEdit->id_brand'); ?>"> -->
+												<?php echo form_open_multipart('admin/edit_data_brand/<?= $listBrandEdit->id_brand ?>'); ?>
 
-													<div class="form-group">
-														<label class="col-sm-4 control-label">Brand ID</label>
-														<div class="col-sm-8">
-															<input type="text" class="form-control" value="<?= $listBrandEdit->id_brand ?>" name="idbrand" id="idbrand" readonly>
-														</div>
+												<div class="form-group">
+													<label class="col-sm-4 control-label">Brand ID</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?= $listBrandEdit->id_brand ?>" name="idbrand" id="idbrand" readonly>
 													</div>
+												</div>
 
-													<div class="form-group">
-														<label class="col-sm-4 control-label">Brand Name</label>
-														<div class="col-sm-8">
-															<input type="text" class="form-control" value="<?= $listBrandEdit->nama_brand ?>" name="brand" id="brand">
-															<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
-														</div>
+												<div class="form-group">
+													<label class="col-sm-4 control-label">Brand Name</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?= $listBrandEdit->nama_brand ?>" name="brand" id="brand">
+														<?= form_error('brand', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
+												</div>
 
-													<tr>
-														<label class="col-sm-4 control-label">Brand Status</label>
-														<td>
+												<tr>
+													<label class="col-sm-4 control-label">Brand Status</label>
+													<td>
 
-															<select name="status">
-																<?php if ($listBrandEdit->status_brand == "aktif") { ?>
+														<select name="status">
+															<?php if ($listBrandEdit->status_brand == "aktif") { ?>
 
-																	<option value="aktif">Aktif</option>
-																	<option value="tidak_aktif">Tidak Aktif</option>
-																<?php } else if ($listBrandEdit->status_brand == "tidak_aktif") { ?>
-																	<option value="tidak_aktif">Tidak Aktif</option>
-																	<option value="aktif">Aktif</option>
-																<?php } ?>
-															</select>
+																<option value="aktif">Aktif</option>
+																<option value="tidak_aktif">Tidak Aktif</option>
+															<?php } else if ($listBrandEdit->status_brand == "tidak_aktif") { ?>
+																<option value="tidak_aktif">Tidak Aktif</option>
+																<option value="aktif">Aktif</option>
+															<?php } ?>
+														</select>
 
-														</td>
-													</tr>
+													</td>
+												</tr>
 
-													<div class="hr-dashed"></div>
+												<div class="hr-dashed"></div>
 
-													<div class="form-group">
+												<div class="form-group">
 
-														<label class="col-sm-4 control-label">Brand Logo</label>
+													<label class="col-sm-4 control-label">Brand Logo</label>
 
-														<input type="file" class="custom-file-input" id="rebrandlogo" name="rebrandlogo">
-														<img src="<?= base_url('assets/img/brandlogo/') . $listBrandEdit->gambar_brand ?>" class="card-img" width="200" height="200">
+													<input type="file" class="custom-file-input" id="rebrandlogo" name="rebrandlogo">
+													<img src="<?= base_url('assets/img/brandlogo/') . $listBrandEdit->gambar_brand ?>" class="card-img" width="200" height="200">
+												</div>
+
+
+
+
+												<div class="form-group">
+													<div class="col-sm-8 col-sm-offset-4">
+
+														<button class="btn btn-primary" name="submit" type="submit">Submit</button>
 													</div>
-
-
-
-
-													<div class="form-group">
-														<div class="col-sm-8 col-sm-offset-4">
-
-															<button class="btn btn-primary" name="submit" type="submit">Submit</button>
-														</div>
-													</div>
-												<?php
+												</div>
+											<?php
 											}
-												?>
-												</form>
+											?>
+											</form>
 
 										</div>
 									</div>
