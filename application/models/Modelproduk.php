@@ -42,6 +42,24 @@ class Modelproduk extends CI_Model
         return $query;
     }
 
+    public function getPriceDay()
+    {
+        $query = $this->db->query('SELECT * FROM produk JOIN tarifsewa ON tarifsewa.id_produk = produk.id_produk WHERE lama_sewa_hari = 1');
+        return $query;
+    }
+
+    public function getPrice3Days()
+    {
+        $query = $this->db->query('SELECT * FROM produk JOIN tarifsewa ON tarifsewa.id_produk = produk.id_produk WHERE lama_sewa_hari = 3');
+        return $query;
+    }
+
+    public function getPrice7Days()
+    {
+        $query = $this->db->query('SELECT * FROM produk JOIN tarifsewa ON tarifsewa.id_produk = produk.id_produk WHERE lama_sewa_hari = 7');
+        return $query;
+    }
+
     function tarif_sewa($where, $table)
     {
         return $this->db->get_where($table, $where);
@@ -87,4 +105,9 @@ class Modelproduk extends CI_Model
     {
         return $this->db->get_where('produk', ['id_produk' => $id])->row_array();
     }*/
+
+    function insert_record($table, $data)
+    {
+        $this->db->insert($table, $data);
+    }
 }

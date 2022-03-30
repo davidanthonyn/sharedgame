@@ -124,6 +124,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 		}
 	</style>
+	<script type="text/javascript" src="<?php echo base_url() . "ckeditor/"; ?>ckeditor.js"></script>
 
 </head>
 
@@ -162,7 +163,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="productname" class="form-control">
+													<input type="text" name="productname" id="productname" class="form-control">
+													<?= form_error('productname', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
 												<div class="col-sm-4">
@@ -186,30 +188,47 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Deskripsi Produk<span style="color:red">*</span></label>
 												<div class="col-sm-10">
-													<textarea class="form-control" name="deskripsi" rows="3" required></textarea>
+													<textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"></textarea>
+
+													<?= form_error('deskripsi', '<small class="text-danger pl-3">', '</small>'); ?>
+													<script>
+														// Replace the <textarea id="editor1"> with a CKEditor 4
+														// instance, using default configuration.
+														CKEDITOR.replace('deskripsi');
+														//var editor = CKEDITOR.replace('detail');
+														//var detail = CKEDITOR.instances.editor.getData();
+
+														function CKUpdate() {
+															for (instance in CKEDITOR.instances) {
+																CKEDITOR.instances['deskripsi'].updateElement();
+															}
+														}
+													</script>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="priceperday" class="form-control" required>
+													<input type="text" name="priceperday" id="priceperday" class="form-control">
+													<?= form_error('priceperday', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="price3days" class="form-control" required>
+													<input type="text" name="price3days" id="price3days" class="form-control">
+													<?= form_error('price3days', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="price7days" class="form-control" required>
-
+													<input type="text" name="price7days" id="price7days" class="form-control">
+													<?= form_error('price7days', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<select class="selectpicker" name="gametype" required>
+													<select class="selectpicker" name="gametype" id="gametype" required>
 
 														<option value="console">Console</option>
 														<option value="game_physics">Game Physics</option>
@@ -221,19 +240,21 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Serial Produk<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="serialnumber" class="form-control" required>
+													<input type="text" name="serialnumber" id="serialnumber" class="form-control">
+													<?= form_error('serialnumber', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="stock" class="form-control" required>
+													<input type="text" name="stock" id="stock" class="form-control">
+													<?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 											</div>
 											<div class="hr-dashed"></div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Warna Produk<span style="color:red">*</span></label>
+												<label class="col-sm-2 control-label">Warna Produk<span style="color:white">*</span></label>
 												<div class="col-sm-4">
-													<input type="color" id="favcolor" name="favcolor" value="#ff0000"><br><br>
+													<input type="color" id="favcolor" name="favcolor" value="#ffffff"><br><br>
 												</div>
 											</div>
 											<div class="hr-dashed"></div>
@@ -248,7 +269,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 											<div class="form-group">
 												<div class="col-sm-4">
-													Product Image<span style="color:red">*</span><input type="file" name="img" required>
+													Product Image<span style="color:red">*</span><input type="file" name="img" id="img">
 												</div>
 												<!--
 												<div class="col-sm-4">
@@ -393,6 +414,14 @@ if (strlen($_SESSION['alogin']) == 0) {
 	</div>
 	</div>
 	</div>
+	<!-- Loading Scripts -->
+	<script>
+		function CKupdate() {
+			for (instance in CKEDITOR.instance) {
+				CKEDITOR.instances[''].updateElement();
+			}
+		}
+	</script>
 
 	<!-- Loading Scripts -->
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>

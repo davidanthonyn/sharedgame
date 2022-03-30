@@ -262,9 +262,10 @@ class Admin extends CI_Controller
                     $this->session->set_flashdata('message_error', 'Brand gagal ditambahkan');
                     redirect('admin/kelolabrand');
                 }
-            } //Title Dashboard Admin saat halaman dibuka
-            $this->session->set_flashdata('messagefailed', 'Logo harus ditambahkan');
-            redirect('admin/tambahbrand');
+            } else { //Title Dashboard Admin saat halaman dibuka
+                $this->session->set_flashdata('message_error', 'Logo harus ditambahkan');
+                redirect('admin/tambahbrand');
+            }
         }
     }
 
@@ -458,6 +459,9 @@ class Admin extends CI_Controller
         $data['title'] = 'Kelola Produk | SharedGame';
         $data['smalltitle'] = 'Daftar Produk';
         $data['product'] = $this->Modelproduk->getAllRowProducts()->result();
+        //$data['priceoneday'] = $this->Modelproduk->getPriceDay()->result();
+        //$data['pricethreeday'] = $this->Modelproduk->getPrice3Days()->result();
+        //$data['pricesevenday'] = $this->Modelproduk->getPrice7Days()->result();
         $this->load->view('admin/manage-products.php', $data);
 
 
@@ -484,8 +488,40 @@ class Admin extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
 
-        $this->form_validation->set_rules('brand', 'text', 'trim|required', [
-            'required' => 'Brand harus diisi!'
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Tambah Produk hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $this->form_validation->set_rules('productname', 'Product Name', 'trim|required', [
+            'required' => 'Nama Produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('deskripsi', 'Description', 'trim|required', [
+            'required' => 'Deskripsi Produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('priceperday', 'Price Per Day', 'trim|required', [
+            'required' => 'Tarif satu hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('price3days', 'Price 3 Days', 'trim|required', [
+            'required' => 'Tarif tiga hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('price7days', 'Price 7 Days', 'trim|required', [
+            'required' => 'Tarif tujuh hari harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('serialnumber', 'Serial Number', 'trim|required', [
+            'required' => 'Serial number produk harus diisi!'
+        ]);
+
+        $this->form_validation->set_rules('stock', 'Stock', 'trim|required', [
+            'required' => 'Stok produk harus diisi!'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -506,60 +542,80 @@ class Admin extends CI_Controller
             $serialproduk = $this->input->post('serialnumber');
             $avail = $this->input->post('stock');
             $color = $this->input->post('favcolor');
-            $img = $this->input->post('img');
+
+            //Cek jika ada gambar brand yang diupload
+            $upload_product = $_FILES['img']['name'];
 
             //Set waktu untuk created at dan updated at
             $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
             $now = date('Y-m-d H:i:s');
 
-            $data = array(
-                'nama_produk' => $nama_produk,
-                'id_brand' => $id_brand,
-                'deskripsi_produk' => $deskripsi,
-                'kategori_produk' => $gametype,
-                'serial_produk' => $serialproduk,
-                'jumlah_tersedia' => $avail,
-                'warna_produk' => $color,
-                'gambar_produk' => $img
-            );
+            if ($upload_product) {
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size']     = '5120';
+                $config['upload_path']     = './assets/img/product/';
 
-            //Memasukkan data produk ke tabel
-            $this->db->insert('produk', $data);
+                $this->load->library('upload', $config);
 
-            //Mengambil insert id, untuk taruh data di tabel tarifsewa
-            $insertId = $this->db->insert_id();
+                if ($this->upload->do_upload('img')) {
+                    //Jika upload produk berhasil
+                    $new_product = $this->upload->data('file_name');
 
-            $hargasatuhari = array(
-                'id_produk' => $insertId,
-                'tarif_harga' => $satuhari,
-                'lama_sewa_hari' => '1',
-                'updated_at' => $now
-            );
+                    $data = array(
+                        'nama_produk' => $nama_produk,
+                        'id_brand' => $id_brand,
+                        'deskripsi_produk' => $deskripsi,
+                        'kategori_produk' => $gametype,
+                        'serial_produk' => $serialproduk,
+                        'jumlah_tersedia' => $avail,
+                        'warna_produk' => $color,
+                        'gambar_produk' => $new_product
+                    );
 
-            $hargatigahari = array(
-                'id_produk' => $insertId,
-                'tarif_harga' => $tigahari,
-                'lama_sewa_hari' => '3',
-                'updated_at' => $now
-            );
+                    //Menjalankan model produk untuk mengirim data ke tabel brand
+                    $this->Modelproduk->insert_record('produk', $data);
 
-            $hargatujuhhari = array(
-                'id_produk' => $insertId,
-                'tarif_harga' => $tujuhhari,
-                'lama_sewa_hari' => '7',
-                'updated_at' => $now
-            );
+                    //Mengambil insert id, untuk taruh data di tabel tarifsewa
+                    $insertId = $this->db->insert_id();
 
-            //Memasukkan data tarifsewa
-            $this->db->insert('tarifsewa', $hargasatuhari);
-            $this->db->insert('tarifsewa', $hargatigahari);
-            $this->db->insert('tarifsewa', $hargatujuhhari);
+                    $hargasatuhari = array(
+                        'id_produk' => $insertId,
+                        'tarif_harga' => $satuhari,
+                        'lama_sewa_hari' => '1',
+                        'updated_at' => $now
+                    );
 
-            //$this->Modelproduk->insert_record($data, 'produk');
+                    $hargatigahari = array(
+                        'id_produk' => $insertId,
+                        'tarif_harga' => $tigahari,
+                        'lama_sewa_hari' => '3',
+                        'updated_at' => $now
+                    );
 
-            //Title Dashboard Admin saat halaman dibuka
-            $this->session->set_flashdata('message', 'Tambah produk berhasil!');
-            redirect('admin/kelolaproduk');
+                    $hargatujuhhari = array(
+                        'id_produk' => $insertId,
+                        'tarif_harga' => $tujuhhari,
+                        'lama_sewa_hari' => '7',
+                        'updated_at' => $now
+                    );
+
+                    //Memasukkan data tarifsewa
+                    $this->db->insert('tarifsewa', $hargasatuhari);
+                    $this->db->insert('tarifsewa', $hargatigahari);
+                    $this->db->insert('tarifsewa', $hargatujuhhari);
+
+                    $this->session->set_flashdata('message', 'Produk berhasil ditambahkan');
+                    redirect('admin/kelolaproduk');
+                } else {
+                    //Jika upload produk gagal
+                    $this->session->set_flashdata('message_error', 'Produk gagal ditambahkan');
+                    redirect('admin/tambahproduk');
+                }
+            } else {
+                //Title Dashboard Admin saat halaman dibuka
+                $this->session->set_flashdata('message_error', 'Gambar Produk harus ditambahkan');
+                redirect('admin/tambahproduk');
+            }
         }
     }
 

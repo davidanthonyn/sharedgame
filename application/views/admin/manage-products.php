@@ -45,6 +45,13 @@
 				-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 			}
+
+			.dot {
+				height: 25px;
+				width: 25px;
+				border-radius: 50%;
+				display: inline-block;
+			}
 		</style>
 
 	</head>
@@ -72,6 +79,9 @@
 												<th>#</th>
 												<th>Brand Name</th>
 												<th>Product Name</th>
+												<!--<th>Price Per Day</th>
+												<th>Price 3 Days</th>
+												<th>Price 7 Days</th>-->
 												<th>Product Category</th>
 												<th>Product Color</th>
 												<th>Product Picture</th>
@@ -87,6 +97,9 @@
 												<th>#</th>
 												<th>Brand Name</th>
 												<th>Product Name</th>
+												<!--<th>Price 1 Day</th>
+												<th>Price 3 Days</th>
+												<th>Price 7 Days</th>-->
 												<th>Product Category</th>
 												<th>Product Color</th>
 												<th>Product Picture</th>
@@ -108,7 +121,21 @@
 														<td><?php echo $listProduct->nama_brand ?></td>
 														<td><?php echo $listProduct->nama_produk ?></td>
 														<td><?php echo $listProduct->kategori_produk ?></td>
-														<td><?php echo $listProduct->warna_produk ?></td>
+														<!--<td><span class="dot" color="<?php //echo $listProduct->warna_produk 
+																							?>"></span></td>-->
+														<!---
+														<td>
+															<font size="7" color="<?php //echo $listProduct->warna_produk
+																					?>"><?php //echo $listProduct->warna_produk
+																						?></font>
+														</td>--->
+														<!--
+														<td style="background-color:<?php //echo $listProduct->warna_produk
+																					?>;">
+														</td>-->
+
+														<td><span class="dot" style="background-color:<?php echo $listProduct->warna_produk
+																										?>;"></span></td>
 														<td><img src="<?= base_url('assets/img/product/') . $listProduct->gambar_produk ?>" class="card-img" width="100" height="100"></td>
 														<td><?php echo $listProduct->deskripsi_produk ?></td>
 														<td><?php echo $listProduct->serial_produk ?></td>
