@@ -29,8 +29,8 @@ class Product extends CI_Controller
     {
         $this->load->database();
         $this->load->model('Modelproduk');
-        $this->load->model('Rekening');
-        $data['rekening'] = $this->Rekening->getAllRekening();
+        $this->load->model('M_Rekening');
+        $data['rekening'] = $this->M_Rekening->getAllRekening();
         $where = array('id_produk' => $id);
         $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         $data["data"] = $this->Modelproduk->GetProdukById($id);

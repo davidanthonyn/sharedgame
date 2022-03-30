@@ -24,10 +24,34 @@
 				</ul>
 			</li>
 
-			<li class="ts-label">Orders</li>
-			<li><a href="manage-bookings.php"><i class="fa fa-users"></i>Booking</a></li>
 
-			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Rekening Toko</a></li>
+			<li class="ts-label">Orders</li>
+			<li><a href="#"><i class="fa fa-files-o"></i> Rekening Toko</a>
+				<ul>
+					<li><a href="<?= base_url('Rekening/tambahrekening');
+									?>">Add Rekening</a></li>
+					<li><a href="<?= base_url('Rekening/kelola');
+									?>">Manage Rekening</a></li>
+				</ul>
+			</li>
+			<li><a href="manage-bookings.php"><i class="fa fa-users"></i>Booking</a>
+			<ul>
+					
+					<li><a href="<?= base_url('Booking/manage');
+									?>">Booking/Transaksi</a></li>
+				</ul>
+
+				<ul>
+					
+					<li><a href="<?= base_url('Booking/kelola');
+									?>">Produk Booking</a></li>
+				</ul>	
+		
+		
+		
+		</li>
+			
+
 
 			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
 

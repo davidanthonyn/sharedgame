@@ -114,7 +114,7 @@ error_reporting(0);
                       <div id="div_content" style="display: none;">
                       <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                       <span class="input-group-text">Rp</span>
+                       <span class="input-group-text">Harga/item (Rp)</span>
                     </div>
                      <input type="text" class="form-control" id="price" name="price" disabled>
                     </div>                 
@@ -128,9 +128,6 @@ error_reporting(0);
                     </div>
                   </div>
                   <br>
-                  <h5> Pembayaran dapat dilakukan melalui : </h5>
-                  <h5><?php echo $rekening[0]['no_rekening_toko']; ?></h5>
-                  <h5><?php echo $rekening[0]['bank_rekening_toko']; ?></h5>
                   </div>
                 </div>
               </div>
