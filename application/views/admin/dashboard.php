@@ -88,7 +88,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Customer</div>
 												</div>
 											</div>
-											<a href="reg-users.php" class="block-anchor panel-footer">Kelola <i class="fa fa-arrow-right"></i></a>
+											<a href="<?= base_url('admin/kelolauser'); ?>" class="block-anchor panel-footer">Kelola <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -106,7 +106,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Listed Products</div>
 												</div>
 											</div>
-											<a href="manage-vehicles.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="<?= base_url('admin/kelolaproduk'); ?>" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -194,7 +194,7 @@ error_reporting(0);
 													<div class="stat-panel-title text-uppercase">Keluhan Customer Service</div>
 												</div>
 											</div>
-											<a href="manage-conactusquery.php" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="<?= base_url('admin/managecs'); ?>" class="block-anchor panel-footer text-center">Kelola &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<!---
