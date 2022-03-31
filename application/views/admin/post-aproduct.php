@@ -105,6 +105,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
 	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<style>
 		.errorWrap {
 			padding: 10px;
@@ -210,12 +212,12 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="priceperday" id="priceperday" class="form-control">
+													<input type="text" name="priceperday" id="priceperday" class="form-control" onkeypress="return onlyNumberKey(event)">
 													<?= form_error('priceperday', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="price3days" id="price3days" class="form-control">
+													<input type="text" name="price3days" id="price3days" class="form-control" onkeypress="return onlyNumberKey(event)">
 													<?= form_error('price3days', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 											</div>
@@ -223,7 +225,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="price7days" id="price7days" class="form-control">
+													<input type="text" name="price7days" id="price7days" class="form-control" onkeypress="return onlyNumberKey(event)">
 													<?= form_error('price7days', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
@@ -245,7 +247,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												</div>
 												<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
 												<div class="col-sm-4">
-													<input type="text" name="stock" id="stock" class="form-control">
+													<input type="text" name="stock" id="stock" class="form-control" onkeypress="return onlyNumberKey(event)">
 													<?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 											</div>
@@ -420,6 +422,16 @@ if (strlen($_SESSION['alogin']) == 0) {
 			for (instance in CKEDITOR.instance) {
 				CKEDITOR.instances[''].updateElement();
 			}
+		}
+	</script>
+	<script>
+		function onlyNumberKey(evt) {
+
+			// Only ASCII character in that range allowed
+			var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+			if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+				return false;
+			return true;
 		}
 	</script>
 
