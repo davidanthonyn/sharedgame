@@ -164,7 +164,7 @@ class User extends CI_Controller
         $config['encrypt_name'] = FALSE;
         $this->load->library('upload', $config);
 
-        if (!empty($upload_ktp) && !empty($upload_selfie_ktp)) {
+        if (empty($upload_ktp) && empty($upload_selfie_ktp)) {
             //Jika upload ktp gagal
             $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Identitas anda gagal.</div>');
             redirect('user/identity');

@@ -456,7 +456,13 @@ class Admin extends CI_Controller
             $data['title'] = 'Add Product | SharedGame';
             $data['smalltitle'] = 'Basic Info';
             $where = array('id_produk' => $id_produk);
+            $wheresatu = array('id_produk' => $id_produk, 'lama_sewa_hari' => '1');
+            $wheretiga = array('id_produk' => $id_produk, 'lama_sewa_hari' => '3');
+            $wheretujuh = array('id_produk' => $id_produk, 'lama_sewa_hari' => '7');
             $data['productEdit'] = $this->Modelproduk->edit_record('produk', $where)->result();
+            $data['tarifSatu'] = $this->Modelproduk->edit_record('tarifsewa', $wheresatu)->result();
+            $data['tarifTiga'] = $this->Modelproduk->edit_record('tarifsewa', $wheretiga)->result();
+            $data['tarifTujuh'] = $this->Modelproduk->edit_record('tarifsewa', $wheretujuh)->result();
 
             $data['brand'] = $this->M_Brand->getAllBrand()->result();
             $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';

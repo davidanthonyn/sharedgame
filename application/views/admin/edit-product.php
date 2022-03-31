@@ -190,7 +190,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Deskripsi Produk<span style="color:red">*</span></label>
 													<div class="col-sm-10">
-														<textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"></textarea>
+														<textarea value="<?= $listProductEdit->deskripsi_produk ?>" name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"></textarea>
 
 														<?= form_error('deskripsi', '<small class="text-danger pl-3">', '</small>'); ?>
 														<script>
@@ -212,12 +212,16 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="text" name="priceperday" id="priceperday" class="form-control">
+														<?php foreach ($tarifSatu as $listTarifSatu) { ?>
+															<input type="text" value="<?= $listTarifSatu->tarif_harga ?>" name="priceperday" id="priceperday" class="form-control">
+														<?php } ?>
 														<?= form_error('priceperday', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 													<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="text" name="price3days" id="price3days" class="form-control">
+														<?php foreach ($tarifTiga as $listTarifTiga) { ?>
+															<input type="text" value="<?= $listTarifTiga->tarif_harga ?>" name="price3days" id="price3days" class="form-control">
+														<?php } ?>
 														<?= form_error('price3days', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 												</div>
@@ -225,7 +229,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="text" name="price7days" id="price7days" class="form-control">
+														<?php foreach ($tarifTujuh as $listTarifTujuh) { ?>
+															<input type="text" value="<?= $listTarifTujuh->tarif_harga ?>" name="price7days" id="price7days" class="form-control">
+														<?php } ?>
 														<?= form_error('price7days', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 													<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
@@ -256,7 +262,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Warna Produk<span style="color:white">*</span></label>
 													<div class="col-sm-4">
-														<input type="color" id="favcolor" name="favcolor" value="#ffffff"><br><br>
+														<input type="color" id="favcolor" name="favcolor" value="<?= $listProductEdit->warna_produk ?>"><br><br>
 													</div>
 												</div>
 												<div class="hr-dashed"></div>
