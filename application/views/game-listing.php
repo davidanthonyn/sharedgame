@@ -46,12 +46,21 @@ error_reporting(0);
   <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>/assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  <style>
+    .dot {
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+  </style>
 </head>
 
 <body>
 
   <!--Header-->
-  <?php include('includes/header.php'); ?>
+  <?php //include('includes/header.php'); 
+  ?>
 
 
   <!--Page Header-->
@@ -82,7 +91,9 @@ error_reporting(0);
 
               <?php for ($i = 0; $i < count($data); $i++) : ?>
                 <div class="box">
-                  <img src="<?php echo $data[$i]['gambar_produk']; ?>" alt="">
+                  <img src="<?php echo base_url() . "assets/img/product/" . $data[$i]['gambar_produk']; ?>" alt="" width="200" height="100">
+
+
                   <div class="content">
                     <div class="stars">
                       <i class="fas fa-star" style="color:orange"></i>
@@ -92,7 +103,10 @@ error_reporting(0);
                       <i class="fas fa-star" style="color:orange"></i>
                     </div>
                     <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $data[$i]['id_produk']; ?>"> <?php echo $data[$i]['nama_produk']; ?></a> </h3>
+                    <span class="dot" style="background-color:<?php echo $data[$i]['warna_produk']
+                                                              ?>;"></span>
                     <div class="price"><?php echo $data[$i]['warna_produk']; ?> <span> </span> </div>
+
                     <a> Available </a>
                   </div>
                 </div>
@@ -115,22 +129,29 @@ error_reporting(0);
                     </div>
                     <div class="recent_addedcars">
                       <ul>
-                        <?php $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid  from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand order by id desc limit 4";
+                        <?php /*$sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid  from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand order by id desc limit 4";
                         $query = $dbh->prepare($sql);
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_OBJ);
                         $cnt = 1;
                         if ($query->rowCount() > 0) {
-                          foreach ($results as $result) {  ?>
+                          foreach ($results as $result) { */  ?>
 
-                            <li class="gray-bg">
-                              <div class="recent_post_img"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1); ?>" alt="image"></a> </div>
-                              <div class="recent_post_title"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a>
-                                <p class="widget_price">$<?php echo htmlentities($result->PricePerDay); ?> Per Day</p>
-                              </div>
-                            </li>
-                        <?php }
-                        } ?>
+                        <li class="gray-bg">
+                          <div class="recent_post_img"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
+                                                                                          ?>"><img src="admin/img/vehicleimages/<?php //echo htmlentities($result->Vimage1); 
+                                                                                                                                ?>" alt="image"></a> </div>
+                          <div class="recent_post_title"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
+                                                                                            ?>"><?php //echo htmlentities($result->BrandName); 
+                                                                                                ?> , <?php //echo htmlentities($result->VehiclesTitle); 
+                                                                                                      ?></a>
+                            <p class="widget_price">$<?php //echo htmlentities($result->PricePerDay); 
+                                                      ?> Per Day</p>
+                          </div>
+                        </li>
+                        <?php //}
+                        //} 
+                        ?>
 
                       </ul>
                     </div>
@@ -143,7 +164,8 @@ error_reporting(0);
   <!-- /Listing-->
 
   <!--Footer-->
-  <?php include_once('includes/footer.php'); ?>
+  <?php //include_once('includes/footer.php'); 
+  ?>
 
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>

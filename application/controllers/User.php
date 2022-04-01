@@ -87,12 +87,18 @@ class User extends CI_Controller
             $dob = $this->input->post('dob');
             $address = $this->input->post('address');
 
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
             $this->db->set('nama_lengkap', $name);
             $this->db->set('email', $email);
             $this->db->set('no_hp', $mobilenumber);
             $this->db->set('no_hp_dua', $mobilenumbertwo);
             $this->db->set('tgl_lahir', $dob);
             $this->db->set('alamat_lengkap', $address);
+            $this->db->set('updated_at', $now);
+
 
             $this->db->where('email', $email);
             $this->db->update('user');

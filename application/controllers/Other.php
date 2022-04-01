@@ -11,9 +11,28 @@ class Other extends CI_Controller
         $this->load->model('M_Page');
     }
 
-    function index()
+    function index($type)
     {
+        //$where = array('type' => $type);
+        $data["page"] = $this->M_Page->GetPageByType($type);
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->view('admin/other.php');
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('page.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
+    }
+
+    function detail($id)
+    {
+        $where = array('id_produk' => $id);
+        $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
+        $data["data"] = $this->Modelproduk->GetProdukById($id);
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('detailproduk.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
     }
 
     function aboutus()

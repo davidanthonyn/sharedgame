@@ -169,15 +169,22 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label">Date of Birth&nbsp;(yyyy/mm/dd)</label>
+                <label class="control-label">Date of Birth&nbsp;(dd/mm/yyyy)</label>
                 <br>
-                <input class="form-control white_bg" name="dob" value="<?= $user['tgl_lahir'];
+                <input class="form-control white_bg" name="dob" value="<?php $date = $user['tgl_lahir'];
+
+
+                                                                        echo date("d/m/Y", strtotime($date));
                                                                         ?>" id="dob">
+
+
+
+
               </div>
               <script type="text/javascript">
                 flatpickr("#dob", {
-                  minDate: "1980-01-01",
-                  maxDate: "2021-12-31"
+                  minDate: "1980/01/01",
+                  maxDate: "2021/12/31"
                 });
               </script>
 

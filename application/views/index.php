@@ -181,7 +181,7 @@
 
 
           <div class="testimonial-m">
-            <div class="testimonial-img"> <img src="assets/images/cat-profile.png" alt="" /> </div>
+            <div class="testimonial-img"> <img src="<?php echo base_url() . "assets/"; ?>assets/images/cat-profile.png" alt="" /> </div>
             <div class="testimonial-content">
               <div class="testimonial-heading">
                 <h5><?php /* echo htmlentities($result->FullName); */ ?></h5>
