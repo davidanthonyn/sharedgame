@@ -157,4 +157,46 @@ class Home extends CI_Controller
             return 'Sent';
         }
     }
+
+    public function tes_subs()
+    {
+        //date_default_timezone_set("Asia/Jakarta");
+        //echo "The time is " . date("h:i:sa");
+        $validity = '1 month';
+        $date = new DateTime('next month');
+        $todayDate = new DateTime();
+
+        if ($date >= $todayDate) {
+            echo "your membership valid until <b>" . $date->format('d-M-Y') . '</b>';
+            echo "<br><br>";
+            echo "valid membership";
+        } else {
+            echo $date->format('d-M-Y');
+            echo "your membership has expired";
+        }
+    }
+
+    //subscription satu bulan
+    public function str_subs_satubulan()
+    {
+        date_default_timezone_set("Asia/Jakarta");
+        $d = strtotime("+1 Months");
+        echo date("Y-m-d h:i:sa", $d) . "<br>";
+    }
+
+    //subscription tiga bulan
+    public function str_subs_tigabulan()
+    {
+        date_default_timezone_set("Asia/Jakarta");
+        $d = strtotime("+3 Months");
+        echo date("Y-m-d h:i:sa", $d) . "<br>";
+    }
+
+    //subscription enam bulan
+    public function str_subs_enambulan()
+    {
+        date_default_timezone_set("Asia/Jakarta");
+        $d = strtotime("+6 Months");
+        echo date("Y-m-d h:i:sa", $d) . "<br>";
+    }
 }
