@@ -66,9 +66,9 @@ class M_Page extends CI_Model
 		return $query;
 	}
 
-	public function GetProdukById($id)
+	public function GetPageByType($type)
 	{
-		$data = $this->db->query("SELECT * FROM pages WHERE 'type'' = '$type'");
+		$data = $this->db->query("SELECT * FROM pages WHERE type = '$type'");
 		return $data->result_array();
 	}
 }

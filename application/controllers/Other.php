@@ -11,12 +11,25 @@ class Other extends CI_Controller
         $this->load->model('M_Page');
     }
 
-    function index($type)
+    function index()
+    {
+        $data["page"] = $this->M_Page->GetPageByType($type);
+        $data['title'] = 'Products | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('game-listing.php', $data);
+        //$this->load->view('includes/footer.php', $data);
+        $this->footer();
+    }
+
+    function info($type)
     {
         //$where = array('type' => $type);
+
         $data["page"] = $this->M_Page->GetPageByType($type);
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $this->load->view('admin/other.php');
+        $data['title'] = $data["page"][0]["page_name"] . ' | SharedGame';
+        //$data["page"] = $this->M_Home->getFaq()->result();
         $this->load->view('includes/header.php', $data);
         $this->load->view('page.php', $data);
         //$this->load->view('includes/footer.php', $data);
@@ -25,8 +38,12 @@ class Other extends CI_Controller
 
     function detail($id)
     {
-        $where = array('id_produk' => $id);
-        $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
+        //$this->load->database();
+        //$this->load->model('Modelproduk');
+        //$this->load->model('M_Rekening');
+        //$data['rekening'] = $this->M_Rekening->getAllRekening();
+        //$where = array('id_produk' => $id);
+        // $data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         $data["data"] = $this->Modelproduk->GetProdukById($id);
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->view('includes/header.php', $data);
@@ -34,7 +51,7 @@ class Other extends CI_Controller
         //$this->load->view('includes/footer.php', $data);
         $this->footer();
     }
-
+    /*
     function aboutus()
     {
         $data['title'] = 'Tentang Kami | SharedGame';
@@ -74,6 +91,7 @@ class Other extends CI_Controller
         //$this->load->view('includes/footer.php', $data);
         $this->footer();
     }
+    */
 
     public function footer()
     {

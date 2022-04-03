@@ -8,7 +8,7 @@
           <ul>
             <?php
             foreach ($pages as $page) { ?>
-              <li><a href="<?php echo base_url('other/' . $page->type) ?>"><?php echo $page->page_name ?></a></li>
+              <li><a href="<?php echo base_url() . 'other/info' ?>/<?php echo  $page->type; ?>"><?php echo $page->page_name ?></a></li>
             <?php } ?>
             <!--
             <li><a href="<?php echo base_url() . 'other/aboutus' ?>">About Us</a></li>

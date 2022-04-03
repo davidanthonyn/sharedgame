@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>Game Rental Portal | Page details</title>
+  <title><?= $title ?></title>
   <!--Bootstrap -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.min.css" type="text/css">
   <!--Custome Style -->
@@ -43,6 +43,7 @@
 </head>
 
 <body>
+
   <?php
   /*
   $pagetype = $_GET['type'];
@@ -54,55 +55,49 @@
   $cnt = 1;
   if ($query->rowCount() > 0) {
     foreach ($results as $result) { */ ?>
-  <?php foreach ($page as $partpage) {
-
-  ?>
-    <section class="page-header aboutus_page">
-      <div class="container">
-        <div class="page-header_wrap">
-          <div class="page-heading">
-            <h1><?= $partpage->page_name; ?></h1>
-          </div>
-          <ul class="coustom-breadcrumb">
-            <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><?= $partpage->page_name; ?></li>
-          </ul>
+  <section class="page-header aboutus_page">
+    <div class="container">
+      <div class="page-header_wrap">
+        <div class="page-heading">
+          <h1><?= $page[0]['page_name']; ?></h1>
         </div>
+        <ul class="coustom-breadcrumb">
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
+          <li><?= $page[0]['page_name']; ?></li>
+        </ul>
       </div>
-      <!-- Dark Overlay-->
-      <div class="dark-overlay"></div>
-    </section>
-    <section class="about_us section-padding">
-      <div class="container">
-        <div class="section-header text-center">
+    </div>
+    <!-- Dark Overlay-->
+    <div class="dark-overlay"></div>
+  </section>
+  <section class="about_us section-padding">
+    <div class="container">
+      <div class="section-header text-center">
 
 
-          <!-- <h2><?php //echo htmlentities($result->PageName); 
-                    ?></h2> -->
-          <p><?= $partpage->detail; ?> </p>
-        </div>
-      <?php }
-    //} 
-      ?>
+        <!-- <h2><?php //echo htmlentities($result->PageName); 
+                  ?></h2> -->
+        <p><?= $page[0]['detail']; ?> </p>
       </div>
-    </section>
-    <!-- /About-us-->
+    </div>
+  </section>
+  <!-- /About-us-->
 
-    <!--Back to top-->
-    <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
-    <!--/Back to top-->
+  <!--Back to top-->
+  <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+  <!--/Back to top-->
 
-    <!-- Scripts -->
-    <script src="<?php echo base_url(); ?>/assets/js/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>/assets/js/interface.js"></script>
-    <!--Switcher-->
-    <script src="<?php echo base_url(); ?>/assets/switcher/js/switcher.js"></script>
-    <!--bootstrap-slider-JS-->
-    <script src="<?php echo base_url(); ?>/assets/js/bootstrap-slider.min.js"></script>
-    <!--Slider-JS-->
-    <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
-    <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
+  <!-- Scripts -->
+  <script src="<?php echo base_url(); ?>/assets/js/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>/assets/js/interface.js"></script>
+  <!--Switcher-->
+  <script src="<?php echo base_url(); ?>/assets/switcher/js/switcher.js"></script>
+  <!--bootstrap-slider-JS-->
+  <script src="<?php echo base_url(); ?>/assets/js/bootstrap-slider.min.js"></script>
+  <!--Slider-JS-->
+  <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
+  <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
 
 </body>
 
