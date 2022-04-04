@@ -165,18 +165,85 @@ class User extends CI_Controller
         $upload_ktp = $_FILES['ktp']['name'];
         $upload_selfie_ktp = $_FILES['selfiektp']['name'];
 
-        $config['allowed_types'] = 'jpg|png';
-        $config['max_size']     = '4096';
-        $config['encrypt_name'] = FALSE;
-        $this->load->library('upload', $config);
+        //$config['allowed_types'] = 'jpg|png';
+        //$config['max_size']     = '4096';
+        //$config['encrypt_name'] = FALSE;
+        //$this->load->library('upload', $config);
 
         if (empty($upload_ktp) && empty($upload_selfie_ktp)) {
             //Jika upload ktp gagal
-            $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Identitas anda gagal.</div>');
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Identitas tidak boleh kosong!</div>');
+            redirect('user/identity');
+        } else if ($upload_ktp == $upload_selfie_ktp) {
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Mohon untuk tidak mengupload file yang sama!</div>');
+            redirect('user/identity');
+        } else if (!empty($upload_ktp) && empty($upload_selfie_ktp)) {
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Mohon mengupload KTP dan Selfie KTP secara bersamaan! (Note: Mohon mengupload ulang KTP)</div>');
+            redirect('user/identity');
+        } else if (empty($upload_ktp) && !empty($upload_selfie_ktp)) {
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Mohon mengupload KTP dan Selfie KTP secara bersamaan! (Note: Mohon mengupload ulang Selfie KTP)</div>');
+            redirect('user/identity');
+        } else if (!empty($upload_ktp) && !empty($upload_selfie_ktp)) {
+            //KTP
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size']     = '4096';
+            $config['encrypt_name'] = FALSE;
+            $config['upload_path']     = './assets/img/ktp/';
+            $this->load->library('upload', $config);
+
+            //Jika upload ktp berhasil
+            $this->upload->do_upload('ktp');
+            $new_image_ktp = $this->upload->data();
+            $filektp = $new_image_ktp['file_name'];
+
+            $this->db->set('foto_ktp', $filektp);
+            $this->db->where('id_user', $this->session->userdata('id_user'));
+            $this->db->update('usercard');
+
+            /* //Jika upload ktp gagal
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload KTP anda gagal.</div>');
+                redirect('user/identity'); */
+
+            /*
+            //Selfie ktp
+            $configdua['allowed_types'] = 'jpg|png';
+            $configdua['max_size']     = '4096';
+            $configdua['encrypt_name'] = FALSE;
+            $configdua['upload_path']     = './assets/img/selfiektp/';
+
+            $this->load->library('upload', $configdua);*/
+
+
+            //Jika upload selfie ktp berhasil
+            $this->upload->do_upload('selfiektp');
+            $new_image_ktp = $this->upload->data();
+            $fileselfiektp = $new_image_ktp['file_name'];
+
+            $this->db->set('foto_selfie_ktp',  $fileselfiektp);
+            $this->db->where('id_user', $this->session->userdata('id_user'));
+            $this->db->update('usercard');
+
+            $this->db->set('status_ktp',  'sedang_verifikasi');
+            $this->db->where('id_user', $this->session->userdata('id_user'));
+            $this->db->update('usercard');
+
+            /* //Jika upload ktp gagal
+                $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Selfie KTP anda gagal.</div>');
+                redirect('user/identity'); */
+
+            /*
+            $this->db->set('foto_ktp', $filektp);
+            $this->db->set('foto_selfie_ktp',  $fileselfiektp);
+            $this->db->where('id_user', $this->session->userdata('id_user'));
+            $this->db->update('usercard');*/
+
+            //Jika berhasil
+            $this->session->set_flashdata('datausermessage', '<div class="alert alert-success" role="alert" style="text-align:center;">Identitas berhasil diupload!</div>');
             redirect('user/identity');
         }
 
-        //Jika user upload ktp
+        /*
+        //Jika user upload ktp(FIX DI ATAS)
         if (!empty($upload_ktp)) {
             $config['upload_path']     = './assets/img/ktp/';
 
@@ -189,29 +256,31 @@ class User extends CI_Controller
             } else {
                 /* //Jika upload ktp gagal
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload KTP anda gagal.</div>');
-                redirect('user/identity'); */
-            }
-        }
+                redirect('user/identity'); 
+    }
+}
+*/
 
+        /*
+//Jika user upload selfie ktp (fix di atas)
+if (!empty($upload_selfie_ktp)) {
+    $config['upload_path']     = './assets/img/selfiektp/';
 
-        //Jika user upload selfie ktp
-        if (!empty($upload_selfie_ktp)) {
-            $config['upload_path']     = './assets/img/selfiektp/';
+    $this->load->library('upload', $config);
 
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('selfiektp')) {
-                //Jika upload ktp berhasil
-                $new_image_ktp = $this->upload->data();
-                $fileselfiektp = $new_image_ktp['file_name'];
-            } else {
-                /* //Jika upload ktp gagal
+    if ($this->upload->do_upload('selfiektp')) {
+        //Jika upload ktp berhasil
+        $new_image_ktp = $this->upload->data();
+        $fileselfiektp = $new_image_ktp['file_name'];
+    } else {
+        /* //Jika upload ktp gagal
                 $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Selfie KTP anda gagal.</div>');
-                redirect('user/identity'); */
-            }
-        }
+                redirect('user/identity'); 
+    }
+}
+        */
 
-        if ($this->form_validation->run()) {
+        /*if ($this->form_validation->run()) {
             $this->db->set('foto_selfie_ktp', $filektp);
             $this->db->set('foto_selfie_ktp',  $fileselfiektp);
             $this->db->where('id_user', $this->session->userdata('id_user'));
@@ -224,7 +293,7 @@ class User extends CI_Controller
             //Jika upload ktp gagal
             $this->session->set_flashdata('datausermessage', '<div class="alert alert-warning" role="alert" style="text-align:center;">Upload Identitas anda gagal.</div>');
             redirect('user/identity');
-        }
+        }*/
     }
 
 
