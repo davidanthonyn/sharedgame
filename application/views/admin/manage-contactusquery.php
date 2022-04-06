@@ -97,7 +97,10 @@
 														<td><?php echo $listcs->nama_lengkap; ?></td>
 														<td><?php echo $listcs->created_at; ?></td>
 														<td><?php echo $listcs->status; ?></td>
-														
+														<td>
+															<a href="<?php echo base_url() . 'cs/edit_data/' . $listcs->id_cs; ?>">Balas</a> ||
+															<a href="<?php echo base_url() . 'cs/delete_data/' . $listcs->id_cs; ?>">Abaikan</a>
+													</td>
 													</tr>
 											<?php //$cnt = $cnt + 1;
 												}

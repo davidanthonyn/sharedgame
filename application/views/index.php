@@ -80,7 +80,7 @@
 
               <div class="col-list-3">
                 <div class="recent-car-list">
-                  <div class="car-info-box"> <a href="<?= $produk[$i]['id_produk']; ?>"><img src="<?php echo $produk[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
+                  <div class="car-info-box"> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $produk[$i]['id_produk']; ?>"><img src="<?php echo $produk[$i]['gambar_produk']; ?>" class="img-responsive" alt="image"></a>
                     <ul>
                       <li><i class="fa fa-car" aria-hidden="true"></i><?php //echo htmlentities($result->FuelType); 
                                                                       ?></li>

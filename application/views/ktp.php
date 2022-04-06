@@ -170,7 +170,7 @@
                       <div class="row">
                         <div class="col-sm-3">
                           <?php if ($identity['foto_selfie_ktp'] != NULL) { ?>
-                            <img src="<?= base_url('assets/img/selfiektp/') . $identity['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
+                            <img src="<?= base_url('assets/img/ktp/') . $identity['foto_selfie_ktp']; ?>" class="card-img" width="150" height="150">
                         </div>
                       <?php } ?>
                       </div class="col-sm-1">
@@ -201,12 +201,17 @@
                     <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
                   </div>
                   </form>
+
                 </div>
               </div>
+              <labelDengan class="control-label">Dengan mensubmit KTP dan Selfie KTP anda, Anda menyatakan setuju dengan Syarat & Ketentuan SharedGame.</label>
             </div>
+
           </div>
+
   </section>
   <!--/Profile-setting-->
+
 
   <!--Back to top-->
   <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>

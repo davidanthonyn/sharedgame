@@ -201,9 +201,9 @@
 
               <div class="product-info">
 
-                <h3 class="product-name">New Shoes</h3>
+                <h3 class="product-name">Playstation 5 </h3>
 
-                <h4 class="product-price">Rp 1,000</h4>
+                <h4 class="product-price">Rp 250.000</h4>
 
                 <h4 class="product-offer">50%</h4>
 
@@ -229,9 +229,9 @@
 
               <div class="product-info">
 
-                <h3 class="product-name">New Bag</h3>
+                <h3 class="product-name">logitech g29</h3>
 
-                <h4 class="product-price">Rp 2,000</h4>
+                <h4 class="product-price">Rp 100.000</h4>
 
                 <h4 class="product-offer">40%</h4>
 

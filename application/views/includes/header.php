@@ -83,7 +83,7 @@
 
             <li><a href="<?php echo base_url() . 'Product' ?>">Product</a>
 
-            <li><a href="<?php echo base_url() . 'other/faq' ?>">FAQ</a></li>
+            <li><a href="<?php echo base_url() . 'other/info/faq' ?>">FAQ</a></li>
 
             <li><a href="<?php echo base_url() . 'Contact' ?>">Contact Us</a></li>
 
