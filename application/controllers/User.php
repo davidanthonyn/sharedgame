@@ -91,22 +91,28 @@ class User extends CI_Controller
             $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
             $now = date('Y-m-d H:i:s');
 
-            $this->db->set('nama_lengkap', $name);
-            $this->db->set('email', $email);
-            $this->db->set('no_hp', $mobilenumber);
-            $this->db->set('no_hp_dua', $mobilenumbertwo);
-            $this->db->set('tgl_lahir', $dob);
-            $this->db->set('alamat_lengkap', $address);
-            $this->db->set('updated_at', $now);
+            if ($mobilenumber == $mobilenumbertwo) {
+                $this->session->set_flashdata('message_error', 'You cannot input same mobile number');
+                //Redirect ke Login
+                redirect('user/edit');
+            } else {
+                $this->db->set('nama_lengkap', $name);
+                $this->db->set('email', $email);
+                $this->db->set('no_hp', $mobilenumber);
+                $this->db->set('no_hp_dua', $mobilenumbertwo);
+                $this->db->set('tgl_lahir', $dob);
+                $this->db->set('alamat_lengkap', $address);
+                $this->db->set('updated_at', $now);
 
 
-            $this->db->where('email', $email);
-            $this->db->update('user');
+                $this->db->where('email', $email);
+                $this->db->update('user');
 
-            $this->session->set_flashdata('message', 'Your profile has been updated!');
+                $this->session->set_flashdata('message', 'Your profile has been updated!');
 
-            //Redirect ke Login
-            redirect('user/edit');
+                //Redirect ke Login
+                redirect('user/edit');
+            }
         }
     }
 
@@ -339,6 +345,66 @@ if (!empty($upload_selfie_ktp)) {
 
                     $this->session->set_flashdata('message', 'Password changed!');
                     redirect('user/changePassword');
+                }
+            }
+        }
+    }
+
+    public function updateEmail()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        }
+
+        $data['title'] = 'Change Email | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('newemail', 'New Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'is_unique' => 'Email telah teregistrasi!'
+        ]);
+
+        $this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|trim|min_length[8]');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('includes/header.php', $data);
+            $this->load->view('update-email.php', $data);
+            //$this->load->view('includes/footer.php', $data);
+            $this->footer();
+        } else {
+            $emaillama = $this->input->post('currentemail');
+            $emailbaru = $this->input->post('newemail');
+            $password = $this->input->post('confirmpassword');
+
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
+            //Validasi input password lama dengan password sekarang pada database
+            if (!password_verify($password, $data['user']['password'])) {
+                $this->session->set_flashdata('message_error', 'Password Anda salah!');
+                redirect('user/updateEmail');
+            } else {
+                //Validasi password baru dan password yang diinput
+                if ($emaillama == $emailbaru) {
+                    $this->session->set_flashdata('message_error', 'Email baru tidak boleh sama dengan email lama!');
+                    redirect('user/updateEmail');
+                } else {
+                    //Password sudah ok
+                    $data = array(
+                        'id_user' => $data['user']['id_user'],
+                        'email_before' => $data['user']['email'],
+                        'email_after' => htmlspecialchars($emailbaru),
+                        'created_at' => $now,
+                        'status_change' => 0
+                    );
+
+                    //Menjalankan model customer service untuk mengirim data ke tabel change_email
+                    $this->M_Page->insert_record('change_email', $data);
+
+                    //Model M_User pada fungsi tambahUserTokenChange(sekaligus dengan fungsi send token ke email)
+                    $this->M_User->tambahUserTokenChange();
+                    $this->session->set_flashdata('message', 'Email Konfirmasi telah dikirim!');
+                    redirect('auth/logout');
                 }
             }
         }

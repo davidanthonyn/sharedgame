@@ -279,6 +279,62 @@ class Auth extends CI_Controller
         }
     }
 
+    public function changeemail()
+    {
+        //Pengambilan data dari link controller
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        //Now
+        $now = date('Y-m-d H:i:s');
+
+        //Memasukkan email ker array, untuk dibawa ke if pertama(cek email nya benar atau tidak)
+        $changeEmail = $this->db->get_where('change_email', ['email_before' => $email])->row_array();
+
+        //Pengecekan user(apakah user nya ada, dan email nya benar)
+        if ($changeEmail) {
+            //Memasukkan token ker array, untuk dibawa ke if kedua(cek token nya benar atau tidak)
+            $user_token = $this->db->get_where('usertoken', ['token' => $token])->row_array();
+
+            if ($user_token) {
+                //Pengecekan waktu token(maksimal 1x24 jam setelah registrasi)
+                if ($now - $user_token['time_created'] < (60 * 60 * 24)) {
+
+                    //Memasukkan data user ke array, untuk dibawa ke if ketiga(cek akun nya aktif atau tidak)
+                    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+                    $this->db->set('email', $user['email']);
+                    $this->db->set('confirmed_at', $now);
+                    $this->db->set('status_change', '1');
+                    $this->db->where('id_user', $user['id_user']);
+                    $this->db->update('change_email');
+
+                    $this->session->set_flashdata('message', '<div class="alert 
+                    alert-success" role="alert">Penggantian email berhasil, harap login kembali.</div>');
+
+                    redirect('auth');
+                } else {
+                    //Alert token expired
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Anda expired! Mohon hubungi Customer Service.</div>');
+
+                    //Redirect ke Login
+                    redirect('auth');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert 
+                    alert-danger" role="alert">Aktivasi akun gagal! Token tidak valid.</div>');
+
+                redirect('auth');
+            }
+        } else {
+            //Alert email salah
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Penggantian email gagal! Email tidak valid.</div>');
+
+            redirect('auth');
+        }
+    }
+
     public function forgotPassword()
     {
 

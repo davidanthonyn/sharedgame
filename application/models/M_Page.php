@@ -71,4 +71,9 @@ class M_Page extends CI_Model
 		$data = $this->db->query("SELECT * FROM pages WHERE type = '$type'");
 		return $data->result_array();
 	}
+
+	function insert_record($table, $data)
+	{
+		$this->db->insert($table, $data);
+	}
 }
