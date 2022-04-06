@@ -424,6 +424,47 @@ class Admin extends CI_Controller
             redirect('');
         }
 
+        //Mengambil produk
+        $produk = $this->db->get_where('produk', ['id_produk' => $id_produk])->row_array();
+        $this->session->set_userdata($produk);
+
+        $data['title'] = 'Add Product | SharedGame';
+        $data['smalltitle'] = 'Basic Info';
+        $where = array('id_produk' => $id_produk);
+        $wheresatu = array('id_produk' => $id_produk, 'lama_sewa_hari' => '1');
+        $wheretiga = array('id_produk' => $id_produk, 'lama_sewa_hari' => '3');
+        $wheretujuh = array('id_produk' => $id_produk, 'lama_sewa_hari' => '7');
+        //$data['brandEdit'] = $this->Modelproduk->edit_record('brand', $where)->result();
+        $data['productEdit'] = $this->Modelproduk->edit_record('produk', $where)->result();
+        $data['tarifSatu'] = $this->Modelproduk->edit_record('tarifsewa', $wheresatu)->result();
+        $data['tarifTiga'] = $this->Modelproduk->edit_record('tarifsewa', $wheretiga)->result();
+        $data['tarifTujuh'] = $this->Modelproduk->edit_record('tarifsewa', $wheretujuh)->result();
+
+        $data['brand'] = $this->M_Brand->getAllBrand()->result();
+        $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
+
+        $this->load->view('admin/edit-product.php', $data);
+    }
+
+    function proses_edit_data_produk()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        if (!$this->session->userdata('id_produk')) {
+            $this->session->set_flashdata('messagefailed', 'Mohon memasukkan ID untuk edit produk');
+            redirect('admin/kelolaproduk');
+        } else {
+            $produk = $this->db->get_where('produk', ['id_produk' => $this->session->userdata('id_produk')])->row_array();
+        }
+
         $this->form_validation->set_rules('productname', 'Product Name', 'trim|required', [
             'required' => 'Nama Produk harus diisi!'
         ]);
@@ -452,23 +493,84 @@ class Admin extends CI_Controller
             'required' => 'Stok produk harus diisi!'
         ]);
 
+
+
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Add Product | SharedGame';
-            $data['smalltitle'] = 'Basic Info';
-            $where = array('id_produk' => $id_produk);
-            $wheresatu = array('id_produk' => $id_produk, 'lama_sewa_hari' => '1');
-            $wheretiga = array('id_produk' => $id_produk, 'lama_sewa_hari' => '3');
-            $wheretujuh = array('id_produk' => $id_produk, 'lama_sewa_hari' => '7');
-            $data['productEdit'] = $this->Modelproduk->edit_record('produk', $where)->result();
-            $data['tarifSatu'] = $this->Modelproduk->edit_record('tarifsewa', $wheresatu)->result();
-            $data['tarifTiga'] = $this->Modelproduk->edit_record('tarifsewa', $wheretiga)->result();
-            $data['tarifTujuh'] = $this->Modelproduk->edit_record('tarifsewa', $wheretujuh)->result();
+            redirect('admin/edit_data_produk/' .  $this->session->userdata('id_produk'));
+        } else {
+            $id_produk =  $this->input->post('productid');
+            $nama_produk = $this->input->post('productname');
+            $id_brand = $this->input->post('id_brand');
+            $deskripsi = $this->input->post('deskripsi');
+            $satuhari = $this->input->post('priceperday');
+            $tigahari = $this->input->post('price3days');
+            $tujuhhari = $this->input->post('price7days');
+            $gametype = $this->input->post('gametype');
+            $serialproduk = $this->input->post('serialnumber');
+            $avail = $this->input->post('stock');
+            $color = $this->input->post('favcolor');
 
-            $data['brand'] = $this->M_Brand->getAllBrand()->result();
-            $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
+            //Cek jika ada gambar brand yang diupload
+            $upload_product = $_FILES['img']['name'];
 
-            $this->load->view('admin/edit-product.php', $data);
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
+            $this->db->set('nama_produk', $nama_produk);
+            $this->db->set('id_brand', $id_brand);
+            $this->db->set('deskripsi_produk', $deskripsi);
+            $this->db->set('kategori_produk', $gametype);
+            $this->db->set('serial_produk', $serialproduk);
+            $this->db->set('jumlah_tersedia', $avail);
+            $this->db->set('warna_produk', $color);
+            $this->db->where('id_produk',  $id_produk);
+            $this->db->update('produk');
+
+            $datasatuhari = array('tarif_harga' => $satuhari, 'updated_at' => $now);
+            $where_one = "id_produk = " .  $id_produk . "lama_sewa_hari = 1";
+            $this->db->update_integer('tarifsewa', $datasatuhari, $where_one);
+
+            $datatigahari = array('tarif_harga' => $tigahari, 'updated_at' => $now);
+            $where_three = "id_produk = " .  $id_produk . "lama_sewa_hari = 3";
+            $this->db->update_string('tarifsewa', $datatigahari, $where_three);
+
+            $datatujuhhari = array('tarif_harga' => $tujuhhari, 'updated_at' => $now);
+            $where_seven = "id_produk = " .  $id_produk . "lama_sewa_hari = 7";
+            $this->db->update_string('tarifsewa', $datatujuhhari, $where_seven);
+
+            $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id_produk])->row_array();
+
+            if ($upload_product) {
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size']     = '5120';
+                $config['upload_path']     = './assets/img/product/';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('img')) {
+                    $old_product = $data['produk']['gambar_produk'];
+                    unlink(FCPATH . 'assets/img/product/' . $old_product);
+
+                    //Jika upload produk berhasil
+                    $new_product = $this->upload->data('file_name');
+                    $this->db->set('gambar_produk', $new_product);
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $this->session->unset_userdata($produk);
+
+            $this->session->set_flashdata('messagesuccess', 'Edit Produk ' . $nama_produk . ' Berhasil');
+            redirect('admin/kelolaproduk');
         }
+    }
+
+    function batalEditProduk()
+    {
+        $this->session->unset_userdata('id_produk');
+        redirect('admin/kelolaproduk');
     }
 
     //contoh
@@ -691,6 +793,41 @@ class Admin extends CI_Controller
             $data['smalltitle'] = 'Daftar Kritik/Saran';
             $data['cs'] = $this->M_CustomerService->tampilkanDataCS()->result();
             $this->load->view('admin/manage-contactusquery.php', $data);
+        } else {
+            redirect('');
+        }
+    }
+
+    function managesells()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1') {
+            $data['title'] = 'Performa Sewa Produk | SharedGame';
+            $data['smalltitle'] = 'Performa Sewa Produk';
+            //$data['cs'] = $this->M_CustomerService->tampilkanDataCS()->result();
+            $this->load->view('admin/manage-sells.php', $data);
+        } else {
+            redirect('');
+        }
+    }
+
+    function delete_data_produk($id_produk)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1') {
+            $where = array('id_produk' => $id_produk);
+            $this->M_Brand->delete_record($where, 'produk');
+            redirect('admin/kelolaproduk');
         } else {
             redirect('');
         }

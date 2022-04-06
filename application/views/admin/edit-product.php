@@ -1,80 +1,3 @@
-<?php
-/*
-//session_start();
-error_reporting(0);
-//include('includes/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-
-	if (isset($_POST['submit'])) {
-		$vehicletitle = $_POST['vehicletitle'];
-		$brand = $_POST['brandname'];
-		$vehicleoverview = $_POST['vehicalorcview'];
-		$priceperday = $_POST['priceperday'];
-		$fueltype = $_POST['fueltype'];
-		$modelyear = $_POST['modelyear'];
-		$seatingcapacity = $_POST['seatingcapacity'];
-		$vimage1 = $_FILES["img1"]["name"];
-		$vimage2 = $_FILES["img2"]["name"];
-		$vimage3 = $_FILES["img3"]["name"];
-		$vimage4 = $_FILES["img4"]["name"];
-		$vimage5 = $_FILES["img5"]["name"];
-		$airconditioner = $_POST['airconditioner'];
-		$powerdoorlocks = $_POST['powerdoorlocks'];
-		$antilockbrakingsys = $_POST['antilockbrakingsys'];
-		$brakeassist = $_POST['brakeassist'];
-		$powersteering = $_POST['powersteering'];
-		$driverairbag = $_POST['driverairbag'];
-		$passengerairbag = $_POST['passengerairbag'];
-		$powerwindow = $_POST['powerwindow'];
-		$cdplayer = $_POST['cdplayer'];
-		$centrallocking = $_POST['centrallocking'];
-		$crashcensor = $_POST['crashcensor'];
-		$leatherseats = $_POST['leatherseats'];
-		move_uploaded_file($_FILES["img1"]["tmp_name"], "img/vehicleimages/" . $_FILES["img1"]["name"]);
-		move_uploaded_file($_FILES["img2"]["tmp_name"], "img/vehicleimages/" . $_FILES["img2"]["name"]);
-		move_uploaded_file($_FILES["img3"]["tmp_name"], "img/vehicleimages/" . $_FILES["img3"]["name"]);
-		move_uploaded_file($_FILES["img4"]["tmp_name"], "img/vehicleimages/" . $_FILES["img4"]["name"]);
-		move_uploaded_file($_FILES["img5"]["tmp_name"], "img/vehicleimages/" . $_FILES["img5"]["name"]);
-
-		$sql = "INSERT INTO tblvehicles(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,SeatingCapacity,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AirConditioner,PowerDoorLocks,AntiLockBrakingSystem,BrakeAssist,PowerSteering,DriverAirbag,PassengerAirbag,PowerWindows,CDPlayer,CentralLocking,CrashSensor,LeatherSeats) VALUES(:vehicletitle,:brand,:vehicleoverview,:priceperday,:fueltype,:modelyear,:seatingcapacity,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:airconditioner,:powerdoorlocks,:antilockbrakingsys,:brakeassist,:powersteering,:driverairbag,:passengerairbag,:powerwindow,:cdplayer,:centrallocking,:crashcensor,:leatherseats)";
-		$query = $dbh->prepare($sql);
-		$query->bindParam(':vehicletitle', $vehicletitle, PDO::PARAM_STR);
-		$query->bindParam(':brand', $brand, PDO::PARAM_STR);
-		$query->bindParam(':vehicleoverview', $vehicleoverview, PDO::PARAM_STR);
-		$query->bindParam(':priceperday', $priceperday, PDO::PARAM_STR);
-		$query->bindParam(':fueltype', $fueltype, PDO::PARAM_STR);
-		$query->bindParam(':modelyear', $modelyear, PDO::PARAM_STR);
-		$query->bindParam(':seatingcapacity', $seatingcapacity, PDO::PARAM_STR);
-		$query->bindParam(':vimage1', $vimage1, PDO::PARAM_STR);
-		$query->bindParam(':vimage2', $vimage2, PDO::PARAM_STR);
-		$query->bindParam(':vimage3', $vimage3, PDO::PARAM_STR);
-		$query->bindParam(':vimage4', $vimage4, PDO::PARAM_STR);
-		$query->bindParam(':vimage5', $vimage5, PDO::PARAM_STR);
-		$query->bindParam(':airconditioner', $airconditioner, PDO::PARAM_STR);
-		$query->bindParam(':powerdoorlocks', $powerdoorlocks, PDO::PARAM_STR);
-		$query->bindParam(':antilockbrakingsys', $antilockbrakingsys, PDO::PARAM_STR);
-		$query->bindParam(':brakeassist', $brakeassist, PDO::PARAM_STR);
-		$query->bindParam(':powersteering', $powersteering, PDO::PARAM_STR);
-		$query->bindParam(':driverairbag', $driverairbag, PDO::PARAM_STR);
-		$query->bindParam(':passengerairbag', $passengerairbag, PDO::PARAM_STR);
-		$query->bindParam(':powerwindow', $powerwindow, PDO::PARAM_STR);
-		$query->bindParam(':cdplayer', $cdplayer, PDO::PARAM_STR);
-		$query->bindParam(':centrallocking', $centrallocking, PDO::PARAM_STR);
-		$query->bindParam(':crashcensor', $crashcensor, PDO::PARAM_STR);
-		$query->bindParam(':leatherseats', $leatherseats, PDO::PARAM_STR);
-		$query->execute();
-		$lastInsertId = $dbh->lastInsertId();
-		if ($lastInsertId) {
-			$msg = "Vehicle posted successfully";
-		} else {
-			$error = "Something went wrong. Please try again";
-		}
-	}
-
-*/
-?>
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -161,10 +84,11 @@ if (strlen($_SESSION['alogin']) == 0) {
 									<div class="panel-body">
 										<?php
 										foreach ($productEdit as $listProductEdit) { ?>
-											<form method="post" action="<?php echo base_url() . 'Admin/edit_data_produk'; ?>" class="form-horizontal" enctype="multipart/form-data">
+											<form method="post" action="<?php echo base_url() . 'Admin/proses_edit_data_produk'; ?>" class="form-horizontal" enctype="multipart/form-data">
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 													<div class="col-sm-4">
+														<input type="text" value="<?= $listProductEdit->id_produk ?>" name="productid" id="productid" class="form-control" disabled>
 														<input type="text" value="<?= $listProductEdit->nama_produk ?>" name="productname" id="productname" class="form-control">
 														<?= form_error('productname', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
@@ -175,7 +99,10 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 															<?php foreach ($brand as $listBrand) { ?>
 
-																<option value="<?php echo $listBrand->id_brand ?>">
+
+																<option value="<?php echo $listBrand->id_brand ?>" <?php if ($listBrand->id_brand == $listProductEdit->id_brand) {
+																														echo "selected";
+																													} ?>>
 
 																	<?php echo $listBrand->nama_brand ?>
 
@@ -183,6 +110,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 															<?php } ?>
 														</select>
+
 													</div>
 												</div>
 
@@ -190,7 +118,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Deskripsi Produk<span style="color:red">*</span></label>
 													<div class="col-sm-10">
-														<textarea value="<?= $listProductEdit->deskripsi_produk ?>" name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"></textarea>
+														<textarea value="<?= $listProductEdit->deskripsi_produk ?>" name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"><?= $listProductEdit->deskripsi_produk ?></textarea>
 
 														<?= form_error('deskripsi', '<small class="text-danger pl-3">', '</small>'); ?>
 														<script>
@@ -213,14 +141,14 @@ if (strlen($_SESSION['alogin']) == 0) {
 													<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
 													<div class="col-sm-4">
 														<?php foreach ($tarifSatu as $listTarifSatu) { ?>
-															<input type="text" value="<?= $listTarifSatu->tarif_harga ?>" name="priceperday" id="priceperday" class="form-control">
+															<input type="text" value="<?= $listTarifSatu->tarif_harga ?>" name="priceperday" id="priceperday" class="form-control" onkeypress="return onlyNumberKey(event)">
 														<?php } ?>
 														<?= form_error('priceperday', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 													<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
 													<div class="col-sm-4">
 														<?php foreach ($tarifTiga as $listTarifTiga) { ?>
-															<input type="text" value="<?= $listTarifTiga->tarif_harga ?>" name="price3days" id="price3days" class="form-control">
+															<input type="text" value="<?= $listTarifTiga->tarif_harga ?>" name="price3days" id="price3days" class="form-control" onkeypress="return onlyNumberKey(event)">
 														<?php } ?>
 														<?= form_error('price3days', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
@@ -230,17 +158,28 @@ if (strlen($_SESSION['alogin']) == 0) {
 													<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
 													<div class="col-sm-4">
 														<?php foreach ($tarifTujuh as $listTarifTujuh) { ?>
-															<input type="text" value="<?= $listTarifTujuh->tarif_harga ?>" name="price7days" id="price7days" class="form-control">
+															<input type="text" value="<?= $listTarifTujuh->tarif_harga ?>" name="price7days" id="price7days" class="form-control" onkeypress="return onlyNumberKey(event)">
 														<?php } ?>
 														<?= form_error('price7days', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 													<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<select class="selectpicker" name="gametype" id="gametype" required>
 
-															<option value="console">Console</option>
-															<option value="game_physics">Game Physics</option>
-															<option value="CNG">Game Gear</option>
+
+														<select class="selectpicker" name="gametype" id="gametype" required>
+															<?php if ($listProductEdit->kategori_produk == "console") { ?>
+																<option value="console">Console</option>
+																<option value="game_physics">Game Physics</option>
+																<option value="game_gear">Game Gear</option>
+															<?php } else if ($listProductEdit->kategori_produk == "game_physics") { ?>
+																<option value="game_physics">Game Physics</option>
+																<option value="console">Console</option>
+																<option value="game_gear">Game Gear</option>
+															<?php } else if ($listProductEdit->kategori_produk == "game_gear") { ?>
+																<option value="game_gear">Game Gear</option>
+																<option value="console">Console</option>
+																<option value="game_physics">Game Physics</option>
+															<?php } ?>
 														</select>
 													</div>
 												</div>
@@ -253,7 +192,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 													</div>
 													<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input value="<?= $listProductEdit->jumlah_tersedia ?>" type="text" name="stock" id="stock" class="form-control">
+														<input value="<?= $listProductEdit->jumlah_tersedia ?>" type="text" name="stock" id="stock" class="form-control" onkeypress="return onlyNumberKey(event)">
 														<?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 												</div>
@@ -409,7 +348,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 										}
 					?>
 					</form>
-					<button class="btn btn-default"><a href="<?php echo base_url() . "admin/kelolaproduk"; ?>">Cancel</a></button>
+					<button class="btn btn-default"><a href="<?php echo base_url() . "admin/batalEditProduk"; ?>">Cancel</a></button>
 					</div>
 				</div>
 			</div>
@@ -426,13 +365,6 @@ if (strlen($_SESSION['alogin']) == 0) {
 	</div>
 	</div>
 	<!-- Loading Scripts -->
-	<script>
-		function CKupdate() {
-			for (instance in CKEDITOR.instance) {
-				CKEDITOR.instances[''].updateElement();
-			}
-		}
-	</script>
 
 	<!-- Loading Scripts -->
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>
@@ -444,6 +376,16 @@ if (strlen($_SESSION['alogin']) == 0) {
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
+	<script>
+		function onlyNumberKey(evt) {
+
+			// Only ASCII character in that range allowed
+			var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+			if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+				return false;
+			return true;
+		}
+	</script>
 </body>
 
 </html>

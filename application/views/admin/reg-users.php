@@ -29,6 +29,8 @@
 	<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
 
 	<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 </head>
 <style>
 	table {
@@ -70,6 +72,7 @@
 									$this->session->unset_userdata('messagefailed');
 								}
 								?>
+
 								<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
@@ -135,11 +138,7 @@
 
 									</tbody>
 								</table>
-								<script>
-									$(document).ready(function() {
-										$('#zctb').DataTable();
-									});
-								</script>
+
 
 
 
@@ -166,6 +165,11 @@
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 	<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#zctb').DataTable();
+		});
+	</script>
 
 </body>
 

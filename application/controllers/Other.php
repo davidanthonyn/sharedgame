@@ -10,7 +10,7 @@ class Other extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('M_Page');
     }
-
+    /*
     function index()
     {
         $data["page"] = $this->M_Page->GetPageByType($type);
@@ -20,6 +20,11 @@ class Other extends CI_Controller
         $this->load->view('game-listing.php', $data);
         //$this->load->view('includes/footer.php', $data);
         $this->footer();
+    }*/
+
+    function index()
+    {
+        redirect('other/info/aboutus');
     }
 
     function info($type)

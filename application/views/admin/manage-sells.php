@@ -9,7 +9,7 @@
 		<meta name="author" content="">
 		<meta name="theme-color" content="#3e454c">
 
-		<title><?= $title ?></title>
+		<title><?= $title; ?></title>
 
 		<!-- Font awesome -->
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/font-awesome.min.css">
@@ -45,6 +45,13 @@
 				-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 			}
+
+			.dot {
+				height: 25px;
+				width: 25px;
+				border-radius: 50%;
+				display: inline-block;
+			}
 		</style>
 
 	</head>
@@ -60,55 +67,13 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Manage Contact Us Queries</h2>
+							<h2 class="page-title"><?= $title ?></h2>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
-								<div class="panel-heading">User queries</div>
+								<div class="panel-heading"><?= $smalltitle ?></div>
 								<div class="panel-body">
-
-									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Nama Lengkap</th>
-												<th>Create at</th>
-												<th>Status</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>Nama Lengkap</th>
-												<th>Create at</th>
-												<th>Status</th>
-												<th>Action</th>
-											</tr>
-											</tr>
-										</tfoot>
-										<tbody>
-
-											<?php
-											if (!empty($cs)) {
-												foreach ($cs as $listcs) {				?>
-													<tr>
-														<td><?php echo $listcs->id_cs; ?></td>
-														<td><?php echo $listcs->nama_lengkap; ?></td>
-														<td><?php echo $listcs->created_at; ?></td>
-														<td><?php echo $listcs->status; ?></td>
-														<td>
-															<a href="<?php echo base_url() . 'cs/edit_data/' . $listcs->id_cs; ?>">Balas</a> ||
-															<a href="<?php echo base_url() . 'cs/delete_data/' . $listcs->id_cs; ?>">Abaikan</a>
-														</td>
-													</tr>
-											<?php //$cnt = $cnt + 1;
-												}
-											} ?>
-
-										</tbody>
-									</table>
-
+									<canvas id="myChart" width="400" height="400"></canvas>
 
 
 								</div>
@@ -122,7 +87,43 @@
 				</div>
 			</div>
 		</div>
-
+		<script>
+			const ctx = document.getElementById('myChart').getContext('2d');
+			const myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+					datasets: [{
+						label: '# of Votes',
+						data: [12, 19, 3, 5, 2, 3],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+		</script>
 		<!-- Loading Scripts -->
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap-select.min.js"></script>
@@ -133,6 +134,7 @@
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
+		<script src="<?php echo base_url() . "chartjs/"; ?>chart.min.js"></script>
 	</body>
 
 	</html>

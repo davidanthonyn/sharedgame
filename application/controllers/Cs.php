@@ -32,4 +32,7 @@ class Cs extends CI_Controller
         }
     }
 
+    function delete_data($id_cs)
+    {
+    }
 }

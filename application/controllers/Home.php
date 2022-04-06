@@ -88,6 +88,8 @@ class Home extends CI_Controller
 
         //Menjalankan model home untuk mengirim data ke tabel newsletter
         $this->M_Home->insert_record('newsletter', $data);
+        //Alert berhasil
+        $this->session->flashdata('flash', 'Ditambahkan');
         redirect(base_url());
         //}
     }

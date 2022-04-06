@@ -35,25 +35,26 @@
 				</ul>
 			</li>
 			<li><a href="manage-bookings.php"><i class="fa fa-users"></i>Booking</a>
-			<ul>
-					
+				<ul>
+
 					<li><a href="<?= base_url('Booking/manage');
 									?>">Booking/Transaksi</a></li>
 				</ul>
 
 				<ul>
-					
+
 					<li><a href="<?= base_url('Booking/kelola');
 									?>">Produk Booking</a></li>
-				</ul>	
-		
-		
-		
-		</li>
-			
+				</ul>
 
 
-			<li><a href="manage-subscribers.php"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
+
+			</li>
+
+
+
+			<li><a href="<?= base_url('Admin/managesells');
+							?>"><i class="fa fa-table"></i>Performa Sewa Produk</a></li>
 
 			<!--
 			

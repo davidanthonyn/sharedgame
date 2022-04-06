@@ -38,20 +38,20 @@
   <!-- Banners -->
   <section id="banner" class="banner-section">
     <div class="container">
-      <div class="div_zindex">
-        <div class="row">
-          <div class="col-md-5 col-md-push-7">
-            <div class="banner_content">
-              <h1>
-                <?= $bannerbig; ?>
-              </h1>
-              <p>
-                <?= $bannersmall; ?>
-              </p>
-            </div>
+
+      <div class="row">
+        <div class="col-md-5 col-md-push-7">
+          <div class="banner_content">
+            <h1>
+              <?= $bannerbig; ?>
+            </h1>
+            <p>
+              <?= $bannersmall; ?>
+            </p>
           </div>
         </div>
       </div>
+    </div>
   </section>
   <!-- /Banners -->
 
@@ -217,6 +217,8 @@
   <!--Slider-JS-->
   <script src="<?php echo base_url() . "assets/"; ?>js/slick.min.js"></script>
   <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
+  <script src="<?php echo base_url() . "sweetalert/"; ?>sweetalert2.all.min.js"></script>
+  <script src="<?php echo base_url() . "assets/"; ?>js/my-script.js"></script>
 
 </body>
 
