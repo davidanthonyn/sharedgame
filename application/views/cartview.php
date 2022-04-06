@@ -223,42 +223,18 @@
 
             </div>
 
-            <div class="product">
-
-              <img src="bag1.jpg">
-
-              <div class="product-info">
-
-                <h3 class="product-name">logitech g29</h3>
-
-                <h4 class="product-price">Rp 100.000</h4>
-
-                <h4 class="product-offer">40%</h4>
-
-                <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
-                                                                                                            ?>" required />
-
-                <p class="product-remove">
-
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-
-                  <span class="remove">Remove</span>
-
-                </p>
-
-              </div>
-
-            </div>
+            
 
           </div>
 
           <div class="cart-total">
-
+          <?php
+                                        foreach ($keranjang as $totalkeranjang) { ?>
             <p>
 
               <span>Total Price</span>
 
-              <span>Rp 3,000</span>
+              <span><?= $totalkeranjang->total_pembayaran ?></span>
 
             </p>
 
@@ -266,7 +242,7 @@
 
               <span>Number of Items</span>
 
-              <span>2</span>
+              <span><?= $totalkeranjang->jumlah_produk ?></span>
 
             </p>
 
@@ -277,9 +253,11 @@
               <span>Rp 1,000</span>
 
             </p>
-
+            <?php
+                                        }
+                    ?>
             <a href="#">Proceed to Checkout</a>
-
+           
           </div>
 
         </div>
