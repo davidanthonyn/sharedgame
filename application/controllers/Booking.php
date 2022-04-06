@@ -33,6 +33,8 @@ class Booking extends CI_Controller
         } else {
             redirect('');
         }
+
+        
     }
 
 
@@ -74,41 +76,8 @@ class Booking extends CI_Controller
         }
     }
 
-    function proses_edit_data()
-    {
-        $this->form_validation->set_rules('rekening', 'text', 'trim|required', [
-            'required' => 'Rekening harus diisi!'
-        ]);
-
-        if ($this->form_validation->run() == false) {
-            $data['title'] = 'Edit Rekening | SharedGame';
-            //Jika validasi salah
-            $this->session->set_flashdata('message_error', 'Edit Rekening Gagal.');
-            redirect('rekening/kelola');
-        } else {
-            $id = $this->input->post('idrekening');
-            $norekening = $this->input->post('no_rekening');
-            $namabank = $this->input->post('rekening');
-            $status = $this->input->post('status');
-
-           
-
-            $data = array(
-                'no_rekening_toko' => $norekening,
-                'bank_rekening_toko' => $namabank,
-                'status_rekening_toko' => $status
-            );
-
-            $where = array(
-                'id_rekening_toko' => $id
-            );
-
-            $this->M_Rekening->update_record($where, $data, 'rekeningtoko');
-            redirect('Rekening/kelola');
-        }
-    }
-
-    function delete_data($id_rekening)
+   
+    function deletebooking($id_booking)
     {
         if (!$this->session->userdata('email')) {
             redirect('');
@@ -116,10 +85,27 @@ class Booking extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
         if ($data['user']['id_role'] == '1') {
-            $this->load->model('M_Rekening');
-            $where = array('id_rekening_toko' => $id_rekening);
-            $this->M_Rekening->delete_record($where, 'rekeningtoko');
-            redirect('Rekening/kelola');
+            $this->load->model('M_Booking');
+            $where = array('id_booking' => $id_booking);
+            $this->M_Booking->delete_record($where, 'booking');
+            redirect('Booking/manage');
+        } else {
+            redirect('');
+        }
+    } 
+
+    function deletedetail_booking($id_detail_booking)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+        if ($data['user']['id_role'] == '1') {
+            $this->load->model('M_Booking');
+            $where = array('id_detail_booking' => $id_detail_booking);
+            $this->M_Booking->delete_record($where, 'detailbooking');
+            redirect('Booking/kelola');
         } else {
             redirect('');
         }

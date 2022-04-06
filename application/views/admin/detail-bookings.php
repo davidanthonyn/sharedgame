@@ -62,7 +62,7 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Manage Booking</h2>
+							<h2 class="page-title">Manage Detail Booking</h2>
 							
 
 							<?php
@@ -87,7 +87,6 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>id detail booking</th>
 												<th>id booking</th>
 												<th>id_produk</th>
 												<th>qty produk</th>
@@ -101,7 +100,6 @@
 										<tfoot>
 											<tr>
 											<th>#</th>
-												<th>id detail booking</th>
 												<th>id booking</th>
 												<th>id_produk</th>
 												<th>qty produk</th>
@@ -125,8 +123,7 @@
 													<td><?php echo $listbooking->tgl_jam_awal_sewa ?></td>
                                                     <td><?php echo $listbooking->tgl_jam_akhir_sewa ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'booking/edit_data/' . $listbooking->id_booking; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'booking/delete_data/' . $listbooking->id_booking; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'booking/deletedetail_booking/' . $listbooking->id_detail_booking; ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php

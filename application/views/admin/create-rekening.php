@@ -96,7 +96,7 @@
                                             <div class="form-group">
 												<label class="col-sm-4 control-label">No Rekening Bank</label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control" name="NoRekening" id="NoRekening">
+													<input type="number" class="form-control" name="NoRekening" id="NoRekening">
 													<?= form_error('NoRekening', '<small class="text-danger pl-3">', '</small>'); ?>
 												</div>
 												<br>

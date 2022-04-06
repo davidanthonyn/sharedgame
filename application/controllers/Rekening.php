@@ -27,11 +27,11 @@ class Rekening extends CI_Controller
         }
 
         $this->form_validation->set_rules('NamaBank', 'text', 'trim|required', [
-            'required' => 'NamaBank harus diisi!'
+            'required' => 'Nama Bank harus diisi!'
         ]);
 
-        $this->form_validation->set_rules('NoRekening', 'text', 'trim|required', [
-            'required' => 'NoRekening harus diisi!'
+        $this->form_validation->set_rules('NoRekening', 'text', 'trim|required|min_length[10]', [
+            'required' => 'No Rekening harus diisi!'
         ]);
 
         if ($this->form_validation->run() == false) {

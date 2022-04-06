@@ -86,7 +86,6 @@
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
 											<tr>
-												<th>#</th>
 												<th>id booking</th>
 												<th>id transaksi</th>
 												<th>id user</th>
@@ -99,7 +98,6 @@
 										</thead>
 										<tfoot>
 											<tr>
-											<th>#</th>
 												<th>id booking</th>
 												<th>id transaksi</th>
 												<th>id user</th>
@@ -117,10 +115,9 @@
 													<td><?php echo $listbooking->id_transaksi ?></td>
 
 													<td><?php echo $listbooking->id_user ?></td>
-                                                    <td><?php echo $listrekening->created_at ?></td>
+                                                    <td><?php echo $listbooking->created_at ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'booking/edit_data/' . $listbooking->id_booking; ?>">Edit</a> ||
-														<a href="<?php echo base_url() . 'booking/delete_data/' . $listbooking->id_booking; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'booking/deletebooking/' . $listbooking->id_booking; ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php

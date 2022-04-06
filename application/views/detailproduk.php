@@ -95,7 +95,7 @@ error_reporting(0);
                   <div class="form-group">
                     <label>Quantity: </label>
                     <div class="input-group">
-                      <input type="number" id="myNumber" class="form-control input-number" value="1" min = "1" max = "<?php echo $data[0]['jumlah_tersedia']; ?>" required />
+                      <input type="number" id="myNumber" class="form-control input-number" value="1" min = "1" max = "<?php echo $data[0]['jumlah_tersedia']; ?>" onKeyDown="return false" required />
                     </div>
                   </div>
 
