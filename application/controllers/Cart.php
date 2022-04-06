@@ -10,19 +10,39 @@ class Cart extends CI_Controller
         parent::__construct();
         $this->load->library('cart');
         $this->load->model('M_Cart');
+        $this->load->model('M_Page');
+        $this->load->model('Modelproduk');
     }
 
     public function index()
     {
-        redirect('cart/tampil_cart');
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Mohon login untuk dapat mengakses keranjang belanja.</div>');
+            redirect('');
+        }
+
+        $data['title'] = 'Cart | SharedGame';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
+        $data['detailcart'] = $this->M_Cart->get_all_detail_cart()->result();
+       
+       
+        //$where = array('id_produk' => $id);
+        //$data["data"] = $this->Modelproduk->GetProdukById($id);
+
+        $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert" style="text-align:center;">Untuk dapat melanjutkan checkout, mohon lengkapi data pribadi dan identitas resmi Anda terlebih dahulu.</div>');
+
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('cartview.php', $data);
+        $this->footer();
     }
 
-    public function tampil_cart()
+    public function footer()
     {
-        $data['kategori'] = $this->M_Cart->get_brand_all();
-        //$this->load->view('themes/header',$data);
-        $this->load->view('v_cart.php', $data);
-        //$this->load->view('themes/footer');
+        $data['pages'] = $this->M_Page->getAllRowPages()->result();
+        $this->load->view('includes/footer.php', $data);
     }
 
     public function check_out()
@@ -35,6 +55,29 @@ class Cart extends CI_Controller
 
     function tambah_keranjang()
     {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['cart'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $qty = $this->input->post('myNumber');
+        $total = $this->input->post('price');
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        if ($data['cart'] == null) {
+            $data = [
+                'id_user' => $this->session->userdata('id_user'),
+                'jumlah_produk' => $qty,
+                'total_pembayaran' => $total,
+                'updated_at' => $now
+                
+            ];
+
+            //Kirim ke tabel user
+            $this->db->insert('cart', $data);
+        } else{
+           // UPDATE table SET quantity = quantity + 5 WHERE Item_id = <x>
+        }
+
         $data_produk = array(
             'id' => $this->input->post('id'),
             'name' => $this->input->post('nama'),

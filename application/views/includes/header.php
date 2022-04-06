@@ -86,6 +86,8 @@
             <li><a href="<?php echo base_url() . 'other/info/faq' ?>">FAQ</a></li>
 
             <li><a href="<?php echo base_url() . 'Contact' ?>">Contact Us</a></li>
+            
+            <li><a href="<?php echo base_url() . 'Cart' ?>">Cart</a></li>
 
 
             <!---

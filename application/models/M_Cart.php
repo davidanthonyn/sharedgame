@@ -47,4 +47,10 @@ class M_Cart extends CI_model
         $query = $this->db->get('brand');
         return $query->result_array();
     }
+
+    public function get_all_detail_cart()
+    {
+        $data = $this->db->query("SELECT * FROM detailcart JOIN produk ON detailcart.id_produk = produk.id_produk");
+        return $data;
+    }
 }
