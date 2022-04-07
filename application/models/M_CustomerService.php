@@ -46,4 +46,10 @@ class M_CustomerService extends CI_Model
         $query = $this->db->query('SELECT * FROM customerservice WHERE id_cs != 1');
         return $query;
     }
+
+    function delete_record($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
 }

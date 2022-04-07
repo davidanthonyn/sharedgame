@@ -591,7 +591,7 @@ class Admin extends CI_Controller
 
             $datasatuhari = array('tarif_harga' => $satuhari, 'updated_at' => $now);
             $where_one = "id_produk = " .  $id_produk . "lama_sewa_hari = 1";
-            $this->db->update_integer('tarifsewa', $datasatuhari, $where_one);
+            $this->db->update_string('tarifsewa', $datasatuhari, $where_one);
 
             $datatigahari = array('tarif_harga' => $tigahari, 'updated_at' => $now);
             $where_three = "id_produk = " .  $id_produk . "lama_sewa_hari = 3";

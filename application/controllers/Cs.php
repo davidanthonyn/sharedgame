@@ -9,7 +9,7 @@ class Cs extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         //Model M_Brand pada fungsi tambahDataCustomer
-        //$this->load->model('M_Rekening');
+        $this->load->model('M_CustomerService');
     }
 
     function edit_data($id_cs)
@@ -34,5 +34,19 @@ class Cs extends CI_Controller
 
     function delete_data($id_cs)
     {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '1' || $data['user']['id_role'] == '2') {
+            //$this->load->model('M_Rekening');
+            $where = array('id_cs' => $id_cs);
+            $this->M_CustomerService->delete_record($where, 'customerservice');
+            redirect('admin/managecs');
+        } else {
+            redirect('');
+        }
     }
 }
