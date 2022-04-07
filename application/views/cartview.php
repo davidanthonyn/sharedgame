@@ -193,71 +193,81 @@
 
         <div class="cart">
 
+
           <div class="products">
 
-            <div class="product">
+            <?php foreach ($productcart as $cart) { ?>
+              <div class="product">
 
-              <img src="shoes.jpg">
+                <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
 
-              <div class="product-info">
+                <div class="product-info">
 
-                <h3 class="product-name">Playstation 5 </h3>
-
-                <h4 class="product-price">Rp 250.000</h4>
-
-                <h4 class="product-offer">50%</h4>
-
-                <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
-                                                                                                            ?>" required />
+                  <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                <p class="product-remove">
+                  <h4 class="product-price">Rp. <?= $cart->tarif_harga ?>,-</h4>
 
-                  <i class="fa fa-trash" aria-hidden="true"></i>
 
-                  <span class="remove">Remove</span>
+                  <h4 class="product-offer">Lama Sewa <select id="cars">
+                      <option value="volvo">1 Hari</option>
+                      <option value="saab">3 Hari</option>
+                      <option value="opel">7 Hari</option>
+                    </select></h4>
 
-                </p>
+
+                  <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
+                                                                                                              ?>" required />
+
+
+                  <p class="product-remove">
+
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+
+                    <span class="remove">Remove</span>
+
+                  </p>
+
+                </div>
 
               </div>
+            <?php }
 
-            </div>
-
-            
+            ?>
 
           </div>
 
           <div class="cart-total">
-          <?php
-                                        foreach ($keranjang as $totalkeranjang) { ?>
-            <p>
-
-              <span>Total Price</span>
-
-              <span><?= $totalkeranjang->total_pembayaran ?></span>
-
-            </p>
-
-            <p>
-
-              <span>Number of Items</span>
-
-              <span><?= $totalkeranjang->jumlah_produk ?></span>
-
-            </p>
-
-            <p>
-
-              <span>You Save</span>
-
-              <span>Rp 1,000</span>
-
-            </p>
             <?php
-                                        }
-                    ?>
+            foreach ($keranjang as $totalkeranjang) { ?>
+              <p>
+
+                <span>Total Price</span>
+
+                <span><?= $totalkeranjang->total_pembayaran ?></span>
+
+              </p>
+
+              <p>
+
+                <span>Number of Items</span>
+
+                <span><?= $totalkeranjang->jumlah_produk ?></span>
+
+              </p>
+
+              <p>
+
+                <span>You Save</span>
+
+                <span>Rp 1,000</span>
+
+              </p>
+            <?php
+            }
+            ?>
             <a href="#">Proceed to Checkout</a>
-           
+
           </div>
 
         </div>

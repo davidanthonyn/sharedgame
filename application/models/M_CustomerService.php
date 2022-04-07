@@ -52,4 +52,9 @@ class M_CustomerService extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+
+    function edit_record($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
 }

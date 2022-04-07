@@ -26,7 +26,7 @@ class Cs extends CI_Controller
             $where = array('id_cs' => $id_cs);
             $data['CSEdit'] = $this->M_CustomerService->edit_record('customerservice', $where)->result();
             //$data['status'] = $this->M_Rekening->AllRekening()->result();
-            $this->load->view('admin/edit-rekening', $data);
+            $this->load->view('admin/reply-cs', $data);
         } else {
             redirect('');
         }

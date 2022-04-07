@@ -48,9 +48,46 @@ class M_Cart extends CI_model
         return $query->result_array();
     }
 
-    public function get_all_detail_cart()
+    public function get_detail_cart($id_cart)
     {
-        $data = $this->db->query("SELECT * FROM detailcart JOIN produk ON detailcart.id_produk = produk.id_produk");
+        $data = $this->db->query("SELECT * FROM detailcart 
+        JOIN produk
+           ON detailcart.id_produk = produk.id_produk
+           JOIN tarifsewa
+           ON detailcart.id_tarif_sewa = tarifsewa.id_tarif_sewa 
+           JOIN cart ON detailcart.id_cart = cart.id_cart 
+           WHERE detailcart.id_cart = " . $id_cart . "
+        ORDER BY detailcart.start_plan DESC");
+
         return $data;
+    }
+
+    public function get_product_detail_cart()
+    {
+        $data = $this->db->query("SELECT *, produk.nama_produk FROM detailcart JOIN produk ON detailcart.id_produk = produk.id_produk");
+        return $data;
+    }
+
+    public function get_price_detail_cart()
+    {
+        $data = $this->db->query("SELECT *, tarif_harga, lama_sewa_hari FROM detailcart JOIN tarifsewa ON detailcart.id_tarif_sewa = tarifsewa.id_tarif_sewa");
+        return $data;
+    }
+
+    public function get_row_detail_cart($id_cart)
+    {
+        $data = $this->db->query("SELECT * FROM detailcart WHERE id_cart =" . $id_cart);
+        return $data;
+
+        //coba sql query
+        /*
+        SELECT * FROM detailcart 
+JOIN produk
+   ON detailcart.id_produk = produk.id_produk
+   JOIN tarifsewa
+   ON detailcart.id_tarif_sewa = tarifsewa.id_tarif_sewa 
+   JOIN cart ON detailcart.id_cart = cart.id_cart 
+   WHERE detailcart.id_cart = 1
+ORDER BY detailcart.start_plan DESC*/
     }
 }

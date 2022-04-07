@@ -66,23 +66,38 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">User queries</div>
                             <div class="panel-body">
+                                <?php foreach($CSEdit as $detilCS) : ?>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Serial Produk<span style="color:red">*</span></label>
+                                    <label class="col-sm-2 control-label">Nama Lengkap<span style="color:red">*</span></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="serialnumber" id="serialnumber" class="form-control">
                                         <?= form_error('serialnumber', '<small class="text-danger pl-3">', '</small>'); ?>
                                     </div>
-                                    <label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
+                                    <label class="col-sm-2 control-label">Email<span style="color:red">*</span></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="stock" id="stock" class="form-control" onkeypress="return onlyNumberKey(event)">
                                         <?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="hr-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nomor HP<span style="color:red">*</span></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="serialnumber" id="serialnumber" class="form-control" value="<?php echo  ?>">
+                                        <?= form_error('serialnumber', '<small class="text-danger pl-3">', '</small>'); ?>
+                                    </div>
 
+                                </div>
+                                <div class="hr-dashed"></div>
+                                <label class="col-sm-2 control-label">Pesan<span style="color:red">*</span></label>
+                                <div class="col-sm-4">
+                                    <textarea type="text" name="stock" id="stock" class="form-control"></textarea>
+                                    <?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
+                                </div>
 
-
+<?php endforeach; ?>
 
                             </div>
                         </div>
