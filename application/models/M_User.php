@@ -169,7 +169,7 @@ class M_User extends CI_model
 
     public function tambahUserTokenChange()
     {
-        $email = $this->input->post('newemail', true);
+        $emailbaru = $this->input->post('newemail');
 
         //Set waktu untuk created at dan updated at
         $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
@@ -178,7 +178,7 @@ class M_User extends CI_model
         //Siapkan token untuk aktivasi akun
         $token = base64_encode(random_bytes(32));
         $user_token = [
-            'email' => $email,
+            'email' => $emailbaru,
             'token' => $token,
             'time_created' => $now
         ];
@@ -247,8 +247,14 @@ class M_User extends CI_model
         } else if ($type == 'forgot') {
             //Jika tipe nya lupa password
             $this->email->subject('Reset Password | SharedGame');
+            $data['email'] = $email;
+            $data['token'] = $token;
+            //Model M_CustomerService pada fungsi index(panggil data CS dari database)
+            $data['cs'] = $this->M_CustomerService->index()->result();
+            $message = $this->load->view('emailtemplates/forgot_password.php', $data, TRUE);
+            $this->email->message($message);
 
-            $this->email->message('Klik link berikut untuk mereset password Anda : <a href="' . base_url() . 'auth/resetpassword?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>');
+            //$this->email->message('Klik link berikut untuk mereset password Anda : <a href="' . base_url() . 'auth/resetpassword?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>');
         } else if ($type == 'change') {
             //Jika tipe nya lupa password
             $this->email->subject('Ganti Email | SharedGame');

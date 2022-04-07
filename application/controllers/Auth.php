@@ -465,6 +465,6 @@ class Auth extends CI_Controller
 
         //Redirect ke Login
         //redirect(base_url());
-        redirect($_SERVER['REQUEST_URI'], 'refresh');
+        redirect(base_url());
     }
 }

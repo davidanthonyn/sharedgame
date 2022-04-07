@@ -139,6 +139,52 @@ class Admin extends CI_Controller
         }
     }
 
+    function add_page()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur About / FAQ / Privacy / Terms hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $tangkapNama = $this->input->post('id_page');
+        $tangkapDetail = $this->input->post('detail');
+
+        $this->form_validation->set_rules('detail', 'Detail Page', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Tambah Halaman | SharedGame';
+            $data['smalltitle'] = 'Tambah Halaman';
+            $this->load->view('admin/add-pages.php', $data);
+        } else {
+            $tangkapNama = $this->input->post('nama_page');
+            $tangkapDetail = $this->input->post('detail');
+
+            $data = array(
+                'nama_page' => $tangkapNama,
+                'detail' => $tangkapDetail
+            );
+
+            $add = $this->M_Page->add_record($data, 'pages');
+
+            if ($add == true) {
+                $this->session->set_flashdata('messagesuccess', 'Halaman berhasil ditambahkan');
+                redirect('admin/manage_page');
+            } else {
+                $this->session->set_flashdata('messagefailed', 'Halaman gagal ditambahkan');
+                redirect('admin/manage_page');
+            }
+        }
+    }
+
     function getPagesByAjax()
     {
         $id_page = $this->input->post('id_page');

@@ -392,7 +392,7 @@ if (!empty($upload_selfie_ktp)) {
                     //Password sudah ok
                     $data = array(
                         'id_user' => $data['user']['id_user'],
-                        'email_before' => $data['user']['email'],
+                        'email_before' => htmlspecialchars($data['user']['email']),
                         'email_after' => htmlspecialchars($emailbaru),
                         'created_at' => $now,
                         'status_change' => 0
@@ -404,7 +404,7 @@ if (!empty($upload_selfie_ktp)) {
                     //Model M_User pada fungsi tambahUserTokenChange(sekaligus dengan fungsi send token ke email)
                     $this->M_User->tambahUserTokenChange();
                     $this->session->set_flashdata('message', 'Email Konfirmasi telah dikirim!');
-                    redirect('auth/logout');
+                    redirect(base_url('auth/logout'));
                 }
             }
         }

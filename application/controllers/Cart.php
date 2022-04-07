@@ -19,15 +19,15 @@ class Cart extends CI_Controller
         if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert 
         alert-danger" role="alert">Mohon login untuk dapat mengakses keranjang belanja.</div>');
-            redirect('');
+            redirect('auth');
         }
 
         $data['title'] = 'Cart | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
         $data['detailcart'] = $this->M_Cart->get_all_detail_cart()->result();
-       
-       
+
+
         //$where = array('id_produk' => $id);
         //$data["data"] = $this->Modelproduk->GetProdukById($id);
 
@@ -69,13 +69,13 @@ class Cart extends CI_Controller
                 'jumlah_produk' => $qty,
                 'total_pembayaran' => $total,
                 'updated_at' => $now
-                
+
             ];
 
             //Kirim ke tabel user
             $this->db->insert('cart', $data);
-        } else{
-           // UPDATE table SET quantity = quantity + 5 WHERE Item_id = <x>
+        } else {
+            // UPDATE table SET quantity = quantity + 5 WHERE Item_id = <x>
         }
 
         $data_produk = array(
