@@ -70,51 +70,6 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 				nicEditors.allTextAreas()
 			});*/
 		</script>
-
-		<script>
-			$(document).ready(function() {
-				$('#id_page').change(function() {
-					var id_page = $(this).val();
-
-					$.ajax({
-
-						type: 'POST',
-
-						url: "<?php echo base_url('admin/getPagesByAjax') ?>",
-
-						dataType: "JSON",
-
-						data: {
-							id_page: id_page
-						},
-
-						success: function(data)
-
-						{
-
-							$.each(data, function() {
-
-								$('[name="page_name"]').val(data.page_name);
-
-								$('[name="detail"]').val(data.detail);
-
-								CKupdate();
-								CKEDITOR.instances['detail'].setData(detail);
-
-							});
-
-						}
-
-
-
-					});
-
-				});
-
-			});
-
-			//JSONInPrettyFormat;
-		</script>
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -157,7 +112,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 									<div class="panel panel-default">
 										<div class="panel-heading"><?= $smalltitle; ?></div>
 										<div class="panel-body">
-											<form method="post" class="form-horizontal" action="<?php echo base_url() . 'Admin/manage_page'; ?>">
+											<form method="post" class="form-horizontal" action="<?php echo base_url() . 'Admin/add_page'; ?>">
 												<!--Pesan berhasil/gagal-->
 												<?php
 												if ($this->session->flashdata('messagesuccess')) {
@@ -172,28 +127,20 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 													$this->session->unset_userdata('messagefailed');
 												}
 												?>
+
 												<div class="form-group">
-													<label class="col-sm-4 control-label">select Page</label>
-													<div class="col-sm-8">
-														<!---
-														<select name="menu1" onChange="MM_jumpMenu('parent',this,0)">
-															<option value="" selected="selected" class="form-control">***Select One***</option>
-															<option value="manage-pages.php?type=terms">terms and condition</option>
-															<option value="manage-pages.php?type=privacy">privacy and policy</option>
-															<option value="manage-pages.php?type=aboutus">aboutus</option>
-															<option value="manage-pages.php?type=faqs">FAQs</option>
-														</select>
-														--->
-
-														<select name="id_page" id="id_page">
-
-															<option value="0">-- Pilih Halaman --</option>
-															<?php foreach ($page as $listPage) { ?>
-																<option value="<?php echo $listPage->id_page ?>"><?php echo $listPage->page_name ?></option>
-															<?php } ?>
-														</select>
+													<label class="col-sm-2 control-label">Nama Page<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="text" name="pagename" id="pagename" class="form-control">
+														<?= form_error('pagename', '<small class="text-danger pl-3">', '</small>'); ?>
+													</div>
+													<label class="col-sm-2 control-label">Type Link<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<input type="text" name="pagelink" id="pagelink" class="form-control" onkeypress="return onlyNumberKey(event)">
+														<?= form_error('pagelink', '<small class="text-danger pl-3">', '</small>'); ?>
 													</div>
 												</div>
+												<div class="hr-dashed"></div>
 												<div class="hr-dashed"></div>
 
 												<div class="form-group">
@@ -238,15 +185,13 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 												<div class="form-group">
 													<div class="col-sm-8 col-sm-offset-4">
 
-														<button type="submit" name="submit" value="Update" id="submit" class="btn-primary btn">Update</button>
+														<button type="submit" name="submit" value="Update" id="submit" class="btn-primary btn">Add</button>
 
 													</div>
 												</div>
 
 											</form>
-											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/add_page"; ?>">Tambah</a></button>
-
-											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/delete_page/" . $listPage->id_page; ?>">Hapus</a></button>
+											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/manage_page"; ?>">Kelola</a></button>
 
 										</div>
 									</div>

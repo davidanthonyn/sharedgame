@@ -155,7 +155,8 @@ class Admin extends CI_Controller
             redirect('');
         }
 
-        $tangkapNama = $this->input->post('id_page');
+        $tangkapNama = $this->input->post('pagename');
+        $tangkapLink = $this->input->post('pagelink');
         $tangkapDetail = $this->input->post('detail');
 
         $this->form_validation->set_rules('detail', 'Detail Page', 'required|trim');
@@ -165,23 +166,38 @@ class Admin extends CI_Controller
             $data['smalltitle'] = 'Tambah Halaman';
             $this->load->view('admin/add-pages.php', $data);
         } else {
-            $tangkapNama = $this->input->post('nama_page');
-            $tangkapDetail = $this->input->post('detail');
 
             $data = array(
-                'nama_page' => $tangkapNama,
+                'page_name' => $tangkapNama,
+                'type' => $tangkapDetail,
                 'detail' => $tangkapDetail
             );
 
-            $add = $this->M_Page->add_record($data, 'pages');
+            $add = $this->M_Page->insert_record('pages', $data);
 
-            if ($add == true) {
+            if ($add) {
                 $this->session->set_flashdata('messagesuccess', 'Halaman berhasil ditambahkan');
                 redirect('admin/manage_page');
             } else {
                 $this->session->set_flashdata('messagefailed', 'Halaman gagal ditambahkan');
                 redirect('admin/manage_page');
             }
+        }
+    }
+
+    function delete_page($id_page)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+        if ($data['user']['id_role'] == '1') {
+            $where = array('id_page' => $id_page);
+            $this->M_Brand->delete_record($where, 'pages');
+            redirect('admin/manage_page');
+        } else {
+            redirect('');
         }
     }
 
