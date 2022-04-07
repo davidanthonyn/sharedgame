@@ -61,7 +61,7 @@ class M_Cart extends CI_model
 
         return $data;
     }
-
+    /*
     public function get_product_detail_cart()
     {
         $data = $this->db->query("SELECT *, produk.nama_produk FROM detailcart JOIN produk ON detailcart.id_produk = produk.id_produk");
@@ -78,9 +78,10 @@ class M_Cart extends CI_model
     {
         $data = $this->db->query("SELECT * FROM detailcart WHERE id_cart =" . $id_cart);
         return $data;
+    }*/
 
-        //coba sql query
-        /*
+    //coba sql query
+    /*
         SELECT * FROM detailcart 
 JOIN produk
    ON detailcart.id_produk = produk.id_produk
@@ -89,5 +90,4 @@ JOIN produk
    JOIN cart ON detailcart.id_cart = cart.id_cart 
    WHERE detailcart.id_cart = 1
 ORDER BY detailcart.start_plan DESC*/
-    }
 }
