@@ -244,7 +244,7 @@
 
                 <span>Total Price</span>
 
-                <span> <?php echo number_format($total, 0, ',', '.'); ?></span>
+                <span> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
               </p>
 
               <p>
