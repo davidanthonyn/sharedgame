@@ -206,10 +206,10 @@
                   <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                  <h4 class="product-price">Rp. <?= $cart->tarif_harga ?>,-</h4>
+                  <h4 class="product-price">Rp. <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?></h4>
 
 
-                  <h4 class="product-offer">Lama Sewa <select id="cars">
+                  <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa">
                       <option value="volvo">1 Hari</option>
                       <option value="saab">3 Hari</option>
                       <option value="opel">7 Hari</option>
@@ -224,7 +224,7 @@
 
                     <i class="fa fa-trash" aria-hidden="true"></i>
 
-                    <span class="remove">Remove</span>
+                    <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
 
                   </p>
 
@@ -244,16 +244,14 @@
 
                 <span>Total Price</span>
 
-                <span><?= $totalkeranjang->total_pembayaran ?></span>
-
+                <span> <?php echo number_format($totalkeranjang->total_pembayaran, 0, ',', '.'); ?></span>
               </p>
 
               <p>
 
                 <span>Number of Items</span>
-
-                <span><?= $totalkeranjang->jumlah_produk ?></span>
-
+                <span><?= $rowcart;
+                      ?></span>
               </p>
 
               <p>

@@ -30,6 +30,7 @@ class Cart extends CI_Controller
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
         $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
+        $data['rowcart'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
 
 
         //$where = array('id_produk' => $id);
@@ -41,6 +42,20 @@ class Cart extends CI_Controller
         $this->load->view('includes/header.php', $data);
         $this->load->view('cartview.php', $data);
         $this->footer();
+    }
+
+    public function delete_cart($id_detail_cart)
+    {
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Mohon login untuk dapat menghapus keranjang belanja.</div>');
+            redirect('auth');
+        }
+
+        $where = array('id_detail_cart' => $id_detail_cart);
+        $this->M_Cart->delete_record($where, 'detailcart');
+
+        redirect('cart');
     }
 
     public function footer()

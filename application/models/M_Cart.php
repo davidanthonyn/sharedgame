@@ -61,6 +61,20 @@ class M_Cart extends CI_model
 
         return $data;
     }
+
+    public function get_row_cart($id_cart)
+    {
+        $this->db->select('id_cart');
+        $this->db->from('detailcart');
+        $this->db->where('id_cart', $id_cart);
+        return $this->db->count_all_results();
+    }
+
+    function delete_record($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
     /*
     public function get_product_detail_cart()
     {
