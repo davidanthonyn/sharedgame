@@ -30,7 +30,10 @@ class Cart extends CI_Controller
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
         $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
-        $data['rowcart'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+        $data['numrowcart'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+        $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+        //var_dump($data['totalprice']);
+        //die;
 
 
         //$where = array('id_produk' => $id);

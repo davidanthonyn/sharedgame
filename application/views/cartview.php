@@ -239,18 +239,18 @@
 
           <div class="cart-total">
             <?php
-            foreach ($keranjang as $totalkeranjang) { ?>
+            foreach ($totalprice as $total) { ?>
               <p>
 
                 <span>Total Price</span>
 
-                <span> <?php echo number_format($totalkeranjang->total_pembayaran, 0, ',', '.'); ?></span>
+                <span> <?php echo number_format($total, 0, ',', '.'); ?></span>
               </p>
 
               <p>
 
                 <span>Number of Items</span>
-                <span><?= $rowcart;
+                <span><?= $numrowcart;
                       ?></span>
               </p>
 

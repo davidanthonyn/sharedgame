@@ -70,6 +70,19 @@ class M_Cart extends CI_model
         return $this->db->count_all_results();
     }
 
+    public function get_total_price_cart($id_cart)
+    {
+        $data = $this->db->query("SELECT SUM(tarifsewa.tarif_harga) FROM detailcart 
+        JOIN produk 
+        ON detailcart.id_produk = produk.id_produk 
+        JOIN tarifsewa 
+        ON detailcart.id_tarif_sewa = tarifsewa.id_tarif_sewa 
+        JOIN cart ON detailcart.id_cart = cart.id_cart 
+        WHERE detailcart.id_cart = " . $id_cart);
+
+        return $data;
+    }
+
     function delete_record($where, $table)
     {
         $this->db->where($where);
