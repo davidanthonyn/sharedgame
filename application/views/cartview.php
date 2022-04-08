@@ -209,7 +209,7 @@
                   <h4 class="product-price">Rp. <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?></h4>
 
 
-                  <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa">
+                  <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa" onchange="change_time()">
                       <option value="volvo">1 Hari</option>
                       <option value="saab">3 Hari</option>
                       <option value="opel">7 Hari</option>
@@ -289,6 +289,29 @@
     <!--Slider-JS-->
     <script src="<?php echo base_url() . "assets/"; ?>js/slick.min.js"></script>
     <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
+
+    <script>
+      function change_time() {
+        var select = document.getElementById('time');
+        var value = select.options[select.selectedIndex].value;
+
+        if (value == "1") {
+          document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
+          document.getElementById('div_content').style.display = 'block';
+        } else
+        if (value == "2") {
+          document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
+          document.getElementById('div_content').style.display = 'block';
+        } else
+        if (value == "3") {
+          document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
+          document.getElementById('div_content').style.display = 'block';
+        } else {
+          document.getElementById('price').value = "";
+          document.getElementById('div_content').style.display = 'none';
+        }
+      }
+    </script>
 
   </body>
 
