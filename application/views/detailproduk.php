@@ -95,7 +95,7 @@ error_reporting(0);
                     <div class="form-group">
                       <label>Quantity: </label>
                       <div class="input-group">
-                        <input type="number" id="myNumber" class="form-control input-number" value="1" min="1" max="<?php echo $data[0]['jumlah_tersedia']; ?>" onKeyDown="return false" required />
+                        <input type="number" id="myNumber" name="myNumber" class="form-control input-number" value="1" min="1" max="<?php echo $data[0]['jumlah_tersedia']; ?>" onKeyDown="return false" required />
                       </div>
                     </div>
 
@@ -116,7 +116,7 @@ error_reporting(0);
                         <div class="input-group-prepend">
                           <span class="input-group-text">Harga/item (Rp)</span>
                         </div>
-                        <input type="text" class="form-control" id="price" name="price" disabled>
+                        <input type="text" class="form-control" id="price" name="price" readonly="readonly">
                       </div>
                     </div>
                     <br>
@@ -186,6 +186,8 @@ error_reporting(0);
         document.getElementById('div_content').style.display = 'none';
       }
     }
+
+    //document.getElementById("price").disabled = true;
   </script>
 
 

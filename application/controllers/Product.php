@@ -54,12 +54,56 @@ class Product extends CI_Controller
         }
 
         $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
+        $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id])->row_array();
+
+        $tangkapQty = $this->input->post('myNumber');
+        //$tangkapJangkaWaktu = $this->input->post('time');
+        $tangkapJangkaWaktu = $_POST['time'];
+        $tangkapHarga = $_POST['price'];
+
+        var_dump($tangkapHarga);
+        die;
+
+        $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu, 'tarif_harga' => $tangkapHarga])->row_array();
 
         if ($data['keranjang'] == NULL) {
-            $this->M_Cart->buatRowCart($data['user']['id_user']);
+            //Set waktu untuk created at dan updated at
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+
+            $data = [
+                'id_user' => $data['user']['id_user'],
+                'updated_at' => $now
+            ];
+
+            //Kirim ke tabel cart
+            $this->db->insert('cart', $data);
+
+            //Mengambil insert id, untuk taruh data di tabel tarifsewa
+            $insertId = $this->db->insert_id();
+
+            $dataprodukmasuk = array(
+                'id_cart' => $insertId,
+                'id_produk' => $id,
+                'id_tarif_sewa' => $id_tarif_sewa,
+                'qty_produk' => $qty_produk,
+                'start_plan' => $start_plan,
+                'finish_plan' => $finish_plan
+            );
+        } else {
         }
 
+
         $data["data"] = $this->Modelproduk->GetProdukById($id);
+
+        $dataprodukmasuk = array(
+            'id_cart' => $insertId,
+            'id_produk' => $id,
+            'id_tarif_sewa' => $id_tarif_sewa,
+            'qty_produk' => $qty_produk,
+            'start_plan' => $start_plan,
+            'finish_plan' => $finish_plan
+        );
 
         $data['cart'] = $this->M_Cart->MoveProductToCart($id);
 

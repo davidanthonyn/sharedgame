@@ -21,6 +21,11 @@ class M_Cart extends CI_model
 
         //Kirim ke tabel cart
         $this->db->insert('cart', $data);
+
+        //Mengambil insert id, untuk taruh data di tabel tarifsewa
+        $insertId = $this->db->insert_id();
+
+        return $insertId;
     }
 
     public function tambahDataDetailCart()
