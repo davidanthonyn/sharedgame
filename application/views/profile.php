@@ -184,7 +184,10 @@
               <script type="text/javascript">
                 flatpickr("#dob", {
                   minDate: "1980/01/01",
-                  maxDate: "2021/12/31"
+                  maxDate: "2021/12/31",
+                  altInput: true,
+                  altFormat: "j F Y",
+                  dateFormat: "Y-m-d"
                 });
               </script>
 

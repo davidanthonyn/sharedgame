@@ -29,6 +29,8 @@ error_reporting(0);
   <link href="<?php echo base_url(); ?>/assets/css/font-awesome.min.css" rel="stylesheet">
 
   <script src="https://kit.fontawesome.com/77d9ac2836.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
   <!-- SWITCHER -->
@@ -139,8 +141,21 @@ error_reporting(0);
                         <div class="input-group-prepend">
                           <span class="input-group-text">Tanggal Mulai Sewa</span>
                         </div>
-                        <input type="date" id="rentstart" name="rentstart" min="todayDate">
+                        <input class="form-control white_bg" name="startdate" id="startdate">
                       </div>
+                      <script type="text/javascript">
+                        flatpickr("#startdate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]
+                        });
+                      </script>
+
                     </div>
                     <br>
                     <div class="row mb-2">
@@ -184,7 +199,7 @@ error_reporting(0);
   <!--Slider-JS-->
   <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
   <!--Quantity + - -->
@@ -211,12 +226,12 @@ error_reporting(0);
     }
   </script>
   <script>
-    var date = new Date();
+    /*var date = new Date();
     var year = date.getFullYear();
     var month = String(date.getMonth() + 1).padStart(2, '0');
     var todayDate = String(date.getDate()).padStart(2, '0');
     var datePattern = year + '-' + month + '-' + todayDate;
-    document.getElementById("rentstart").value = datePattern;
+    document.getElementById("startdate").value = datePattern;*/
   </script>
 
 

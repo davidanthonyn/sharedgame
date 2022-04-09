@@ -56,19 +56,28 @@ class Product extends CI_Controller
         $tangkapQty = $this->input->post('myNumber');
         //$tangkapJangkaWaktu = $this->input->post('time');
         $tangkapJangkaWaktu = $_POST['time'];
+        $tangkapTanggal = $this->input->post('startdate');
         $tangkapHarga = $_POST['price'];
 
-        if ($tangkapJangkaWaktu == '0') {
+        if ($tangkapJangkaWaktu == '0' && $tangkapTanggal == '') {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Untuk dapat menambahkan produk ke Cart, mohon tentukan jangka waktu dan tanggal penyewaan.</div>');
+            redirect('product/detail/' . $id);
+        } else if ($tangkapJangkaWaktu == '0') {
             $this->session->set_flashdata('message', '<div class="alert 
             alert-danger" role="alert" style="text-align:center;">Untuk dapat menambahkan produk ke Cart, mohon tentukan jangka waktu penyewaan.</div>');
             redirect('product/detail/' . $id);
+        } else if ($tangkapTanggal == '') {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Untuk dapat menambahkan produk ke Cart, mohon tentukan tanggal penyewaan.</div>');
+            redirect('product/detail/' . $id);
         }
 
-        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
+        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
         $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id])->row_array();
 
-        $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu, 'tarif_harga' => $tangkapHarga])->row_array();
+        $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu])->row_array();
 
         if ($data['keranjang'] == NULL) {
             //Set waktu untuk created at dan updated at
@@ -89,17 +98,37 @@ class Product extends CI_Controller
             $dataprodukmasuk = array(
                 'id_cart' => $insertId,
                 'id_produk' => $id,
-                'id_tarif_sewa' => $id_tarif_sewa,
+                'id_tarif_sewa' => $data['hargasewa']['id_tarif_sewa'],
                 'qty_produk' => $tangkapQty,
-                'start_plan' => $start_plan,
-                'finish_plan' => $finish_plan
+                'start_plan' => $tangkapTanggal,
+                'finish_plan' => strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days'),
             );
 
             $this->db->insert('detailcart', $dataprodukmasuk);
+
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-success" role="alert" style="text-align:center;">Penambahan Produk ke Cart Berhasil!</div>');
+            redirect('product/detail/' . $id);
         } else {
+
+
+            $dataprodukmasuk = array(
+                'id_cart' => $data['keranjang']['id_cart'],
+                'id_produk' => $id,
+                'id_tarif_sewa' => $data['hargasewa']['id_tarif_sewa'],
+                'qty_produk' => $tangkapQty,
+                'start_plan' => $tangkapTanggal,
+                'finish_plan' => strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days'),
+            );
+
+            $this->db->insert('detailcart', $dataprodukmasuk);
+
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-success" role="alert" style="text-align:center;">Penambahan Produk ke Cart Berhasil!</div>');
+            redirect('product/detail/' . $id);
         }
 
-
+        /*
         $data["data"] = $this->Modelproduk->GetProdukById($id);
 
         $dataprodukmasuk = array(
@@ -112,12 +141,14 @@ class Product extends CI_Controller
         );
 
         $data['cart'] = $this->M_Cart->MoveProductToCart($id);
+        
 
 
         $where = array('id_produk' => $id);
         $this->load->view('includes/header.php', $data);
         $this->load->view('detailproduk.php', $data);
         $this->footer();
+        */
     }
 
     public function footer()
