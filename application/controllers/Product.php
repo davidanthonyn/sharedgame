@@ -53,18 +53,20 @@ class Product extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         }
 
-        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
-        $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id])->row_array();
-
         $tangkapQty = $this->input->post('myNumber');
         //$tangkapJangkaWaktu = $this->input->post('time');
         $tangkapJangkaWaktu = $_POST['time'];
         $tangkapHarga = $_POST['price'];
 
         if ($tangkapJangkaWaktu == '0') {
-
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Untuk dapat menambahkan produk ke Cart, mohon tentukan jangka waktu penyewaan.</div>');
             redirect('product/detail/' . $id);
         }
+
+        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
+
+        $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id])->row_array();
 
         $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu, 'tarif_harga' => $tangkapHarga])->row_array();
 
@@ -88,10 +90,12 @@ class Product extends CI_Controller
                 'id_cart' => $insertId,
                 'id_produk' => $id,
                 'id_tarif_sewa' => $id_tarif_sewa,
-                'qty_produk' => $qty_produk,
+                'qty_produk' => $tangkapQty,
                 'start_plan' => $start_plan,
                 'finish_plan' => $finish_plan
             );
+
+            $this->db->insert('detailcart', $dataprodukmasuk);
         } else {
         }
 

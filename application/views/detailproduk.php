@@ -69,6 +69,20 @@ error_reporting(0);
   </section>
   <!-- /Page Header-->
 
+  <!--Pesan berhasil/gagal-->
+  <?php
+  if ($this->session->flashdata('message')) {
+    echo $this->session->flashdata('message');
+    $this->session->unset_userdata('message');
+  }
+  ?>
+  <?php
+  if ($this->session->flashdata('message_error')) {
+  ?><?php echo $this->session->flashdata('message_error');
+    $this->session->unset_userdata('message_error');
+    ?><?php }
+      ?>
+
   <!--Listing-->
   <section class="listing-page">
     <div class="container">
@@ -117,6 +131,15 @@ error_reporting(0);
                           <span class="input-group-text">Harga/item (Rp)</span>
                         </div>
                         <input type="text" class="form-control" id="price" name="price" readonly="readonly">
+                      </div>
+                    </div>
+                    <br>
+                    <div id="div_content">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Tanggal Mulai Sewa</span>
+                        </div>
+                        <input type="date" id="rentstart" name="rentstart" min="todayDate">
                       </div>
                     </div>
                     <br>
@@ -186,10 +209,15 @@ error_reporting(0);
         document.getElementById('div_content').style.display = 'none';
       }
     }
-
-    //document.getElementById("price").disabled = true;
   </script>
-
+  <script>
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var todayDate = String(date.getDate()).padStart(2, '0');
+    var datePattern = year + '-' + month + '-' + todayDate;
+    document.getElementById("rentstart").value = datePattern;
+  </script>
 
 
 </body>
