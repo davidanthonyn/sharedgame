@@ -61,8 +61,10 @@ class Product extends CI_Controller
         $tangkapJangkaWaktu = $_POST['time'];
         $tangkapHarga = $_POST['price'];
 
-        var_dump($tangkapHarga);
-        die;
+        if ($tangkapJangkaWaktu == '0') {
+
+            redirect('product/detail/' . $id);
+        }
 
         $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu, 'tarif_harga' => $tangkapHarga])->row_array();
 
