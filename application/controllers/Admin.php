@@ -619,6 +619,8 @@ class Admin extends CI_Controller
                     //Jika upload produk berhasil
                     $new_product = $this->upload->data('file_name');
                     $this->db->set('gambar_produk', $new_product);
+                    $this->db->where('id_produk', $id_produk);
+                    $this->db->update('produk');
                 } else {
                     echo $this->upload->display_errors();
                 }
