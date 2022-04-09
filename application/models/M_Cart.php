@@ -8,7 +8,22 @@ class M_Cart extends CI_model
         return $this->db->get('detailcart')->result_array();
     }
 
-    public function tambahDataCart()
+    public function buatRowCart($id_user)
+    {
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        $data = [
+            'id_user' => $id_user,
+            'updated_at' => $now
+        ];
+
+        //Kirim ke tabel cart
+        $this->db->insert('cart', $data);
+    }
+
+    public function tambahDataDetailCart()
     {
         //Set waktu untuk created at dan updated at
         $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone

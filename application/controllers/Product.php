@@ -43,6 +43,33 @@ class Product extends CI_Controller
         $this->footer();
     }
 
+    function addProductToCart($id)
+    {
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert">Mohon login untuk dapat menambahkan produk ke keranjang belanja.</div>');
+            redirect('auth');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
+
+        if ($data['keranjang'] == NULL) {
+            $this->M_Cart->buatRowCart($data['user']['id_user']);
+        }
+
+        $data["data"] = $this->Modelproduk->GetProdukById($id);
+
+        $data['cart'] = $this->M_Cart->MoveProductToCart($id);
+
+
+        $where = array('id_produk' => $id);
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('detailproduk.php', $data);
+        $this->footer();
+    }
+
     public function footer()
     {
         $data['pages'] = $this->M_Page->getAllRowPages()->result();
