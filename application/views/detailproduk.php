@@ -122,8 +122,8 @@ error_reporting(0);
                         <select class="form-control" onchange="change_time()" name="time" id="time" required>
                           <option value="0">-- Pilih --</option>
                           <option value="1"> 1 Hari</option>
-                          <option value="2"> 3 Hari</option>
-                          <option value="3"> 7 Hari</option>
+                          <option value="3"> 3 Hari</option>
+                          <option value="7"> 7 Hari</option>
                         </select>
                       </div>
                     </div>
@@ -149,10 +149,10 @@ error_reporting(0);
                           altInput: true,
                           altFormat: "j F Y",
                           dateFormat: "Y-m-d",
-                          disable: ["2022-04-15", {
+                          /*disable: ["2022-04-15", {
                             from: "2022-05-03",
                             to: "2022-05-08"
-                          }]
+                          }]*/
                         });
                       </script>
 
@@ -212,11 +212,11 @@ error_reporting(0);
         document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
         document.getElementById('div_content').style.display = 'block';
       } else
-      if (value == "2") {
+      if (value == "3") {
         document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
         document.getElementById('div_content').style.display = 'block';
       } else
-      if (value == "3") {
+      if (value == "7") {
         document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
         document.getElementById('div_content').style.display = 'block';
       } else {

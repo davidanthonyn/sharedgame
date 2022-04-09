@@ -54,10 +54,10 @@ class Product extends CI_Controller
         }
 
         $tangkapQty = $this->input->post('myNumber');
-        //$tangkapJangkaWaktu = $this->input->post('time');
-        $tangkapJangkaWaktu = $_POST['time'];
+        $tangkapJangkaWaktu = $this->input->post('time');
         $tangkapTanggal = $this->input->post('startdate');
-        $tangkapHarga = $_POST['price'];
+        $tangkapHarga = $this->input->post('price');
+
 
         if ($tangkapJangkaWaktu == '0' && $tangkapTanggal == '') {
             $this->session->set_flashdata('message', '<div class="alert 
@@ -77,13 +77,15 @@ class Product extends CI_Controller
 
         $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id])->row_array();
 
-        $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu])->row_array();
+        $data['hargasewa'] = $this->db->get_where('tarifsewa', ['id_produk' => $id, 'lama_sewa_hari' => $tangkapJangkaWaktu, 'tarif_harga' => $tangkapHarga])->row_array();
+
+        $data['detailcart'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjang']['id_cart'], 'id_produk' => $id])->row_array();
 
         if ($data['keranjang'] == NULL) {
             //Set waktu untuk created at dan updated at
             $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
             $now = date('Y-m-d H:i:s');
-
+            //Buat array untuk cart
             $data = [
                 'id_user' => $data['user']['id_user'],
                 'updated_at' => $now
@@ -92,9 +94,9 @@ class Product extends CI_Controller
             //Kirim ke tabel cart
             $this->db->insert('cart', $data);
 
-            //Mengambil insert id, untuk taruh data di tabel tarifsewa
+            //Mengambil insert id, untuk taruh data di tabel detailcart
             $insertId = $this->db->insert_id();
-
+            //Buat array untuk detailcart
             $dataprodukmasuk = array(
                 'id_cart' => $insertId,
                 'id_produk' => $id,
@@ -109,9 +111,12 @@ class Product extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert 
             alert-success" role="alert" style="text-align:center;">Penambahan Produk ke Cart Berhasil!</div>');
             redirect('product/detail/' . $id);
+        } else if ($data['detailcart'] != NULL) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-warning" role="alert" style="text-align:center;">Anda telah menambahkan produk ' . $data['produk']['nama_produk'] . ' ke keranjang belanja.</div>');
+            redirect('product/detail/' . $id);
         } else {
-
-
+            //Kalau cart nya sudah, maka langsung membuat detailcart
             $dataprodukmasuk = array(
                 'id_cart' => $data['keranjang']['id_cart'],
                 'id_produk' => $id,
