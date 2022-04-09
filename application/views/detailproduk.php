@@ -94,7 +94,7 @@ error_reporting(0);
             <div class="sorting-count">
               <form class="user" method="POST" action="<?= base_url('product/addProductToCart/' . $data[0]['id_produk']); ?>">
                 <div class="box">
-                  <img src="<?php echo $data[0]['gambar_produk']; ?>" alt="">
+                  <img src="<?php echo base_url('./assets/img/product/') . $data[0]['gambar_produk']; ?>" alt="" width="480" height="270">
                   <div class="content">
                     <div class="stars">
                       <i class="fas fa-star" style="color:orange"></i>

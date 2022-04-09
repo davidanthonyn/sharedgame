@@ -71,6 +71,12 @@
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
       }
 
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       /*
       #cart-container table {
         border-collapse: collapse;
@@ -188,89 +194,107 @@
 
     <section class="user_profile inner_pages">
       <div class="container">
+        <?php if ($productcart != NULL) { ?>
+          <h4>Produk yang akan disewakan</h4>
 
-        <h4>Produk yang akan disewakan</h4>
-
-        <div class="cart">
-
-
-          <div class="products">
-
-            <?php foreach ($productcart as $cart) { ?>
-              <div class="product">
-
-                <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
-
-                <div class="product-info">
-
-                  <h3 class="product-name"><?= $cart->nama_produk ?></h3>
+          <div class="cart">
 
 
-                  <h4 class="product-price">Rp. <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?></h4>
+            <div class="products">
 
 
-                  <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa" onchange="change_time()">
-                      <option value="volvo">1 Hari</option>
-                      <option value="saab">3 Hari</option>
-                      <option value="opel">7 Hari</option>
-                    </select></h4>
+
+              <?php foreach ($productcart as $cart) { ?>
+                <div class="product">
+
+                  <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
+
+                  <div class="product-info">
+
+                    <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                  <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
-                                                                                                              ?>" required />
+                    <h4 class="product-price">Rp. <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?></h4>
 
 
-                  <p class="product-remove">
+                    <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa" onchange="change_time()">
+                        <option value="volvo">1 Hari</option>
+                        <option value="saab">3 Hari</option>
+                        <option value="opel">7 Hari</option>
+                      </select></h4>
 
-                    <i class="fa fa-trash" aria-hidden="true"></i>
 
-                    <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
+                                                                                                                ?>" required />
 
-                  </p>
+
+                    <p class="product-remove">
+
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+
+                      <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+
+                    </p>
+
+                  </div>
 
                 </div>
+              <?php }
 
-              </div>
-            <?php }
+              ?>
 
-            ?>
+            </div>
+
+            <div class="cart-total">
+              <?php
+              foreach ($totalprice as $total) { ?>
+                <p>
+
+                  <span>Total Price</span>
+
+                  <span> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                </p>
+
+                <p>
+
+                  <span>Number of Items</span>
+                  <span><?= $numrowcart;
+                        ?></span>
+                </p>
+
+                <p>
+
+                  <span>You Save</span>
+
+                  <span>Rp 1,000</span>
+
+                </p>
+              <?php
+              }
+              ?>
+              <a href="#">Proceed to Checkout</a>
+
+            </div>
 
           </div>
-
-          <div class="cart-total">
-            <?php
-            foreach ($totalprice as $total) { ?>
-              <p>
-
-                <span>Total Price</span>
-
-                <span> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
-              </p>
-
-              <p>
-
-                <span>Number of Items</span>
-                <span><?= $numrowcart;
-                      ?></span>
-              </p>
-
-              <p>
-
-                <span>You Save</span>
-
-                <span>Rp 1,000</span>
-
-              </p>
-            <?php
-            }
-            ?>
-            <a href="#">Proceed to Checkout</a>
-
-          </div>
-
-        </div>
 
       </div>
+    <?php } else { ?>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <img src="<?= base_url('assets/images/finding.png') ?>" class="card-img center" width="274" height="400">
+            <h4 class="center">Oops!</h4>
+            <p class="center">Keranjang Belanja Anda Kosong.</p>
+            <hr>
+            <p class="mb-0">
+              <a href="<?php echo base_url() . 'product'; ?>" class="btn btn-primary center">Cari Produk</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    <?php
+        } ?>
     </section>
     <!--/Profile-setting-->
     <!--Back to top-->
