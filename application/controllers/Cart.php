@@ -38,10 +38,10 @@ class Cart extends CI_Controller
 
         //$where = array('id_produk' => $id);
         //$data["data"] = $this->Modelproduk->GetProdukById($id);
-
+        /*
         $this->session->set_flashdata('message', '<div class="alert 
         alert-danger" role="alert" style="text-align:center;">Untuk dapat melanjutkan checkout, mohon lengkapi data pribadi dan identitas resmi Anda terlebih dahulu.</div>');
-
+*/
         $this->load->view('includes/header.php', $data);
         $this->load->view('cartview.php', $data);
         $this->footer();

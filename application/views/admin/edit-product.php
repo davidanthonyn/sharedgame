@@ -84,7 +84,8 @@
 									<div class="panel-body">
 										<?php
 										foreach ($productEdit as $listProductEdit) { ?>
-											<form method="post" action="<?php echo base_url() . 'Admin/proses_edit_data_produk'; ?>" class="form-horizontal" enctype="multipart/form-data">
+											<form method="post" action="<?php echo base_url() . 'Admin/edit_data_produk/' . $listProductEdit->id_produk; ?>" class="form-horizontal" enctype="multipart/form-data">
+
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 													<div class="col-sm-4">

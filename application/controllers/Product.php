@@ -58,6 +58,10 @@ class Product extends CI_Controller
         $tangkapTanggal = $this->input->post('startdate');
         $tangkapHarga = $this->input->post('price');
 
+        $tangkaptiga = strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days');
+        var_dump($tangkaptiga);
+        die;
+
 
         if ($tangkapJangkaWaktu == '0' && $tangkapTanggal == '') {
             $this->session->set_flashdata('message', '<div class="alert 
