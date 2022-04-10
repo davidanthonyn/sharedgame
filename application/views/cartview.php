@@ -223,7 +223,7 @@
                         <option value="7">7 Hari</option>
                       </select></h4>
 
-                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php echo $cart->qty_produk
+                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php echo $cart->jumlah_tersedia
                                                                                                                 ?>" required />
 
 
