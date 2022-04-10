@@ -61,7 +61,7 @@ error_reporting(0);
           <h1>Game Listing</h1>
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
           <li>Game Listing</li>
         </ul>
       </div>
