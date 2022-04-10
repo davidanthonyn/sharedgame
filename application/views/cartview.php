@@ -38,7 +38,7 @@
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url() . "assets/"; ?>images/favicon-icon/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
     <!-- Google-Font-->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() . "assets/cart/"; ?>cart.css">
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -218,13 +218,12 @@
 
 
                     <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa" onchange="change_time()">
-                        <option value="volvo">1 Hari</option>
-                        <option value="saab">3 Hari</option>
-                        <option value="opel">7 Hari</option>
+                        <option value="1">1 Hari</option>
+                        <option value="3">3 Hari</option>
+                        <option value="7">7 Hari</option>
                       </select></h4>
 
-
-                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php //echo $data[0]['jumlah_tersedia']; 
+                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php echo $cart->qty_produk
                                                                                                                 ?>" required />
 
 
@@ -315,26 +314,29 @@
     <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
 
     <script>
-      function change_time() {
+      /* function change_time() {
         var select = document.getElementById('time');
         var value = select.options[select.selectedIndex].value;
 
         if (value == "1") {
-          document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
-          document.getElementById('div_content').style.display = 'block';
-        } else
-        if (value == "2") {
-          document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
+          document.getElementById('price').value = <?php //echo $tarifsewa[0]['tarif_harga']; 
+                                                    ?>;
           document.getElementById('div_content').style.display = 'block';
         } else
         if (value == "3") {
-          document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
+          document.getElementById('price').value = <?php //echo $tarifsewa[1]['tarif_harga']; 
+                                                    ?>;
+          document.getElementById('div_content').style.display = 'block';
+        } else
+        if (value == "7") {
+          document.getElementById('price').value = <?php //echo $tarifsewa[2]['tarif_harga']; 
+                                                    ?>;
           document.getElementById('div_content').style.display = 'block';
         } else {
           document.getElementById('price').value = "";
           document.getElementById('div_content').style.display = 'none';
         }
-      }
+      } */
     </script>
 
   </body>

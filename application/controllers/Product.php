@@ -57,10 +57,7 @@ class Product extends CI_Controller
         $tangkapJangkaWaktu = $this->input->post('time');
         $tangkapTanggal = $this->input->post('startdate');
         $tangkapHarga = $this->input->post('price');
-
-        $tangkaptiga = strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days');
-        var_dump($tangkaptiga);
-        die;
+        $deadline = date("Y-m-d", strtotime($tangkapTanggal . '+' . $tangkapJangkaWaktu . 'days'));
 
 
         if ($tangkapJangkaWaktu == '0' && $tangkapTanggal == '') {
@@ -107,7 +104,7 @@ class Product extends CI_Controller
                 'id_tarif_sewa' => $data['hargasewa']['id_tarif_sewa'],
                 'qty_produk' => $tangkapQty,
                 'start_plan' => $tangkapTanggal,
-                'finish_plan' => strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days'),
+                'finish_plan' => strtotime($tangkapTanggal . ' + ' . $tangkapJangkaWaktu . ' days')
             );
 
             $this->db->insert('detailcart', $dataprodukmasuk);
@@ -127,7 +124,7 @@ class Product extends CI_Controller
                 'id_tarif_sewa' => $data['hargasewa']['id_tarif_sewa'],
                 'qty_produk' => $tangkapQty,
                 'start_plan' => $tangkapTanggal,
-                'finish_plan' => strtotime($tangkapTanggal . ' + ' . $data['hargasewa']['lama_sewa_hari'] . ' days'),
+                'finish_plan' => $deadline
             );
 
             $this->db->insert('detailcart', $dataprodukmasuk);
