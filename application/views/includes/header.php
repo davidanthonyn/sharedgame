@@ -71,8 +71,8 @@
           </div>
           <div class="header_search">
             <div id="search_toggle"><i class="fa fa-search" aria-hidden="true"></i></div>
-            <form action="#" method="get" id="header-search-form">
-              <input type="text" placeholder="Search..." class="form-control">
+            <form action="<?= base_url('product/cariproduk/') ?>" method="get" id="header-search-form">
+              <input type="text" placeholder="Search..." class="form-control" id="namaproduk" name="namaproduk">
               <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
             </form>
           </div>
@@ -86,7 +86,7 @@
             <li><a href="<?php echo base_url() . 'other/info/faq' ?>">FAQ</a></li>
 
             <li><a href="<?php echo base_url() . 'Contact' ?>">Contact Us</a></li>
-            
+
             <li><a href="<?php echo base_url() . 'Cart' ?>">Cart</a></li>
 
 

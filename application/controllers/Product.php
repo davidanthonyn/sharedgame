@@ -9,6 +9,7 @@ class Product extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('M_Page');
+        $this->load->model('Modelproduk');
         /*if (empty($this->session->userdata('admin'))) {
             redirect('auth');
         }*/
@@ -155,6 +156,24 @@ class Product extends CI_Controller
         $this->load->view('detailproduk.php', $data);
         $this->footer();
         */
+    }
+
+    public function cariproduk()
+    {
+        $nama_produk = $this->input->get('namaproduk');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Cari Produk ' . $nama_produk . ' | SharedGame';
+        $data["data"] = $this->Modelproduk->FindProduk($nama_produk);
+
+        if ($nama_produk == "" || $data["data"] == NULL) {
+            $this->load->view('includes/header.php', $data);
+            $this->load->view('find-listing-empty.php', $data);
+            $this->footer();
+        } else if ($data["data"] != NULL) {
+            $this->load->view('includes/header.php', $data);
+            $this->load->view('find-listing.php', $data);
+            $this->footer();
+        }
     }
 
     public function footer()

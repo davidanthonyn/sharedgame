@@ -53,6 +53,12 @@ error_reporting(0);
       border-radius: 50%;
       display: inline-block;
     }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 
@@ -85,82 +91,16 @@ error_reporting(0);
   <section class="listing-page">
     <div class="container">
       <div class="row">
-        <div class="col-md-9 col-md-push-3">
-          <div class="result-sorting-wrapper">
-            <div class="sorting-count">
-
-              <?php for ($i = 0; $i < count($data); $i++) : ?>
-                <div class="box">
-                  <img src="<?php echo base_url() . "assets/img/product/" . $data[$i]['gambar_produk']; ?>" alt="" width="200" height="100">
-
-
-                  <div class="content">
-                    <div class="stars">
-                      <i class="fas fa-star" style="color:orange"></i>
-                      <i class="fas fa-star" style="color:orange"></i>
-                      <i class="fas fa-star" style="color:orange"></i>
-                      <i class="fas fa-star" style="color:orange"></i>
-                      <i class="fas fa-star" style="color:orange"></i>
-                    </div>
-                    <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $data[$i]['id_produk']; ?>"> <?php echo $data[$i]['nama_produk']; ?></a> </h3>
-                    <span class="dot" style="background-color:<?php echo $data[$i]['warna_produk']
-                                                              ?>;"></span>
-                    <div class="price"><?php echo $data[$i]['warna_produk']; ?> <span> </span> </div>
-
-                    <a> Available </a>
-                  </div>
-                </div>
-                <br>
-                <br>
-              <?php endfor; ?>
-
-
-              <!--Side-Bar-->
-              <!--
-              <aside class="col-md-3 col-md-pull-9">
-                <div class="sidebar_widget">
-                  <div class="widget_heading">
-                    <h5><i class="fa fa-filter" aria-hidden="true"></i> Find Your Game </h5>
-                  </div>
-
-
-                  <div class="sidebar_widget">
-                    <div class="widget_heading">
-                      <h5><i class="fa fa-car" aria-hidden="true"></i> Recently Listed Cars</h5>
-                    </div>
-                    <div class="recent_addedcars">
-                      <ul>
-                        <?php /*$sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid  from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand order by id desc limit 4";
-                        $query = $dbh->prepare($sql);
-                        $query->execute();
-                        $results = $query->fetchAll(PDO::FETCH_OBJ);
-                        $cnt = 1;
-                        if ($query->rowCount() > 0) {
-                          foreach ($results as $result) { */  ?>
-
-                        <li class="gray-bg">
-                          <div class="recent_post_img"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
-                                                                                          ?>"><img src="admin/img/vehicleimages/<?php //echo htmlentities($result->Vimage1); 
-                                                                                                                                ?>" alt="image"></a> </div>
-                          <div class="recent_post_title"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
-                                                                                            ?>"><?php //echo htmlentities($result->BrandName); 
-                                                                                                ?> , <?php //echo htmlentities($result->VehiclesTitle); 
-                                                                                                      ?></a>
-                            <p class="widget_price">$<?php //echo htmlentities($result->PricePerDay); 
-                                                      ?> Per Day</p>
-                          </div>
-                        </li>
-                        <?php //}
-                        //} 
-                        ?>
-
-                      </ul>
-                    </div>
-                  </div>
-              </aside>
-            </div>
-          </div>
-          -->
+        <div class="col-md-12">
+          <img src="<?= base_url('assets/images/bust.png') ?>" class="card-img center" width="277" height="400">
+          <h4 class="center">Don't Give Up!</h4>
+          <p class="center">Produk Yang Anda Cari Tidak Ditemukan.</p>
+          <hr>
+          <p class="mb-0">
+            <a href="<?php echo base_url() . 'product'; ?>" class="btn btn-primary center">Cari Produk</a>
+          </p>
+        </div>
+      </div>
   </section>
   <!-- /Listing-->
 

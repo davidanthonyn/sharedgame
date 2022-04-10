@@ -9,6 +9,12 @@ class Modelproduk extends CI_Model
         return $data->result_array();
     }
 
+    public function FindProduk($nama_produk)
+    {
+        $data = $this->db->query("SELECT * FROM produk WHERE nama_produk LIKE '%" . $nama_produk . "%' OR kategori_produk LIKE '%" . $nama_produk . "%' OR deskripsi_produk LIKE '%" . $nama_produk . "%'");
+        return $data->result_array();
+    }
+
     public function GetProdukById($id)
     {
         $data = $this->db->query("SELECT * FROM produk WHERE id_produk = '$id'");
