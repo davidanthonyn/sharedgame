@@ -9,6 +9,7 @@
 		<meta name="author" content="">
 		<meta name="theme-color" content="#3e454c">
 
+
 		<title><?= $title; ?></title>
 
 		<!-- Font awesome -->
@@ -27,6 +28,9 @@
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
+		<script src="<?php echo base_url() . "chartjs/"; ?>chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -73,7 +77,7 @@
 							<div class="panel panel-default">
 								<div class="panel-heading"><?= $smalltitle ?></div>
 								<div class="panel-body">
-									<canvas id="myChart" width="400" height="400"></canvas>
+									<canvas id="myChart"></canvas>
 
 
 								</div>
@@ -88,38 +92,66 @@
 			</div>
 		</div>
 		<script>
-			const ctx = document.getElementById('myChart').getContext('2d');
-			const myChart = new Chart(ctx, {
-				type: 'bar',
+			let myChart = document.getElementById('myChart').getContext('2d');
+
+			// Global Options
+			Chart.defaults.global.defaultFontFamily = 'Lato';
+			Chart.defaults.global.defaultFontSize = 18;
+			Chart.defaults.global.defaultFontColor = '#777';
+
+			let massPopChart = new Chart(myChart, {
+				type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
 				data: {
-					labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+					labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
 					datasets: [{
-						label: '# of Votes',
-						data: [12, 19, 3, 5, 2, 3],
+						label: 'Population',
+						data: [
+							617594,
+							181045,
+							153060,
+							106519,
+							105162,
+							95072
+						],
+						//backgroundColor:'green',
 						backgroundColor: [
-							'rgba(255, 99, 132, 0.2)',
-							'rgba(54, 162, 235, 0.2)',
-							'rgba(255, 206, 86, 0.2)',
-							'rgba(75, 192, 192, 0.2)',
-							'rgba(153, 102, 255, 0.2)',
-							'rgba(255, 159, 64, 0.2)'
+							'rgba(255, 99, 132, 0.6)',
+							'rgba(54, 162, 235, 0.6)',
+							'rgba(255, 206, 86, 0.6)',
+							'rgba(75, 192, 192, 0.6)',
+							'rgba(153, 102, 255, 0.6)',
+							'rgba(255, 159, 64, 0.6)',
+							'rgba(255, 99, 132, 0.6)'
 						],
-						borderColor: [
-							'rgba(255, 99, 132, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(255, 206, 86, 1)',
-							'rgba(75, 192, 192, 1)',
-							'rgba(153, 102, 255, 1)',
-							'rgba(255, 159, 64, 1)'
-						],
-						borderWidth: 1
+						borderWidth: 1,
+						borderColor: '#777',
+						hoverBorderWidth: 3,
+						hoverBorderColor: '#000'
 					}]
 				},
 				options: {
-					scales: {
-						y: {
-							beginAtZero: true
+					title: {
+						display: true,
+						text: 'Largest Cities In Massachusetts',
+						fontSize: 25
+					},
+					legend: {
+						display: true,
+						position: 'right',
+						labels: {
+							fontColor: '#000'
 						}
+					},
+					layout: {
+						padding: {
+							left: 50,
+							right: 0,
+							bottom: 0,
+							top: 0
+						}
+					},
+					tooltips: {
+						enabled: true
 					}
 				}
 			});
@@ -134,7 +166,7 @@
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
-		<script src="<?php echo base_url() . "chartjs/"; ?>chart.min.js"></script>
+
 	</body>
 
 	</html>

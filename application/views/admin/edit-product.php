@@ -60,30 +60,30 @@
 
 				<div class="row">
 					<div class="col-md-12">
+						<?php
+						foreach ($productEdit as $listProductEdit) { ?>
+							<h2 class="page-title">Edit Product: <?= $listProductEdit->nama_produk ?> </h2>
 
-						<h2 class="page-title">Post A Product</h2>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="panel panel-default">
-									<div class="panel-heading">Basic Info</div>
-									<?php
-									if ($this->session->flashdata('message')) {
-									?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
-																						$this->session->unset_userdata('message');
-																						?> </div><?php }
-																									?>
-									<?php
-									if ($this->session->flashdata('message_error')) {
-									?>
-										<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
-																						$this->session->unset_userdata('message_error');
-																						?> </div><?php }
-																									?>
-
-									<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">Basic Info</div>
 										<?php
-										foreach ($productEdit as $listProductEdit) { ?>
+										if ($this->session->flashdata('message')) {
+										?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+																							$this->session->unset_userdata('message');
+																							?> </div><?php }
+																									?>
+										<?php
+										if ($this->session->flashdata('message_error')) {
+										?>
+											<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+																							$this->session->unset_userdata('message_error');
+																							?> </div><?php }
+																										?>
+
+										<div class="panel-body">
+
 											<form method="post" action="<?php echo base_url() . 'Admin/edit_data_produk/' . $listProductEdit->id_produk; ?>" class="form-horizontal" enctype="multipart/form-data">
 
 												<div class="form-group">
@@ -242,12 +242,12 @@
 														-->
 
 												<div class="hr-dashed"></div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 
-						<!--
+							<!--
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
@@ -339,17 +339,17 @@
 
 
 
-						<div class="form-group">
-							<div class="col-sm-8 col-sm-offset-2">
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-2">
 
-								<button class="btn btn-primary" name="submit" type="submit">Save</button>
+									<button class="btn btn-primary" name="submit" type="submit">Save</button>
+								</div>
 							</div>
-						</div>
-					<?php
-										}
-					?>
-					</form>
-					<button class="btn btn-default"><a href="<?php echo base_url() . "admin/batalEditProduk"; ?>">Cancel</a></button>
+						<?php
+						}
+						?>
+						</form>
+						<button class="btn btn-default"><a href="<?php echo base_url() . "admin/kelolaproduk"; ?>">Back</a></button>
 					</div>
 				</div>
 			</div>

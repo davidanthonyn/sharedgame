@@ -72,6 +72,20 @@
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
 								<div class="panel-heading"><?= $smalltitle ?></div>
+
+								<?php
+								if ($this->session->flashdata('message')) {
+								?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
+																						$this->session->unset_userdata('message');
+																						?> </div><?php }
+																									?>
+								<?php
+								if ($this->session->flashdata('message_error')) {
+								?>
+									<div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
+																					$this->session->unset_userdata('message_error');
+																					?> </div><?php }
+																									?>
 								<div class="panel-body">
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
@@ -142,6 +156,7 @@
 														<td><?php echo $listProduct->jumlah_tersedia ?></td>
 														<td>
 															<a href="<?php echo base_url() . 'Admin/edit_data_produk/' . $listProduct->id_produk; ?>">Edit</a> ||
+															<a href="<?php echo base_url() . 'Admin/non_activate_product/' . $listProduct->id_produk; ?>">Nonaktifkan</a> ||
 															<a href="<?php echo base_url() . 'Admin/delete_data_produk/' . $listProduct->id_produk; ?>">Hapus</a>
 														</td>
 													</tr>

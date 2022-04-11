@@ -467,11 +467,6 @@ class Admin extends CI_Controller
         //$data['pricethreeday'] = $this->Modelproduk->getPrice3Days()->result();
         //$data['pricesevenday'] = $this->Modelproduk->getPrice7Days()->result();
         $this->load->view('admin/manage-products.php', $data);
-
-
-
-        //Title Dashboard Admin saat halaman dibuka
-        $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
     }
 
     function edit_data_produk($id_produk)
@@ -518,7 +513,7 @@ class Admin extends CI_Controller
         // $produk = $this->db->get_where('produk', ['id_produk' => $id_produk])->row_array();
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Edit Product | SharedGame';
+
             $data['smalltitle'] = 'Basic Info';
             $where = array('id_produk' => $id_produk);
             $wheresatu = array('id_produk' => $id_produk, 'lama_sewa_hari' => '1');
@@ -526,10 +521,11 @@ class Admin extends CI_Controller
             $wheretujuh = array('id_produk' => $id_produk, 'lama_sewa_hari' => '7');
             //$data['brandEdit'] = $this->Modelproduk->edit_record('brand', $where)->result();
             $data['productEdit'] = $this->Modelproduk->edit_record('produk', $where)->result();
+            $data['namaProduk'] = $this->Modelproduk->edit_record('produk', $where)->row_array();
             $data['tarifSatu'] = $this->Modelproduk->edit_record('tarifsewa', $wheresatu)->result();
             $data['tarifTiga'] = $this->Modelproduk->edit_record('tarifsewa', $wheretiga)->result();
             $data['tarifTujuh'] = $this->Modelproduk->edit_record('tarifsewa', $wheretujuh)->result();
-
+            $data['title'] = 'Edit Product ' . $data['namaProduk']['nama_produk'] . ' | SharedGame';
 
             $data['brand'] = $this->M_Brand->getAllBrand()->result();
             $data['icon'] = '<link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameSettings.png">';
@@ -626,7 +622,7 @@ class Admin extends CI_Controller
                 }
             }
 
-            $this->session->set_flashdata('messagesuccess', 'Edit Produk ' . $nama_produk . ' Berhasil');
+            $this->session->set_flashdata('message', 'Edit Produk ' . $nama_produk . ' Berhasil');
             redirect('admin/edit_data_produk/' . $id_produk);
         }
     }
@@ -885,9 +881,46 @@ class Admin extends CI_Controller
         if ($data['user']['id_role'] == '1') {
             $where = array('id_produk' => $id_produk);
             $this->M_Brand->delete_record($where, 'produk');
+
+            $this->session->set_flashdata('message', 'Hapus produk berhasil!');
             redirect('admin/kelolaproduk');
         } else {
             redirect('');
         }
+    }
+
+    function non_activate_product($id_produk)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        $data['produk'] = $this->db->get_where('produk', ['id_produk' => $id_produk])->row_array();
+
+        if ($data['user']['id_role'] == '1') {
+            if ($data['produk']['jumlah_tersedia'] != '0') {
+                $data = array(
+                    'jumlah_tersedia' => '0'
+                );
+
+                $where = array('id_produk' => $id_produk);
+                $this->M_Brand->update_record($where, $data, 'produk');
+
+                $this->session->set_flashdata('message', 'Penonaktifan Produk ' . $data['produk']['nama_produk'] . ' berhasil!');
+                redirect('admin/kelolaproduk');
+            } else {
+                $this->session->set_flashdata('message_error', 'Produk ' . $data['produk']['nama_produk'] . ' sudah kosong! (Penonaktifan = Stok Dibuat Kosong)');
+                redirect('admin/kelolaproduk');
+            }
+        } else {
+            $this->session->set_flashdata('message_error', 'Penonaktifan Produk hanya dapat dilakukan oleh admin!');
+            redirect('admin/kelolaproduk');
+        }
+    }
+
+    function get_data_user()
+    {
     }
 }
