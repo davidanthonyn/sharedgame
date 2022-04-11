@@ -920,7 +920,27 @@ class Admin extends CI_Controller
         }
     }
 
-    function get_data_user()
+    function getdatauser()
     {
+        if (!empty($_POST['kategori_produk'])) {
+            $this->db->where('produk', $_POST['kategori_produk']);
+        }
+
+        $result = $this->db->get('produk')->result();
+        $data = array();
+        $i = 0;
+        foreach ($result as $val) {
+            $data[] = array(
+                $i,
+                $val->nama_brand,
+                $val->nama_produk,
+                $val->kategori_produk,
+                $val->warna_produk,
+                $val->gambar_produk,
+                $val->deskripsi_produk,
+                $val->serial_produk,
+                $val->jumlah_tersedia
+            );
+        }
     }
 }

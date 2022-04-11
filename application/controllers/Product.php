@@ -165,6 +165,17 @@ class Product extends CI_Controller
         $data['title'] = 'Cari Produk ' . $nama_produk . ' | SharedGame';
         $data["data"] = $this->Modelproduk->FindProduk($nama_produk);
 
+        //Set waktu untuk created at dan updated at
+        $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        $datasearch = array(
+            'keyword' => $nama_produk,
+            'tgl_pencarian' => $now
+        );
+
+        $this->db->insert('search', $datasearch);
+
         if ($nama_produk == "" || $data["data"] == NULL) {
             $this->load->view('includes/header.php', $data);
             $this->load->view('find-listing-empty.php', $data);
