@@ -26,14 +26,16 @@ class Cart extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        //$where = array('id_produk' => $id);
+        //$data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         //$data['jumlahrow'] = $this->M_Cart->get_row_detail_cart($data['keranjangrow']['id_cart'])->result();
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
         $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
-        $data['numrowcart'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+        $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+        $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
         $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
-        //var_dump($data['totalprice']);
-        //die;
+
 
 
         //$where = array('id_produk' => $id);
@@ -180,5 +182,27 @@ class Cart extends CI_Controller
         $this->load->view('themes/header', $data);
         $this->load->view('shopping/sukses', $data);
         $this->load->view('themes/footer');
+    }
+
+    public function edit_quantity()
+    {
+        $rowid = $_POST['rowid'];
+        $qty = $_POST['qty'];
+
+        $edit_temp_purchase = array(
+            'qty_produk' => $qty
+        );
+
+        $this->db->update('detailcart', $edit_temp_purchase, ['id_produk' => $rowid]);
+    }
+
+    public function getPriceByAjax()
+    {
+        $lama = $this->input->post('sewa');
+        $produk = $this->input->post('id_produk');
+        $where = array('lama_sewa_hari' => $lama, 'id_produk' => $produk);
+        //$where = array('id_page' => 1);
+        $data = $this->M_Cart->get_price_by_ajax($where);
+        echo json_encode($data);
     }
 }

@@ -39,7 +39,15 @@
     <link rel="shortcut icon" href="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png">
     <!-- Google-Font-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() . "assets/cart/"; ?>cart.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script rel="javascript" type="text/javascript" src="<?php echo base_url() . "assetsadmin/";
+                                                          ?>js/jquery.min.js"></script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="<?php //echo base_url() . "assets/cart/cart.css";
+                                                  ?>" />
+                                                  -->
+
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript">
@@ -51,6 +59,51 @@
         }
         return true;
       }*/
+    </script>
+    <script>
+      /*
+      $(document).ready(function() {
+        $('#sewa').change(function() {
+          var sewa = $(this).val();
+
+          $.ajax({
+
+            type: 'POST',
+
+            url: "<?php echo base_url('admin/getPriceByAjax') ?>",
+
+            dataType: "JSON",
+
+            data: {
+              sewa: sewa
+            },
+
+            success: function(data)
+
+            {
+
+              $.each(data, function() {
+
+                $('[name="page_name"]').val(data.page_name);
+
+                $('[name="detail"]').val(data.detail);
+
+                CKupdate();
+                CKEDITOR.instances['detail'].setData(detail);
+
+              });
+
+            }
+
+
+
+          });
+
+        });
+
+      });*/
+
+      //JSONInPrettyFormat;
     </script>
     <style>
       .errorWrap {
@@ -75,6 +128,324 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      /* @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap'); */
+
+      * {
+
+        /* font-family: 'Comfortaa', cursive; */
+
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+      }
+
+      .container {
+
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+      }
+
+      .container>h1 {
+
+        padding: 20px 0;
+
+      }
+
+      .cart {
+
+        display: flex;
+
+      }
+
+      .products {
+
+        flex: 0.75;
+
+      }
+
+      .product {
+
+        display: flex;
+
+        width: 100%;
+
+        height: 350px;
+
+        overflow: hidden;
+
+        border: 1px solid silver;
+
+        margin-bottom: 20px;
+
+      }
+
+      .product:hover {
+
+        border: none;
+
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+        transform: scale(1.01);
+
+      }
+
+      .product>img {
+
+        width: 300px;
+
+        height: 240px;
+
+        object-fit: cover;
+
+      }
+
+      .product>img:hover {
+
+        transform: scale(1.04);
+
+      }
+
+      .product-info {
+
+        padding: 20px;
+
+        width: 100%;
+
+        position: relative;
+
+      }
+
+      .product-name,
+      .price,
+      .product-offer {
+
+        margin-bottom: 20px;
+
+      }
+
+      .product-remove {
+
+        position: absolute;
+
+        bottom: 270px;
+
+        right: 20px;
+
+        padding: 10px 25px;
+
+        background-color: green;
+
+        color: white;
+
+        cursor: pointer;
+
+        border-radius: 5px;
+
+      }
+
+      .product-remove:hover {
+
+        background-color: white;
+
+        color: green;
+
+        font-weight: 600;
+
+        border: 1px solid green;
+
+      }
+
+      .product-update {
+
+        position: absolute;
+
+        bottom: 140px;
+
+        right: 270px;
+
+        padding: 10px 25px;
+
+        background-color: white;
+
+        color: white;
+
+        cursor: pointer;
+
+        border-radius: 5px;
+
+      }
+
+      .product-update:hover {
+
+        background-color: white;
+
+        color: orange;
+
+        font-weight: 600;
+
+        border: 1px solid orange;
+
+      }
+
+      .product-quantity>input {
+
+        width: 40px;
+
+        padding: 5px;
+
+        text-align: center;
+
+      }
+
+      .plan-date>input {
+
+        width: 200px;
+
+        padding: 5px;
+
+        text-align: center;
+
+      }
+
+      .plan-date .end {
+
+        position: relative;
+
+        left: 270px;
+
+        bottom: 46px;
+
+        width: 200px;
+
+        padding: 5px;
+
+        text-align: center;
+
+      }
+
+      .fa {
+
+        margin-right: 5px;
+
+      }
+
+      .cart-total {
+
+        flex: 0.25;
+
+        margin-left: 20px;
+
+        padding: 20px;
+
+        height: 240px;
+
+        border: 1px solid silver;
+
+        border-radius: 5px;
+
+      }
+
+      .cart-total p {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        margin-bottom: 30px;
+
+        font-size: 20px;
+
+      }
+
+      .cart-total a {
+
+        display: block;
+
+        text-align: center;
+
+        height: 40px;
+
+        line-height: 40px;
+
+        background-color: tomato;
+
+        color: white;
+
+        text-decoration: none;
+
+      }
+
+      .cart-total a:hover {
+
+        background-color: red;
+
+      }
+
+      @media screen and (max-width: 700px) {
+
+        .remove {
+
+          display: none;
+
+        }
+
+        .product {
+
+          height: 150px;
+
+        }
+
+        .product>img {
+
+          height: 150px;
+
+          width: 200px;
+
+        }
+
+        .product-name,
+        .price,
+        .product-offer {
+
+          margin-bottom: 10px;
+
+        }
+
+      }
+
+      @media screen and (max-width: 900px) {
+
+        .cart {
+
+          flex-direction: column;
+
+        }
+
+        .cart-total {
+
+          margin-left: 0;
+
+          margin-bottom: 20px;
+
+        }
+
+      }
+
+      @media screen and (max-width: 1220px) {
+
+        .container {
+
+          max-width: 95%;
+
+        }
+
       }
 
       /*
@@ -202,45 +573,79 @@
 
             <div class="products">
 
-
-
               <?php foreach ($productcart as $cart) { ?>
-                <div class="product">
+                <form class="user" method="POST" id="frm<?= $cart->id_produk ?>" action="<?= base_url('checkout'); ?>">
 
-                  <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
+                  <div class="product">
+                    <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
 
-                  <div class="product-info">
+                    <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
 
-                    <h3 class="product-name"><?= $cart->nama_produk ?></h3>
+                    <div class="product-info">
 
-
-                    <h4 class="product-price">Rp. <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?></h4>
-
-
-                    <h4 class="product-offer">Lama Sewa <select id="sewa" name="sewa" onchange="change_time()">
-                        <option value="1">1 Hari</option>
-                        <option value="3">3 Hari</option>
-                        <option value="7">7 Hari</option>
-                      </select></h4>
-
-                    <p class="product-quantity">Qnt: <input type="number" id="myNumber" value="1" min="1" max="<?php echo $cart->jumlah_tersedia
-                                                                                                                ?>" required />
+                      <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                    <p class="product-remove">
+                      <p class="product-price price<?= $cart->id_produk ?>">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?> x <?php echo $cart->qty_produk
+                                                                                                                                                ?> =</p>
+                      <h4 class="subtotal subtotal<?= $cart->id_produk ?>"> Rp <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
 
-                      <i class="fa fa-trash" aria-hidden="true"></i>
+                      <p class="product-quantity qty<?= $cart->id_produk ?>">Qty <input type="number" id="myNumber" name="myNumber" onchange="updateproduct(<?= $cart->id_produk ?>)" value="<?php echo $cart->qty_produk
+                                                                                                                                                                                              ?>" min="1" max="<?php echo $cart->jumlah_tersedia
+                                                                                                                                                                                                                ?>" required />
 
-                      <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
+                          <option value="1">1 Hari</option>
+                          <option value="3">3 Hari</option>
+                          <option value="7">7 Hari</option>
+                        </select>
+                      </p>
+                      <p class="plan-date">Tanggal Sewa <input class="form-control white_bg" value="<?= $cart->start_plan ?>" name="plandate" id="plandate">
+                        <input class="end" class="form-control white_bg" value="<?= $cart->finish_plan ?>" name="enddate" id="enddate" disabled>
+                      </p>
+                      <script type="text/javascript">
+                        flatpickr("#plandate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          /*disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]*/
+                        });
 
-                    </p>
+                        flatpickr("#enddate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          /*disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]*/
+                        });
+                      </script>
+
+
+                      <p class="product-remove">
+
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+
+                        <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+
+
+                      </p>
+                      <p class="product-update">
+
+                        <a class="update" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Update</a>
+                      </p>
+                    </div>
 
                   </div>
+                <?php }
 
-                </div>
-              <?php }
-
-              ?>
+                ?>
 
             </div>
 
@@ -251,28 +656,27 @@
 
                   <span>Total Price</span>
 
-                  <span> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                  <span class="grandtotal" id="totalharga" name="totalharga"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
                 </p>
 
                 <p>
-
                   <span>Number of Items</span>
-                  <span><?= $numrowcart;
-                        ?></span>
+                  <span><?php echo $totalitem; ?> </span>
                 </p>
 
                 <p>
-
+                  <!--
                   <span>You Save</span>
 
-                  <span>Rp 1,000</span>
+                  <span>Rp 1,000</span> -->
 
                 </p>
               <?php
+
               }
               ?>
               <a href="#">Proceed to Checkout</a>
-
+              </form>
             </div>
 
           </div>
@@ -312,9 +716,11 @@
     <!--Slider-JS-->
     <script src="<?php echo base_url() . "assets/"; ?>js/slick.min.js"></script>
     <script src="<?php echo base_url() . "assets/"; ?>js/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-      /* function change_time() {
+      /*
+      function change_time() {
         var select = document.getElementById('time');
         var value = select.options[select.selectedIndex].value;
 
@@ -336,7 +742,38 @@
           document.getElementById('price').value = "";
           document.getElementById('div_content').style.display = 'none';
         }
-      } */
+      }
+
+      function change_quantity() {
+
+      }
+
+      function change_date() {
+
+      }*/
+    </script>
+    <script>
+      function updateproduct(rowid) {
+        var qty = $('.qty' + rowid).val();
+        var price = $('.price' + rowid).text();
+        var subtotal = $('.subtotal' + rowid).text();
+        console.log(qty);
+        console.log(price);
+        console.log(subtotal);
+
+        $.ajax({
+          type: "POST",
+          url: "<?php echo base_url('cart/edit_quantity'); ?>",
+          data: "rowid=" + rowid + "&qty=" + qty,
+          success: function(response) {
+            $('.subtotal' + rowid).text(response);
+            $('.subtotal').each(function() {
+              total += parseInt($(this).text());
+              $('.grandtotal').text(total);
+            });
+          }
+        });
+      }
     </script>
 
   </body>

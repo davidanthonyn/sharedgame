@@ -84,15 +84,19 @@ class M_Cart extends CI_model
 
     public function get_row_cart($id_cart)
     {
-        $this->db->select('id_cart');
-        $this->db->from('detailcart');
+        //$data = $this->db->query("SELECT SUM(`qty_produk`) FROM detailcart WHERE id_cart = " . $id_cart);
+        //return $data;
+
+        $this->db->select('SUM(qty_produk) as total');
         $this->db->where('id_cart', $id_cart);
-        return $this->db->count_all_results();
+        $q = $this->db->get('detailcart');
+        $row = $q->row();
+        return $row->total;
     }
 
     public function get_total_price_cart($id_cart)
     {
-        $data = $this->db->query("SELECT SUM(tarifsewa.tarif_harga) FROM detailcart 
+        $data = $this->db->query("SELECT SUM(tarifsewa.tarif_harga*qty_produk) FROM detailcart 
         JOIN produk 
         ON detailcart.id_produk = produk.id_produk 
         JOIN tarifsewa 
@@ -103,10 +107,63 @@ class M_Cart extends CI_model
         return $data;
     }
 
+    public function get_tarif_sewa($id_cart)
+    {
+        $data = $this->db->query("SELECT id_produk, tarif_harga, lama_sewa_hari FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE tarifsewa.id_produk = detailcart.id_produk AND id_cart = " . $id_cart . ")");
+
+        return $data;
+    }
+
     function delete_record($where, $table)
     {
         $this->db->where($where);
         $this->db->delete($table);
+    }
+
+    public function addquantity()
+    {
+        $this->db->select('*');
+        $this->db->from('detailcart');
+        $this->db->where('id_produk', $this->input->post('id'));
+        $q = $this->db->get();
+        $lab = $q->result_array();
+        $this->load->library('cart');
+        $cart = $this->cart->contents();
+        $found = false;
+        foreach ($cart as $items) {
+
+            if ($this->input->post('id') == $items['id_produk']) {
+                $this->cart->update(array(
+                    'rowid' => $items['rowid'],
+                    'qty' => $items['qty'] + 1
+                ));
+                $found = true;
+            }
+        }
+        if ($found == false) {
+            $data = array(
+                'id' => $lab[0]['lid'],
+                'name' => $lab[0]['ldesc'],
+                'qty' => 1,
+                'price' => $lab[0]['lprice']
+            );
+            $this->cart->insert($data);
+        }
+
+        return $this->cart->contents();
+    }
+
+    function get_price_by_ajax($where)
+    {
+        $query = $this->db->get_where('tarifsewa', $where);
+
+        foreach ($query->result() as $data) {
+            $output = array(
+                //'page_name' => $data->page_name,
+                'tarif_harga' => $data->tarif_harga
+            );
+        }
+        return $output;
     }
     /*
     public function get_product_detail_cart()
