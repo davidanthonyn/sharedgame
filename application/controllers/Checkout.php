@@ -27,4 +27,12 @@ $this->load->model('M_Page');
         $data['pages'] = $this->M_Page->getAllRowPages()->result();
         $this->load->view('includes/footer.php', $data);
     }
+
+    public function index()
+    {
+        $data['title'] = 'Transaksi Berhasil | SharedGame';
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('checkout.php', $data);
+        $this->footer();
+    }
 }
