@@ -210,7 +210,7 @@ class M_User extends CI_model
         //Config gmail
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://usvip4.noc401.com',
+            'smtp_host' => 'mail.sharedgame.tech',
             'smtp_user' => 'noreply@sharedgame.tech',
             'smtp_pass' => 'Sukamaingam3!',
             'smtp_port' => 465,

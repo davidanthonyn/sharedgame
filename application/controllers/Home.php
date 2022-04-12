@@ -101,7 +101,6 @@ class Home extends CI_Controller
         //require APPPATH . 'phpmailer\src\Exception.php';
         //require APPPATH . 'phpmailer\src\PHPMailer.php';
         //require APPPATH . 'phpmailer\src\SMTP.php';
-        $data = 'tahi';
 
         $html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
         //$html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
@@ -114,7 +113,7 @@ class Home extends CI_Controller
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->Host = "usvip4.noc401.com";
+            $mail->Host = "mail.sharedgame.tech";
             $mail->Port = 465;
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
@@ -144,7 +143,7 @@ class Home extends CI_Controller
 
         $mail = $this->phpmailer_lib->load();
         // SMTP configuration
-        $mail->Host       = "usvip4.noc401.com";      // setting GMail as our SMTP server
+        $mail->Host       = "mail.sharedgame.tech";      // setting GMail as our SMTP server
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = "ssl";  // prefix for secure protocol to connect to the server
         $mail->Port       = 465;                   // SMTP port to connect to GMail
