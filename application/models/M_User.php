@@ -396,4 +396,17 @@ class M_User extends CI_model
         }
         return $output;
     }
+
+    public function get_detail_transaction($id_transaction)
+    {
+        $data = $this->db->query("SELECT * FROM detailtransaksi 
+        JOIN transaksi 
+        ON detailtransaksi.id_transaksi = transaksi.id_transaksi 
+        JOIN produk
+           ON detailtransaksi.id_produk = produk.id_produk 
+           WHERE detailtransaksi.id_transaksi = " . $id_transaction . "
+           ORDER BY detailtransaksi.startrent DESC");
+
+        return $data;
+    }
 }

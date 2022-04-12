@@ -426,8 +426,11 @@ if (!empty($upload_selfie_ktp)) {
 
         $data['title'] = 'My Transaction | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-
+        $data['transaction'] = $this->db->get_where('transaksi', ['id_user' => $data['user']['id_user']])->row_array();
+        //$data['detailtransaction'] = $this->db->get_where('detailtransaksi', ['id_transaksi' => $data['transaction']['id_transaksi']])->result_array();
+        $data['detailtransaction'] = $this->M_User->get_detail_transaction($data['transaction']['id_transaksi'])->result();
+        //var_dump($data['detailtransaction']);
+        //die;
         $this->load->view('includes/header.php', $data);
         $this->load->view('my-transaction.php', $data);
         $this->footer();
