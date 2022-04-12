@@ -190,14 +190,29 @@ class M_User extends CI_model
 
     private function _sendEmail($token, $type)
     {
+        require APPPATH . 'smtp\PHPMailerAutoload.php';
+        $this->load->library('Phpmailer_lib');
         $email = $this->input->post('email', true);
+        /*
+        $mail = new PHPMailer();
+        $mail->SMTPDebug  = 2;
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'ssl';
+        $mail->Host = "usvip4.noc401.com";
+        $mail->Port = 465;
+        $mail->IsHTML(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Username = "noreply@sharedgame.tech";
+        $mail->Password = "Sukamaingam3!";
+        $mail->SetFrom("noreply@sharedgame.tech");*/
 
         //Config gmail
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://usvip4.noc401.com',
             'smtp_user' => 'noreply@sharedgame.tech',
-            'smtp_pass' => 'p_X$KQFgOWOL',
+            'smtp_pass' => 'Sukamaingam3!',
             'smtp_port' => 465,
             //'mail_type' => 'html',
             'charset' => 'iso-8859-1'

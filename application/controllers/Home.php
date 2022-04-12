@@ -101,8 +101,11 @@ class Home extends CI_Controller
         //require APPPATH . 'phpmailer\src\Exception.php';
         //require APPPATH . 'phpmailer\src\PHPMailer.php';
         //require APPPATH . 'phpmailer\src\SMTP.php';
+        $data = 'tahi';
 
-        $html = 'Msg';
+        $html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
+        //$html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
+
 
         function smtp_mailer($to, $subject, $msg)
         {
@@ -111,12 +114,12 @@ class Home extends CI_Controller
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->Host = "ns02.000webhost.com";
-            $mail->Port = 587;
+            $mail->Host = "usvip4.noc401.com";
+            $mail->Port = 465;
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
             $mail->Username = "noreply@sharedgame.tech";
-            $mail->Password = "qmSgTyH6";
+            $mail->Password = "Sukamaingam3!";
             $mail->SetFrom("noreply@sharedgame.tech");
             $mail->Subject = $subject;
             $mail->Body = $msg;
@@ -132,7 +135,7 @@ class Home extends CI_Controller
                 return 'Sent';
             }
         }
-        echo smtp_mailer('danthonynathanael@gmail.com', 'Test Email', $html);
+        echo smtp_mailer(htmlspecialchars('kontolbinatang@protonmail.com'), 'Test Email', $html);
     }
 
     public function sendEmailHery()
@@ -141,13 +144,13 @@ class Home extends CI_Controller
 
         $mail = $this->phpmailer_lib->load();
         // SMTP configuration
-        $mail->Host       = "ns02.000webhost.com";      // setting GMail as our SMTP server
+        $mail->Host       = "usvip4.noc401.com";      // setting GMail as our SMTP server
         $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "tls";  // prefix for secure protocol to connect to the server
-        $mail->Port       = 587;                   // SMTP port to connect to GMail
+        $mail->SMTPSecure = "ssl";  // prefix for secure protocol to connect to the server
+        $mail->Port       = 465;                   // SMTP port to connect to GMail
         $mail->Username   = "noreply@sharedgame.tech";  // alamat email kamu
-        $mail->Password   = "qmSgTyH6";            // password GMail
-        $mail->setFrom('noreply@sharedgame.tech', 'David'); //email alias
+        $mail->Password   = "Sukamaingam3!";            // password GMail
+        $mail->setFrom('noreply@sharedgame.tech', 'SharedGame'); //email alias
         $mail->addAddress('kontolbinatang@protonmail.com');     // Add a recipient
         $mail->Subject = 'Hallo';                    // Email subject
         $mail->Body       = 'Selamat Registrasi Anda berhasil ';                    // Set email Body
