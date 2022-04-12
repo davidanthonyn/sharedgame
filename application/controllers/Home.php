@@ -110,7 +110,7 @@ class Home extends CI_Controller
             $mail->SMTPDebug  = 2;
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
-            $mail->SMTPSecure = 'tls';
+            $mail->SMTPSecure = 'ssl';
             $mail->Host = "ns02.000webhost.com";
             $mail->Port = 587;
             $mail->IsHTML(true);

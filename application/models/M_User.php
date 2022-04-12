@@ -195,9 +195,9 @@ class M_User extends CI_model
         //Config gmail
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'sharedgametech@gmail.com',
-            'smtp_pass' => 'sukamaingame',
+            'smtp_host' => 'ssl://usvip4.noc401.com',
+            'smtp_user' => 'noreply@sharedgame.tech',
+            'smtp_pass' => 'p_X$KQFgOWOL',
             'smtp_port' => 465,
             //'mail_type' => 'html',
             'charset' => 'iso-8859-1'
