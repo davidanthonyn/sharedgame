@@ -95,6 +95,7 @@
 
   <section class="user_profile inner_pages">
     <div class="container">
+      <!--
       <div class="user_profile_info gray-bg padding_4x4_40">
         <div class="upload_user_logo"> <img src="<?php echo base_url() . "assets/"; ?>images/dealer-logo.jpg" alt="image">
         </div>
@@ -109,6 +110,7 @@
                     ?></p>
         </div>
       </div>
+  -->
 
       <div class="row">
         <div class="col-md-3 col-sm-3">
