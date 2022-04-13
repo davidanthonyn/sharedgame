@@ -125,7 +125,7 @@
 									<!--
 									<a href="https://sharedgame.tech"><img src="img/SharedGameController.png" width="60"
 											<a href="https://sharedgame.tech">-->
-									<img src="https://drive.google.com/thumbnail?id=17fE0j6Uar2mGw-kL8g_D3WzV3PQH2lhv" width="60" alt="Logo" title="Logo"></a>
+									<img src="<?php base_url('assets/images/SharedGameController.png') ?>" width="60" alt="Logo" title="Logo"></a>
 
 								</td>
 							</tr>
@@ -234,11 +234,11 @@
 						<tr>
 							<td style="background-color: #F76D2B;padding: 10px;text-align: center;">
 								<p style="font-size: 15px;color: #fff;Margin-bottom:13px;">Connect with us</p>
-								<a href="#1"><img src="https://drive.google.com/thumbnail?id=1umze7tnXbfl4xZJVgm3T2bI8ZfNoODIx" width="30" alt=""></a>
-								<a href="#2"><img src="https://drive.google.com/thumbnail?id=1T0AbPtdEwJYh4W9bmUys8l21GWTEDYTR" width="30" alt=""></a>
-								<a href="#3"><img src="https://drive.google.com/thumbnail?id=15CMNdAeE1lKiD-Fzr5GkQgPYzuITkfeu" width="30" alt=""></a>
-								<a href="#4"><img src="https://drive.google.com/thumbnail?id=1OGIqdFBDH7B9HhU0kzfas2zJPfgugC3q" width="30" alt=""></a>
-								<a href="#5"><img src="https://drive.google.com/thumbnail?id=1K9kqkRh4SATeVAqIMWOAsheMZ0NG4Lrl" width="30" alt=""></a>
+								<a href="#1"><img src="<?php base_url('assets/images/white-facebook.png') ?>" width="30" alt=""></a>
+								<a href="#2"><img src="<?php base_url('assets/images/white-twitter.png') ?>" width="30" alt=""></a>
+								<a href="#3"><img src="<?php base_url('assets/images/white-youtube.png') ?>" width="30" alt=""></a>
+								<a href="#4"><img src="<?php base_url('assets/images/white-linkedin.png') ?>" width="30" alt=""></a>
+								<a href="#5"><img src="<?php base_url('assets/images/white-instagram.png') ?>" width="30" alt=""></a>
 
 							</td>
 						</tr>
@@ -254,7 +254,7 @@
 								<!--
 									<a href="#"><img src="img/SharedGameController.png" alt="" width="60"></a>
 									-->
-								<a href="#"><img src="https://drive.google.com/thumbnail?id=17fE0j6Uar2mGw-kL8g_D3WzV3PQH2lhv" alt="" width="60"></a>
+								<a href="<?php base_url(); ?>"><img src="<?php base_url('assets/images/SharedGameController.png') ?>" alt="" width="60"></a>
 								<?php
 
 								foreach ($cs as $listCs) { ?>
