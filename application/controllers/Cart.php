@@ -25,6 +25,7 @@ class Cart extends CI_Controller
         $data['title'] = 'Cart | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
 
         //$where = array('id_produk' => $id);
         //$data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
@@ -34,7 +35,7 @@ class Cart extends CI_Controller
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
         if ($data['keranjangrow'] != NULL) {
             $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
-            $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
         }

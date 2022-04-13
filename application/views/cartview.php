@@ -565,122 +565,121 @@
 
     <section class="user_profile inner_pages">
       <div class="container">
-        <?php if ($keranjangrow != NULL) { ?>
-          <?php if ($totalitem != NULL) { ?>
-            <h4>Produk yang akan disewakan</h4>
+        <?php if ($keranjangrow != NULL && $totalitem != NULL) { ?>
+          <h4>Produk yang akan disewakan</h4>
 
-            <div class="cart">
-
-
-              <div class="products">
-
-                <?php foreach ($productcart as $cart) { ?>
-                  <form class="user" method="POST" id="frm<?= $cart->id_produk ?>" action="<?= base_url('checkout'); ?>">
-
-                    <div class="product">
-                      <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
-
-                      <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
-
-                      <div class="product-info">
-
-                        <h3 class="product-name"><?= $cart->nama_produk ?></h3>
+          <div class="cart">
 
 
-                        <p class="product-price price<?= $cart->id_produk ?>">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?> x <?php echo $cart->qty_produk
-                                                                                                                                                  ?> =</p>
-                        <h4 class="subtotal subtotal<?= $cart->id_produk ?>"> Rp <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+            <div class="products">
 
-                        <p class="product-quantity qty<?= $cart->id_produk ?>">Qty <input type="number" id="myNumber" name="myNumber" onchange="updateproduct(<?= $cart->id_produk ?>)" value="<?php echo $cart->qty_produk
-                                                                                                                                                                                                ?>" min="1" max="<?php echo $cart->jumlah_tersedia
+              <?php foreach ($productcart as $cart) { ?>
+                <form class="user" method="POST" id="frm<?= $cart->id_produk ?>" action="<?= base_url('checkout'); ?>">
+
+                  <div class="product">
+                    <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
+
+                    <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
+
+                    <div class="product-info">
+
+                      <h3 class="product-name"><?= $cart->nama_produk ?></h3>
+
+
+                      <p class="product-price price<?= $cart->id_produk ?>">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?> x <?php echo $cart->qty_produk
+                                                                                                                                                ?> =</p>
+                      <h4 class="subtotal subtotal<?= $cart->id_produk ?>"> Rp <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+
+                      <p class="product-quantity qty<?= $cart->id_produk ?>">Qty <input type="number" id="myNumber" name="myNumber" onchange="updateproduct(<?= $cart->id_produk ?>)" value="<?php echo $cart->qty_produk
+                                                                                                                                                                                              ?>" min="1" max="<?php echo $cart->jumlah_tersedia
                                                                                                                                                                                                                 ?>" required />
 
-                        <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
-                            <option value="1">1 Hari</option>
-                            <option value="3">3 Hari</option>
-                            <option value="7">7 Hari</option>
-                          </select>
-                        </p>
-                        <p class="plan-date">Tanggal Sewa <input class="form-control white_bg" value="<?= $cart->start_plan ?>" name="plandate" id="plandate">
-                          <input class="end" class="form-control white_bg" value="<?= $cart->finish_plan ?>" name="enddate" id="enddate" disabled>
-                        </p>
-                        <script type="text/javascript">
-                          flatpickr("#plandate", {
-                            minDate: "today",
-                            altInput: true,
-                            altFormat: "j F Y",
-                            dateFormat: "Y-m-d",
-                            /*disable: ["2022-04-15", {
-                              from: "2022-05-03",
-                              to: "2022-05-08"
-                            }]*/
-                          });
+                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
+                          <option value="1">1 Hari</option>
+                          <option value="3">3 Hari</option>
+                          <option value="7">7 Hari</option>
+                        </select>
+                      </p>
+                      <p class="plan-date">Tanggal Sewa <input class="form-control white_bg" value="<?= $cart->start_plan ?>" name="plandate" id="plandate">
+                        <input class="end" class="form-control white_bg" value="<?= $cart->finish_plan ?>" name="enddate" id="enddate" disabled>
+                      </p>
+                      <script type="text/javascript">
+                        flatpickr("#plandate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          /*disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]*/
+                        });
 
-                          flatpickr("#enddate", {
-                            minDate: "today",
-                            altInput: true,
-                            altFormat: "j F Y",
-                            dateFormat: "Y-m-d",
-                            /*disable: ["2022-04-15", {
-                              from: "2022-05-03",
-                              to: "2022-05-08"
-                            }]*/
-                          });
-                        </script>
-
-
-                        <p class="product-remove">
-
-                          <i class="fa fa-trash" aria-hidden="true"></i>
-
-                          <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+                        flatpickr("#enddate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          /*disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]*/
+                        });
+                      </script>
 
 
-                        </p>
-                        <p class="product-update">
+                      <p class="product-remove">
 
-                          <a class="update" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Update</a>
-                        </p>
-                      </div>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
 
+                        <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
+
+
+                      </p>
+                      <p class="product-update">
+
+                        <a class="update" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Update</a>
+                      </p>
                     </div>
-                  <?php }
 
-                  ?>
+                  </div>
+                <?php }
 
-              </div>
+                ?>
 
-              <div class="cart-total">
-                <?php
-                foreach ($totalprice as $total) { ?>
-                  <p>
+            </div>
 
-                    <span>Total Price</span>
+            <div class="cart-total">
+              <?php
+              foreach ($totalprice as $total) { ?>
+                <p>
 
-                    <span class="grandtotal" id="totalharga" name="totalharga"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
-                  </p>
+                  <span>Total Price</span>
 
-                  <p>
-                    <span>Number of Items</span>
-                    <span><?php echo $totalitem; ?> </span>
-                  </p>
+                  <span class="grandtotal" id="totalharga" name="totalharga"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                </p>
 
-                  <p>
-                    <!--
+                <p>
+                  <span>Number of Items</span>
+                  <span><?php echo $totalitem; ?> </span>
+                </p>
+
+                <p>
+                  <!--
                   <span>You Save</span>
 
                   <span>Rp 1,000</span> -->
 
-                  </p>
-                <?php
+                </p>
+              <?php
 
-                }
-                ?>
-                <a href="#">Proceed to Checkout</a>
-                </form>
-              </div>
-
+              }
+              ?>
+              <a href="#">Proceed to Checkout</a>
+              </form>
             </div>
+
+          </div>
 
       </div>
     <?php } else { ?>
@@ -698,22 +697,6 @@
         </div>
       </div>
     <?php
-          } ?>
-  <?php } else { ?>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <img src="<?= base_url('assets/images/finding.png') ?>" class="card-img center" width="274" height="400">
-          <h4 class="center">Oops!</h4>
-          <p class="center">Keranjang Belanja Anda Kosong.</p>
-          <hr>
-          <p class="mb-0">
-            <a href="<?php echo base_url() . 'product'; ?>" class="btn btn-primary center">Cari Produk</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  <?php
         } ?>
     </section>
     <!--/Profile-setting-->
