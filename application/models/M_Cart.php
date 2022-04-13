@@ -180,7 +180,7 @@ class M_Cart extends CI_model
 
     public function get_row_detail_cart($id_cart)
     {
-        $data = $this->db->query("SELECT * FROM detailcart WHERE id_cart =" . $id_cart);
+        $data = $this->db->query("SELECT COUNT(*) FROM detailcart WHERE id_cart =" . $id_cart);
         return $data;
     }*/
 

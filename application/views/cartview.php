@@ -564,8 +564,25 @@
         ?>
 
     <section class="user_profile inner_pages">
-      <div class="container">
-        <?php if ($keranjangrow != NULL && $totalitem != NULL) { ?>
+      <?php
+      if ($detailkeranjangrow == NULL) { ?>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <img src="<?= base_url('assets/images/finding.png') ?>" class="card-img center" width="274" height="400">
+              <h4 class="center">Oops!</h4>
+              <p class="center">Keranjang Belanja Anda Kosong.</p>
+              <hr>
+              <p class="mb-0">
+                <a href="<?php echo base_url() . 'product'; ?>" class="btn btn-primary center">Cari Produk</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      <?php } else { ?>
+        <div class="container">
+
+
           <h4>Produk yang akan disewakan</h4>
 
           <div class="cart">
@@ -673,6 +690,7 @@
                 </p>
               <?php
 
+
               }
               ?>
               <a href="#">Proceed to Checkout</a>
@@ -681,23 +699,9 @@
 
           </div>
 
-      </div>
-    <?php } else { ?>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <img src="<?= base_url('assets/images/finding.png') ?>" class="card-img center" width="274" height="400">
-            <h4 class="center">Oops!</h4>
-            <p class="center">Keranjang Belanja Anda Kosong.</p>
-            <hr>
-            <p class="mb-0">
-              <a href="<?php echo base_url() . 'product'; ?>" class="btn btn-primary center">Cari Produk</a>
-            </p>
-          </div>
         </div>
-      </div>
-    <?php
-        } ?>
+      <?php
+      } ?>
     </section>
     <!--/Profile-setting-->
     <!--Back to top-->

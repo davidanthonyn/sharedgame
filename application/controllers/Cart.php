@@ -25,17 +25,37 @@ class Cart extends CI_Controller
         $data['title'] = 'Cart | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
-        $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+
+
+        //$data['jumlahrow'] = $this->M_Cart->get_row_detail_cart($data['keranjangrow']['id_cart'])->row_array();
 
         //$where = array('id_produk' => $id);
         //$data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
         //$data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
-        //$data['jumlahrow'] = $this->M_Cart->get_row_detail_cart($data['keranjangrow']['id_cart'])->result();
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
-        if ($data['keranjangrow'] != NULL) {
-            $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
 
+        if ($data['keranjangrow'] == NULL) {
+            $timezone = date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $now = date('Y-m-d H:i:s');
+            //Buat array untuk cart
+            $data = [
+                'id_user' => $data['user']['id_user'],
+                'updated_at' => $now
+            ];
+
+            //Kirim ke tabel cart
+            $this->db->insert('cart', $data);
+
+            $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->row_array();
+            $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
+            $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+            $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
+            $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+        } else if ($data['keranjangrow'] != NULL) {
+            $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->row_array();
+            $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
+            $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
         }
