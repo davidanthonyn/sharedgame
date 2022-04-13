@@ -10,10 +10,12 @@ class Checkout extends CI_Controller
         $this->load->model('M_Page');
         $this->load->model('M_Rekening');
     }
+
     public function proses_checkout()
     {
         $this->load->view('v_chekout');
     }
+
     public function berhasil()
     {
         $data['title'] = 'Transaksi Berhasil | SharedGame';

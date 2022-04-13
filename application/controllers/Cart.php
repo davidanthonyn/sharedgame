@@ -228,4 +228,54 @@ class Cart extends CI_Controller
         $data = $this->M_Cart->get_price_by_ajax($where);
         echo json_encode($data);
     }
+
+    public function checkout($id_cart)
+    {
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert 
+        alert-danger" role="alert">Mohon login untuk dapat mengakses keranjang belanja.</div>');
+            redirect('auth');
+        }
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['ktp'] = $this->db->get_where('usercard', ['id_user' => $data['user']['id_user']])->row_array();
+        $data['keranjangrow'] = $this->db->get_where('cart', ['id_cart' => $id_cart])->row_array();
+        $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->row_array();
+        $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
+        $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+        $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
+        $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+
+        if ($data['detailkeranjangrow'] == NULL) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Anda belum menambahkan produk ke keranjang!</div>');
+            redirect('cart');
+        } else if (
+            $data['user']['alamat_lengkap'] == "" || $data['user']['no_hp'] == "" || $data['user']['no_hp_dua'] == ""
+            || $data['user']['tgl_lahir'] == "0000-00-00"
+        ) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Mohon <a href="user/edit"> lengkapi </a> data pribadi anda terlebih dahulu</div>');
+            redirect('cart');
+        } else if ($data['ktp']['foto_ktp'] == NULL || $data['ktp']['foto_selfie_ktp'] == NULL) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Mohon <a href="user/identity">mengisi</a> identitas resmi(KTP) anda terlebih dahulu</div>');
+            redirect('cart');
+        } else if ($data['ktp']['status_ktp'] == "belum") {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Anda belum dinyatakan <a href="user/identity">mengisi</a> identitas resmi(KTP)</div>');
+            redirect('cart');
+        } else if ($data['ktp']['status_ktp'] == "sedang_verifikasi") {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-warning" role="alert" style="text-align:center;">Mohon menunggu verifikasi identitas resmi Anda oleh tim kami, untuk bisa melanjutkan Checkout.</div>');
+            redirect('cart');
+        } else if ($data['ktp']['status_ktp'] == "ditolak") {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert" style="text-align:center;">Mohon maaf, namun identitas anda ditolak, mohon <a href="user/identity">periksa</a>  kembali.</div>');
+            redirect('cart');
+        } else if ($data['ktp']['status_ktp'] == "diterima") {
+            echo "berhasil";
+            //redirect('checkout');
+        }
+    }
 }

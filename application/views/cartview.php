@@ -693,7 +693,7 @@
 
               }
               ?>
-              <a href="#">Proceed to Checkout</a>
+              <a href="<?php echo base_url() . 'cart/checkout/' . $cart->id_cart; ?>">Proceed to Checkout</a>
               </form>
             </div>
 
