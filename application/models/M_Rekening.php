@@ -8,6 +8,11 @@ class M_Rekening extends CI_model
         return $this->db->get('rekeningtoko')->result_array();
     }
 
+    public function getRekening($where){
+        $this->db->where('no_rekening_toko', $where);
+        return $this->db->get('rekeningtoko')->result_array();
+    }
+
     public function AllRekening()
     {
         return $this->db->get('rekeningtoko');

@@ -81,6 +81,19 @@ error_reporting(0);
   </section>
   <!-- /Page Header-->
 
+ <!-- /FilterBrand-->
+ 
+   </div>
+   <form action="<?php echo base_url() . "product/filter" ?>" id="FormLaporan" method="post"> 
+     <select name="id_brand" id="brand" class="form-control">
+      <option value="0">Show All</option>
+        <?php for ($i=0; $i<count($brand); $i++): ?>
+      <option value="<?php echo $brand[$i]['id_brand'] ?>"><?php echo $brand[$i]['nama_brand'] ?></option>
+      <?php endfor;?> 
+     </select>
+     <br>
+     <button type="submit" class="btn btn-primary">Show Data</button>
+    </form> 
   <!--Listing-->
   <section class="listing-page">
     <div class="container">
@@ -89,9 +102,9 @@ error_reporting(0);
           <div class="result-sorting-wrapper">
             <div class="sorting-count">
 
-              <?php for ($i = 0; $i < count($data); $i++) : ?>
+              <?php for ($i = 0; $i < count($produk); $i++) : ?>
                 <div class="box">
-                  <img src="<?php echo base_url() . "assets/img/product/" . $data[$i]['gambar_produk']; ?>" alt="" width="200" height="100">
+                  <img src="<?php echo base_url() . "assets/img/product/" . $produk[$i]['gambar_produk']; ?>" alt="" width="200" height="100">
 
 
                   <div class="content">
@@ -102,17 +115,19 @@ error_reporting(0);
                       <i class="fas fa-star" style="color:orange"></i>
                       <i class="fas fa-star" style="color:orange"></i>
                     </div>
-                    <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $data[$i]['id_produk']; ?>"> <?php echo $data[$i]['nama_produk']; ?></a> </h3>
-                    <span class="dot" style="background-color:<?php echo $data[$i]['warna_produk']
+                    <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $produk[$i]['id_produk']; ?>"> <?php echo $produk[$i]['nama_produk']; ?></a> </h3>
+                    <span class="dot" style="background-color:<?php echo $produk[$i]['warna_produk']
                                                               ?>;"></span>
-                    <div class="price"><?php echo $data[$i]['warna_produk']; ?> <span> </span> </div>
+                    <div class="price"><?php echo $produk[$i]['warna_produk']; ?> <span> </span> </div>
 
                     <a> Available </a>
                   </div>
                 </div>
                 <br>
                 <br>
+                
               <?php endfor; ?>
+              
 
 
               <!--Side-Bar-->
@@ -120,42 +135,10 @@ error_reporting(0);
                 <div class="sidebar_widget">
                   <div class="widget_heading">
                     <h5><i class="fa fa-filter" aria-hidden="true"></i> Find Your Game </h5>
-                  </div>
+              </div>
 
 
-                  <div class="sidebar_widget">
-                    <div class="widget_heading">
-                      <h5><i class="fa fa-car" aria-hidden="true"></i> Recently Listed Cars</h5>
-                    </div>
-                    <div class="recent_addedcars">
-                      <ul>
-                        <?php /*$sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid  from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand order by id desc limit 4";
-                        $query = $dbh->prepare($sql);
-                        $query->execute();
-                        $results = $query->fetchAll(PDO::FETCH_OBJ);
-                        $cnt = 1;
-                        if ($query->rowCount() > 0) {
-                          foreach ($results as $result) { */  ?>
-
-                        <li class="gray-bg">
-                          <div class="recent_post_img"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
-                                                                                          ?>"><img src="admin/img/vehicleimages/<?php //echo htmlentities($result->Vimage1); 
-                                                                                                                                ?>" alt="image"></a> </div>
-                          <div class="recent_post_title"> <a href="vehical-details.php?vhid=<?php //echo htmlentities($result->id); 
-                                                                                            ?>"><?php //echo htmlentities($result->BrandName); 
-                                                                                                ?> , <?php //echo htmlentities($result->VehiclesTitle); 
-                                                                                                      ?></a>
-                            <p class="widget_price">$<?php //echo htmlentities($result->PricePerDay); 
-                                                      ?> Per Day</p>
-                          </div>
-                        </li>
-                        <?php //}
-                        //} 
-                        ?>
-
-                      </ul>
-                    </div>
-                  </div>
+                
               </aside>
               <!--/Side-Bar-->
             </div>

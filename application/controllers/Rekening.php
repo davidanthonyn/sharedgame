@@ -43,12 +43,25 @@ class Rekening extends CI_Controller
             //Cek nama rekening
             $namabank = $this->input->post('NamaBank');
             $norekening = $this->input->post('NoRekening');
+            
+            //Cegah data rekening tidak sama
+            $rekeningbank = $this->M_Rekening->getRekening($norekening);
+            if(! empty($rekeningbank[0])){
+                
+              $this->session->set_flashdata('message_error', "Rekening telah tersedia");
+              redirect('rekening/tambahrekening');
+            }
+            /*
+                $this->session->set_flashdata('message', "Rekening telah tersedia");
+                redirect('rekening/tambahrekening');
+                }
+                */
 
             $data = array(
                 'no_rekening_toko' => $norekening,
                 'bank_rekening_toko' => $namabank,
                 'status_rekening_toko' => 'aktif',
-                'created_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s')
             );
 
             //Menjalankan model brand untuk mengirim data ke tabel brand
