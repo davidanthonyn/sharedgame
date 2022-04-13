@@ -1562,7 +1562,7 @@ nav.navbar {
 	3.8 Testimonial-Section
 -----------------------------*/
 .testimonial-section {
-  background-image: url("../images/testimonial-bg.jpg");
+  background-image: url("../images/tampilan4.jpg");
 }
 .white-text h2 {
   color: #ffffff;
@@ -2244,7 +2244,7 @@ form .slider.slider-horizontal {
 	4.8. Help
 ------------------------*/
 #help {
-  background-image: url("../images/help_bg.jpg");
+  background-image: url("../images/tampilan4.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   position:relative;
@@ -2259,7 +2259,7 @@ form .slider.slider-horizontal {
 ==============================================*/
 
 .page-header {
-  background-image: url("../images/listing-page-header-img.jpg");
+  background-image: url("../images/tampilan5.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   border: 0 none;
@@ -2488,7 +2488,7 @@ form .slider.slider-horizontal {
   background-attachment: scroll;
   background-clip: border-box;
   background-color: rgba(0, 0, 0, 0);
-  background-image: url("../images/img_390x390.jpg") !important;
+  background-image: url("../Images/tampilan2.jpg") !important;
   background-origin: padding-box;
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -3627,7 +3627,7 @@ table.info-tabel tr td {
 	16. Profile-page
 ================================*/
 .profile_page {
-	background-image:url(../images/profile-page-header-img.jpg);
+	background-image:url(../images/tampilan1.jpg);
 }
 .inner_pages {
 	padding:80px 0;
