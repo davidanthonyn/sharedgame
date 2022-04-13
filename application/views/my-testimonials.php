@@ -63,7 +63,7 @@ if (strlen($_SESSION['login']) == 0) {
             <h1>My Testimonials</h1>
           </div>
           <ul class="coustom-breadcrumb">
-            <li><a href="#">Home</a></li>
+            <li><a href="<?php echo base_url(); ?>">Home</a></li>
             <li>My Testimonials</li>
           </ul>
         </div>

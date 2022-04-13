@@ -69,7 +69,7 @@
           <h1>Contact Us</h1>
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
           <li>Contact Us</li>
         </ul>
       </div>

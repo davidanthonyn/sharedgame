@@ -55,7 +55,7 @@ error_reporting(0);
         <div class="page-heading">
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
         </ul>
       </div>
     </div>

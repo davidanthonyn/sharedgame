@@ -98,7 +98,7 @@ if (strlen($_SESSION['login']) == 0) {
             <h1>Post Testimonial</h1>
           </div>
           <ul class="coustom-breadcrumb">
-            <li><a href="#">Home</a></li>
+            <li><a href="<?php echo base_url(); ?>">Home</a></li>
             <li>Post Testimonial</li>
           </ul>
         </div>

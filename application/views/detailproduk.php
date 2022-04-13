@@ -29,6 +29,8 @@ error_reporting(0);
   <link href="<?php echo base_url(); ?>/assets/css/font-awesome.min.css" rel="stylesheet">
 
   <script src="https://kit.fontawesome.com/77d9ac2836.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
   <!-- SWITCHER -->
@@ -59,7 +61,7 @@ error_reporting(0);
           <h1>Game Listing</h1>
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
           <li>Game Listing</li>
         </ul>
       </div>
@@ -69,6 +71,20 @@ error_reporting(0);
   </section>
   <!-- /Page Header-->
 
+  <!--Pesan berhasil/gagal-->
+  <?php
+  if ($this->session->flashdata('message')) {
+    echo $this->session->flashdata('message');
+    $this->session->unset_userdata('message');
+  }
+  ?>
+  <?php
+  if ($this->session->flashdata('message_error')) {
+  ?><?php echo $this->session->flashdata('message_error');
+    $this->session->unset_userdata('message_error');
+    ?><?php }
+      ?>
+
   <!--Listing-->
   <section class="listing-page">
     <div class="container">
@@ -76,67 +92,90 @@ error_reporting(0);
         <div class="col-md-9 col-md-push-3">
           <div class="result-sorting-wrapper">
             <div class="sorting-count">
-
-              <div class="box">
-                <img src="<?php echo $data[0]['gambar_produk']; ?>" alt="">
-                <div class="content">
-                  <div class="stars">
-                    <i class="fas fa-star"style="color:orange"></i>
-                    <i class="fas fa-star"style="color:orange"></i>
-                    <i class="fas fa-star"style="color:orange"></i>
-                    <i class="fas fa-star"style="color:orange"></i>
-                    <i class="fas fa-star"style="color:orange"></i>
-                  </div>
-
-                  <!-- Nama Produk-->
-                  <h3><?php echo $data[0]['nama_produk']; ?></h3>
-
-                  <!-- Quantity Barang-->
-                  <div class="form-group">
-                    <label>Quantity: </label>
-                    <div class="input-group">
-                      <input type="number" id="myNumber" class="form-control input-number" value="1" min = "1" max = "<?php echo $data[0]['jumlah_tersedia']; ?>" onKeyDown="return false" required />
+              <form class="user" method="POST" action="<?= base_url('product/addProductToCart/' . $data[0]['id_produk']); ?>">
+                <div class="box">
+                  <img src="<?php echo base_url('./assets/img/product/') . $data[0]['gambar_produk']; ?>" alt="" width="480" height="270">
+                  <div class="content">
+                    <div class="stars">
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
+                      <i class="fas fa-star" style="color:orange"></i>
                     </div>
-                  </div>
 
-                  <!--tarif-->
-                  <div class="row">
-                  <div class="form-group col-lg-3">
-                      <label>Jangka Waktu</label>
-                      <select class="form-control" onchange="change_time()" name="time" id="time" required>
-                     <option value="0">-- Pilih --</option>
-                    <option value="1"> 1 Hari</option>
-                    <option value="2"> 3 Hari</option>
-                    <option value="3"> 7 Hari</option>
-                      </select>
-                  </div>
+                    <!-- Nama Produk-->
+                    <h3><?php echo $data[0]['nama_produk']; ?></h3>
+
+                    <!-- Quantity Barang-->
+                    <div class="form-group">
+                      <label>Quantity: </label>
+                      <div class="input-group">
+                        <input type="number" id="myNumber" name="myNumber" class="form-control input-number" value="1" min="1" max="<?php echo $data[0]['jumlah_tersedia']; ?>" onKeyDown="return false" required />
                       </div>
-                      <div id="div_content" style="display: none;">
+                    </div>
+
+                    <!--tarif-->
+                    <div class="row">
+                      <div class="form-group col-lg-3">
+                        <label>Jangka Waktu</label>
+                        <select class="form-control" onchange="change_time()" name="time" id="time" required>
+                          <option value="0">-- Pilih --</option>
+                          <option value="1"> 1 Hari</option>
+                          <option value="3"> 3 Hari</option>
+                          <option value="7"> 7 Hari</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="div_content" style="display: none;">
                       <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                       <span class="input-group-text">Harga/item (Rp)</span>
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Harga/item (Rp)</span>
+                        </div>
+                        <input type="text" class="form-control" id="price" name="price" readonly="readonly">
+                      </div>
                     </div>
-                     <input type="text" class="form-control" id="price" name="price" disabled>
-                    </div>                 
-                   </div>
-                   <br>
-                  <div class="row mb-2">
-                    <div class="col-sm-6">
-                      <button type="button" class="btn btn-primary">
-                        <i class="<i class=" fa-regular fa-cart-circle-check></i>Cart
-                      </button>
+                    <br>
+                    <div id="div_content">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Tanggal Mulai Sewa</span>
+                        </div>
+                        <input class="form-control white_bg" name="startdate" id="startdate">
+                      </div>
+                      <script type="text/javascript">
+                        flatpickr("#startdate", {
+                          minDate: "today",
+                          altInput: true,
+                          altFormat: "j F Y",
+                          dateFormat: "Y-m-d",
+                          /*disable: ["2022-04-15", {
+                            from: "2022-05-03",
+                            to: "2022-05-08"
+                          }]*/
+                        });
+                      </script>
+
                     </div>
-                  </div>
-                  <br>
-                  </div>
-                </div>
-              </div>
-
-
-
-
+                    <br>
+                    <div class="row mb-2">
+                      <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="<i class=" fa-regular fa-cart-circle-check></i>Add to Cart
+                        </button>
+              </form>
             </div>
           </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    </div>
+    </div>
   </section>
 
 
@@ -160,35 +199,40 @@ error_reporting(0);
   <!--Slider-JS-->
   <script src="<?php echo base_url(); ?>/assets/js/slick.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/owl.carousel.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
   <!--Quantity + - -->
   <script>
-    
-      function change_time() {
-        var select = document.getElementById('time');
-        var value = select.options[select.selectedIndex].value;
+    function change_time() {
+      var select = document.getElementById('time');
+      var value = select.options[select.selectedIndex].value;
 
-        if (value == "1") {
-            document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
-            document.getElementById('div_content').style.display = 'block';
-        } else
-        if (value == "2") {
-            document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
-            document.getElementById('div_content').style.display = 'block';
-        } else
-        if (value == "3") {
-            document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
-            document.getElementById('div_content').style.display = 'block';
-        } else {
-            document.getElementById('price').value = "";
-            document.getElementById('div_content').style.display = 'none';
-        }
+      if (value == "1") {
+        document.getElementById('price').value = <?php echo $tarifsewa[0]['tarif_harga']; ?>;
+        document.getElementById('div_content').style.display = 'block';
+      } else
+      if (value == "3") {
+        document.getElementById('price').value = <?php echo $tarifsewa[1]['tarif_harga']; ?>;
+        document.getElementById('div_content').style.display = 'block';
+      } else
+      if (value == "7") {
+        document.getElementById('price').value = <?php echo $tarifsewa[2]['tarif_harga']; ?>;
+        document.getElementById('div_content').style.display = 'block';
+      } else {
+        document.getElementById('price').value = "";
+        document.getElementById('div_content').style.display = 'none';
+      }
     }
-
   </script>
-
+  <script>
+    /*var date = new Date();
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var todayDate = String(date.getDate()).padStart(2, '0');
+    var datePattern = year + '-' + month + '-' + todayDate;
+    document.getElementById("startdate").value = datePattern;*/
+  </script>
 
 
 </body>

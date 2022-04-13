@@ -246,6 +246,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 											</form>
 											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/add_page"; ?>">Tambah</a></button>
 
+											<button class="btn btn-primary mb1 black bg-darken-1"><a href="<?php echo base_url() . "admin/delete_page/" . $listPage->id_page; ?>">Hapus</a></button>
+
 										</div>
 									</div>
 								</div>

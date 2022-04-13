@@ -79,7 +79,7 @@
             <h1>Update Password</h1>
           </div>
           <ul class="coustom-breadcrumb">
-            <li><a href="#">Home</a></li>
+            <li><a href="<?php echo base_url(); ?>">Home</a></li>
             <li>Update Password</li>
           </ul>
         </div>
@@ -112,8 +112,8 @@
                 <?php
                 if ($this->session->flashdata('message')) {
                 ?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo $this->session->flashdata('message');
-                                                                  $this->session->unset_userdata('message');
-                                                                  ?> </div><?php }
+                                                                    $this->session->unset_userdata('message');
+                                                                    ?> </div><?php }
                                                                             ?>
                 <?php
                 if ($this->session->flashdata('message_error')) {
@@ -121,7 +121,7 @@
                   <div class="errorWrap"><strong>ERROR</strong> : <?php echo $this->session->flashdata('message_error');
                                                                   $this->session->unset_userdata('message_error');
                                                                   ?> </div><?php }
-                                                                          ?>
+                                                                            ?>
                 <div class="form-group">
                   <label class="control-label">Current Password</label>
                   <input class="form-control white_bg" id="currentpassword" name="currentpassword" type="password">

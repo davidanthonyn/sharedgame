@@ -70,7 +70,7 @@
           <h1>Your Profile</h1>
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
           <li>Profile</li>
         </ul>
       </div>
@@ -184,7 +184,10 @@
               <script type="text/javascript">
                 flatpickr("#dob", {
                   minDate: "1980/01/01",
-                  maxDate: "2021/12/31"
+                  maxDate: "2021/12/31",
+                  altInput: true,
+                  altFormat: "j F Y",
+                  dateFormat: "Y-m-d"
                 });
               </script>
 

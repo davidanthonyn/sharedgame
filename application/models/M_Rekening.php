@@ -5,7 +5,8 @@ class M_Rekening extends CI_model
 {
     public function getAllRekening()
     {
-        return $this->db->get('rekeningtoko')->result_array();
+        $query = $this->db->query("SELECT * FROM rekeningtoko WHERE status_rekening_toko = 'aktif'");
+        return $query;
     }
 
     public function getRekening($where){

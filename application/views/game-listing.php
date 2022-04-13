@@ -71,7 +71,7 @@ error_reporting(0);
           <h1>Game Listing</h1>
         </div>
         <ul class="coustom-breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url(); ?>">Home</a></li>
           <li>Game Listing</li>
         </ul>
       </div>
@@ -131,6 +131,7 @@ error_reporting(0);
 
 
               <!--Side-Bar-->
+              <!--
               <aside class="col-md-3 col-md-pull-9">
                 <div class="sidebar_widget">
                   <div class="widget_heading">
@@ -140,9 +141,9 @@ error_reporting(0);
 
                 
               </aside>
-              <!--/Side-Bar-->
             </div>
           </div>
+          -->
   </section>
   <!-- /Listing-->
 

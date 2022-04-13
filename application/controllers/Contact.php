@@ -82,9 +82,9 @@ class Contact extends CI_Controller
         //Config gmail
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'sharedgametech@gmail.com',
-            'smtp_pass' => 'sukamaingame',
+            'smtp_host' => 'mail.sharedgame.tech',
+            'smtp_user' => 'noreply@sharedgame.tech',
+            'smtp_pass' => 'Sukamaingam3!',
             'smtp_port' => 465,
             'mail_type' => 'html',
             'charset' => 'utf-8',
@@ -94,7 +94,7 @@ class Contact extends CI_Controller
         $this->load->library('email');
         $this->email->initialize($config);
 
-        $this->email->from('sharedgametech@gmail.com', 'SharedGame | Do Not Reply');
+        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         $this->email->to($email);
     }
