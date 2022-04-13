@@ -31,11 +31,12 @@ class Cart extends CI_Controller
         //$data['jumlahrow'] = $this->M_Cart->get_row_detail_cart($data['keranjangrow']['id_cart'])->result();
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
-        $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
-        $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
-        $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
-        $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
-
+        if ($data['keranjangrow'] == null) {
+            $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
+            $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
+            $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
+            $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+        }
 
 
         //$where = array('id_produk' => $id);
