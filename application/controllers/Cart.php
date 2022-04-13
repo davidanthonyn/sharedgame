@@ -24,14 +24,15 @@ class Cart extends CI_Controller
 
         $data['title'] = 'Cart | SharedGame';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
         //$where = array('id_produk' => $id);
+        //$data['keranjang'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->result();
         //$data['tarifsewa'] = $this->Modelproduk->tarif_sewa($where, 'tarifsewa')->result_array();
         //$data['jumlahrow'] = $this->M_Cart->get_row_detail_cart($data['keranjangrow']['id_cart'])->result();
         //$data['productname'] = $this->M_Cart->get_product_detail_cart()->result();
         //$data['productprice'] = $this->M_Cart->get_price_detail_cart()->result();
-        if ($data['keranjangrow'] != null) {
+        if ($data['keranjangrow'] != NULL) {
             $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
             $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();

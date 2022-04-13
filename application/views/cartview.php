@@ -565,7 +565,7 @@
 
     <section class="user_profile inner_pages">
       <div class="container">
-        <?php if ($productcart != NULL) { ?>
+        <?php if (($keranjangrow != NULL) && ($totalitem != NULL)) { ?>
           <h4>Produk yang akan disewakan</h4>
 
           <div class="cart">
