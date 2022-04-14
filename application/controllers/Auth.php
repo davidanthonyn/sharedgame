@@ -314,6 +314,11 @@ class Auth extends CI_Controller
 
                     redirect('auth');
                 } else {
+                    //Memasukkan data user ke array, untuk dibawa ke if ketiga(cek akun nya aktif atau tidak)
+                    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+                    $this->db->delete('user', ['email' => $user['email']]);
+                    $this->db->delete('usertoken', ['email' => $user['email']]);
+
                     //Alert token expired
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Anda expired! Mohon hubungi Customer Service.</div>');
 
