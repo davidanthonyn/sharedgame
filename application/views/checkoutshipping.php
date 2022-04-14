@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
     <img src="<?php echo base_url() . "assets/"; ?>images/SharedGameController.png" width="75" height="75"> <br><br>
 
     <div class="progress-checkout-container">
@@ -34,26 +33,37 @@
     </div>
 
     <div class="form-container">
-        <h2 class="form-title">Payment Details</h2>
+        <h2 class="form-title">Shipping Details</h2>
         <form action="" class="checkout-form">
             <div class="input-line">
-                <label for="rekening">Pilih Pembayaran</label>
+                <label for="rekening">Pilih Distribusi</label>
 
                 <select class="selectpicker" name="rekening" required>
-                    <option value="pilih">---</option>
-                    <?php foreach ($rekening as $listRekening) { ?>
 
-                        <option value="<?php echo $listRekening->id_rekening_toko ?>">
+                    <option value="pilih">
 
-                            <?php echo $listRekening->bank_rekening_toko ?>
+                        ---
 
-                        </option>
+                    </option>
 
-                    <?php } ?>
+
+                    <option value="diambil">
+
+                        Diambil di Toko
+
+                    </option>
+
+                    <option value="dikirim">
+
+                        Dikirim ke Alamat
+
+                    </option>
+
+
                 </select>
             </div>
-            <input type="button" value="Lanjutkan"><br>
-            <input type="button" onclick="window.location.href='<?php echo base_url('checkout'); ?>';" value="Back">
+            <input type="button" onclick="window.location.href='<?php echo base_url('checkout/bayar'); ?>';" value="Lanjutkan"><br>
+            <input type="button" onclick="window.location.href='<?php echo base_url('cart'); ?>';" value="Back">
         </form>
     </div>
     <!--Back to top-->

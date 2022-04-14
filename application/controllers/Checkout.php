@@ -9,6 +9,12 @@ class Checkout extends CI_Controller
         parent::__construct();
         $this->load->model('M_Page');
         $this->load->model('M_Rekening');
+        $this->load->model('M_Booking');
+    }
+
+    public function index()
+    {
+        redirect('checkout/shipping');
     }
 
     public function proses_checkout()
@@ -33,7 +39,7 @@ class Checkout extends CI_Controller
 
     public function bayar()
     {
-        $data['title'] = 'Transaksi Berhasil | SharedGame';
+        $data['title'] = 'Pilih Pembayaran | SharedGame';
         $data['rekening'] = $this->M_Rekening->getAllRekening()->result();
         //var_dump($data['rekening']);
         //die;
@@ -44,6 +50,9 @@ class Checkout extends CI_Controller
 
     public function shipping()
     {
+        $data['title'] = 'Pilih Pengiriman | SharedGame';
+        $data['booking'] = $this->M_Booking->getAllDistribution()->result();
+        $this->load->view('checkoutshipping.php', $data);
     }
 
     public function payment()

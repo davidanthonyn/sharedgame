@@ -150,19 +150,23 @@ class Cart extends CI_Controller
         redirect('shopping/tampil_cart');
     }
 
-    function ubah_keranjang()
+    function ubah_qty_keranjang()
     {
-        $cart_info = $this->input->post('id_detail_cart');
-        $qty = $this->input->post('qty_produk');
+        $cart_info = $this->input->post('id');
+        $qty = $this->input->post('qty');
+
         $data = array(
             'qty_produk' => $qty
         );
 
         $where = array('id_detail_cart' => $cart_info);
 
-        $this->db->set('qty_produk', $data);
-        $this->db->where('id_detail_cart', $where);
+        $this->db->set('qty_produk', $qty);
+        $this->db->where('id_detail_cart', $cart_info);
         $this->db->update('detailcart');
+
+        $data = $this->M_Cart->get_new_qty_by_ajax($where);
+        echo json_encode($data);
     }
 
     public function proses_order()
@@ -203,14 +207,34 @@ class Cart extends CI_Controller
 
     public function edit_quantity()
     {
-        $rowid = $_POST['rowid'];
-        $qty = $_POST['qty'];
+        require "cart.class.php";
+        $cart = new Cart();
+
+        $id = $this->input->post('id');
+        $qty = $this->input->post('qty');
+
+        $cart->update_cart(["id" => $id, "qty" => $qty]);
+
+        /*$data = array(
+            'id_detail_cart' => $id,
+            'qty_produk'   => $qty
+        );
+
+        $this->cart->update($data);*/
+
 
         $edit_temp_purchase = array(
             'qty_produk' => $qty
         );
 
-        $this->db->update('detailcart', $edit_temp_purchase, ['id_produk' => $rowid]);
+        $this->db->update('detailcart', $edit_temp_purchase, ['id_detail_cart' => $id]);
+
+        $result = [
+            "row_total" => $cart->get_item($id)["total"],
+            "total" => $cart->get_cart_total(),
+        ];
+
+        echo json_encode($result);
     }
 
     public function getPriceByAjax()
@@ -268,8 +292,7 @@ class Cart extends CI_Controller
             alert-danger" role="alert" style="text-align:center;">Mohon maaf, namun identitas anda ditolak, mohon <a href="user/identity">periksa</a>  kembali.</div>');
             redirect('cart');
         } else if ($data['ktp']['status_ktp'] == "diterima") {
-            echo "berhasil";
-            //redirect('checkout');
+            redirect('checkout');
         }
     }
 }

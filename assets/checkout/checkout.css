@@ -219,6 +219,22 @@ input[type="button"] {
     cursor: pointer;
 }
 
+input[type="buttonback"] {
+    background-color: #8e8e8e;
+    color: white;
+    font-weight: 500;
+    font-size: 9px;
+    height: 20px;
+    padding: 0 30px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="buttonback"]:hover {
+    background-color: #6e6e6e;
+}
+
 input[type="button"]:hover {
     background-color: #bc5221;
 }

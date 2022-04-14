@@ -603,14 +603,13 @@
                       <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                      <p class="product-price">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> x <?php echo $cart->qty_produk
-                                                                                                                                                                                                ?> =</p>
+                      <p class="product-price">Satuan: Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> </p>
 
-                      <h4 class="subtotal itotal"> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+                      <h4 class="subtotal row_total"> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
 
-                      <p class="product-quantity">Qty <input type="number" id="myNumber" name="myNumber" class="iquantity" onchange="subTotal()" value="<?php echo $cart->qty_produk
-                                                                                                                                                        ?>" min="1" max="<?php echo $cart->jumlah_tersedia
-                                                                                                                                                                          ?>" required />
+                      <p class="product-quantity">Qty <input type="number" id="myNumber" name="myNumber" class="iquantity" pid='<?= $cart->id_detail_cart ?>' value="<?php echo $cart->qty_produk
+                                                                                                                                                                      ?>" min="1" max="<?php echo $cart->jumlah_tersedia
+                                                                                                                                                                                        ?>" required />
 
                       <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
                           <option value="1">1 Hari</option>
@@ -670,7 +669,7 @@
 
                   <span>Total Price</span>
 
-                  <span class="grandtotal" id="totalharga" name="totalharga"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                  <span class="grandtotal" id="total" name="total"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
                 </p>
 
                 <p>
@@ -754,55 +753,35 @@
       }*/
     </script>
     <script>
-      function updateproduct(rowid) {
-        var qty = $('.qty' + rowid).val();
-        var price = $('.price' + rowid).text();
-        var subtotal = $('.subtotal' + rowid).text();
-        console.log(qty);
-        console.log(price);
-        console.log(subtotal);
-
-        $.ajax({
-          type: "POST",
-          url: "<?php echo base_url('cart/edit_quantity'); ?>",
-          data: "rowid=" + rowid + "&qty=" + qty,
-          success: function(response) {
-            $('.subtotal' + rowid).text(response);
-            $('.subtotal').each(function() {
-              total += parseInt($(this).text());
-              $('.grandtotal').text(total);
-            });
-          }
+      $(document).ready(function() {
+        $(".iquantity").change(function() {
+          update_cart($(this));
         });
-      }
-    </script>
-    <script>
-      var iprice = document.getElementsByClassName('iprice');
-      var iquantity = document.getElementsByClassName('iquantity');
-      var itotal = document.getElementsByClassName('itotal');
-      var rowid = document.getElementsByClassName('rowid');
+        $(".iquantity").keyup(function() {
+          update_cart($(this));
+        });
 
-      function subTotal() {
-        for (i = 0; i < iprice.length; i++) {
+        function update_cart(cls) {
+          var pid = $(cls).attr("pid");
+          var q = $(cls).val();
+
           $.ajax({
-            url: "<?php echo base_url('cart/ubah_keranjang'); ?>",
-            type: "POST",
-            async: true,
+            url: "<?php echo base_url('cart/ubah_qty_keranjang'); ?>",
+            type: "post",
             data: {
-              id_detail_cart: rowid,
-              qty_produk: iquantity
+              id: pid,
+              qty: q
             },
-            dataType: "html",
+            success: function(res) {
+              console.log(res);
 
-            success: function(data) {
-              itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
-            },
+              var a = JSON.parse(res);
+              $("#total").text(a.total);
+              $(cls).closest("tr").find(".row_total").text(a.row_total);
+            }
           });
-
-          //itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
-
         }
-      }
+      });
     </script>
 
   </body>

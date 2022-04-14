@@ -9,7 +9,7 @@ class M_Booking extends CI_model
         return $this->db->get('booking');
     }
 
-   
+
     function edit_record($table, $where)
     {
         return $this->db->get_where($table, $where);
@@ -30,5 +30,11 @@ class M_Booking extends CI_model
     public function DetailBooking()
     {
         return $this->db->get('detailbooking');
+    }
+
+    public function getAllDistribution()
+    {
+        $query = $this->db->query("SELECT * FROM rekeningtoko WHERE status_rekening_toko = 'aktif'");
+        return $query;
     }
 }

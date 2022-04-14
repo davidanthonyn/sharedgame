@@ -153,14 +153,14 @@ class M_Cart extends CI_model
         return $this->cart->contents();
     }
 
-    function get_price_by_ajax($where)
+    function get_new_qty_by_ajax($where)
     {
-        $query = $this->db->get_where('tarifsewa', $where);
+        $query = $this->db->get_where('detailcart', $where);
 
         foreach ($query->result() as $data) {
             $output = array(
                 //'page_name' => $data->page_name,
-                'tarif_harga' => $data->tarif_harga
+                'qty_produk' => $data->qty_produk
             );
         }
         return $output;
