@@ -85,12 +85,9 @@
 												<form method="post" class="form-horizontal" action="//base_url('admin/edit_data_brand/$listBrandEdit->id_brand'); ?>"> -->
 												<?php echo form_open_multipart('admin/edit_data_brand/<?= $listBrandEdit->id_brand ?>'); ?>
 
-												<div class="form-group">
-													<label class="col-sm-4 control-label">Brand ID</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control" value="<?= $listBrandEdit->id_brand ?>" name="idbrand" id="idbrand" readonly>
-													</div>
-												</div>
+
+												<input type="hidden" class="form-control" value="<?= $listBrandEdit->id_brand ?>" name="idbrand" id="idbrand" readonly>
+
 
 												<div class="form-group">
 													<label class="col-sm-4 control-label">Brand Name</label>

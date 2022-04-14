@@ -96,7 +96,7 @@ class Home extends CI_Controller
 
     public function kirimEmail()
     {
-        require APPPATH . 'smtp\PHPMailerAutoload.php';
+        require APPPATH . 'smtp/PHPMailerAutoload.php';
 
         //require APPPATH . 'phpmailer\src\Exception.php';
         //require APPPATH . 'phpmailer\src\PHPMailer.php';

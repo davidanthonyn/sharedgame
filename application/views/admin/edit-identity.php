@@ -61,8 +61,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<?php
-						foreach ($productEdit as $listProductEdit) { ?>
-							<h2 class="page-title">Edit Product: <?= $listProductEdit->nama_produk ?> </h2>
+						foreach ($customer as $listUser) { ?>
+							<h2 class="page-title">Edit Identity: <?= $listUser->nama_lengkap ?> </h2>
 
 							<div class="row">
 								<div class="col-md-12">
@@ -84,171 +84,85 @@
 
 										<div class="panel-body">
 
-											<form method="post" action="<?php echo base_url() . 'Admin/edit_data_produk/' . $listProductEdit->id_produk; ?>" class="form-horizontal" enctype="multipart/form-data">
+											<form method="post" action="<?php echo base_url() . 'Admin/reviewidentity/' . $listUser->id_user; ?>" class="form-horizontal" enctype="multipart/form-data">
 
 												<div class="form-group">
-													<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
+													<label class="col-sm-2 control-label">Full Name<span style="color:red">*</span></label>
 													<div class="col-sm-4">
-														<input type="hidden" value="<?= $listProductEdit->id_produk ?>" name="productid" id="productid" class="form-control" disabled>
-
-														<input type="text" value="<?= $listProductEdit->nama_produk ?>" name="productname" id="productname" class="form-control">
-														<?= form_error('productname', '<small class="text-danger pl-3">', '</small>'); ?>
+														<input type="hidden" value="<?= $listUser->id_user ?>" name="userid" id="userid" class="form-control" disabled>
+														<input type="text" value="<?= $listUser->nama_lengkap ?>" name="username" id="username" class="form-control">
 													</div>
-													<label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
-													<div class="col-sm-4">
 
-														<select class="selectpicker" name="id_brand" required>
+													<?php
+													foreach ($card as $listCard) { ?>
 
-															<?php foreach ($brand as $listBrand) { ?>
-
-
-																<option value="<?php echo $listBrand->id_brand ?>" <?php if ($listBrand->id_brand == $listProductEdit->id_brand) {
-																														echo "selected";
-																													} ?>>
-
-																	<?php echo $listBrand->nama_brand ?>
-
-																</option>
-
-															<?php } ?>
-														</select>
-
-													</div>
 												</div>
-
-												<div class="hr-dashed"></div>
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Deskripsi Produk<span style="color:red">*</span></label>
-													<div class="col-sm-10">
-														<textarea value="<?= $listProductEdit->deskripsi_produk ?>" name="deskripsi" id="deskripsi" class="form-control" rows="3" cols="50"><?= $listProductEdit->deskripsi_produk ?></textarea>
-
-														<?= form_error('deskripsi', '<small class="text-danger pl-3">', '</small>'); ?>
-														<script>
-															// Replace the <textarea id="editor1"> with a CKEditor 4
-															// instance, using default configuration.
-															CKEDITOR.replace('deskripsi');
-															//var editor = CKEDITOR.replace('detail');
-															//var detail = CKEDITOR.instances.editor.getData();
-
-															function CKUpdate() {
-																for (instance in CKEDITOR.instances) {
-																	CKEDITOR.instances['deskripsi'].updateElement();
-																}
-															}
-														</script>
-													</div>
-												</div>
-
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Price 1 Day<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<?php foreach ($tarifSatu as $listTarifSatu) { ?>
-															<input type="text" value="<?= $listTarifSatu->tarif_harga ?>" name="priceperday" id="priceperday" class="form-control" onkeypress="return onlyNumberKey(event)">
-														<?php } ?>
-														<?= form_error('priceperday', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-													<label class="col-sm-2 control-label">Price 3 Days<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<?php foreach ($tarifTiga as $listTarifTiga) { ?>
-															<input type="text" value="<?= $listTarifTiga->tarif_harga ?>" name="price3days" id="price3days" class="form-control" onkeypress="return onlyNumberKey(event)">
-														<?php } ?>
-														<?= form_error('price3days', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-												</div>
-
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Price 7 Days<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<?php foreach ($tarifTujuh as $listTarifTujuh) { ?>
-															<input type="text" value="<?= $listTarifTujuh->tarif_harga ?>" name="price7days" id="price7days" class="form-control" onkeypress="return onlyNumberKey(event)">
-														<?php } ?>
-														<?= form_error('price7days', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-													<label class="col-sm-2 control-label">Select Game Type<span style="color:red">*</span></label>
-													<div class="col-sm-4">
+										</div>
 
 
-														<select class="selectpicker" name="gametype" id="gametype" required>
-															<?php if ($listProductEdit->kategori_produk == "console") { ?>
-																<option value="console">Console</option>
-																<option value="game_physics">Game Physics</option>
-																<option value="game_gear">Game Gear</option>
-															<?php } else if ($listProductEdit->kategori_produk == "game_physics") { ?>
-																<option value="game_physics">Game Physics</option>
-																<option value="console">Console</option>
-																<option value="game_gear">Game Gear</option>
-															<?php } else if ($listProductEdit->kategori_produk == "game_gear") { ?>
-																<option value="game_gear">Game Gear</option>
-																<option value="console">Console</option>
-																<option value="game_physics">Game Physics</option>
-															<?php } ?>
-														</select>
-													</div>
-												</div>
 
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Serial Produk<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<input value="<?= $listProductEdit->serial_produk ?>" type="text" name="serialnumber" id="serialnumber" class="form-control">
-														<?= form_error('serialnumber', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-													<label class="col-sm-2 control-label">Jumlah Stok Tersedia<span style="color:red">*</span></label>
-													<div class="col-sm-4">
-														<input value="<?= $listProductEdit->jumlah_tersedia ?>" type="text" name="stock" id="stock" class="form-control" onkeypress="return onlyNumberKey(event)">
-														<?= form_error('stock', '<small class="text-danger pl-3">', '</small>'); ?>
-													</div>
-												</div>
-												<div class="hr-dashed"></div>
+										<div class="form-group">
+											<div class="col-sm-4">
+												<label class="col-sm-4 control-label">Status Identitas <span style="color:red">*</span></label>
 
-												<div class="form-group">
-													<label class="col-sm-2 control-label">Warna Produk<span style="color:white">*</span></label>
-													<div class="col-sm-4">
-														<input type="color" id="favcolor" name="favcolor" value="<?= $listProductEdit->warna_produk ?>"><br><br>
-													</div>
-												</div>
-												<div class="hr-dashed"></div>
+												<select class="selectpicker" name="cardtype" id="cardtype" required>
+													<?php if ($listCard->status_ktp == "belum") { ?>
+														<option value="belum">Belum</option>
+														<option value="sedang_verifikasi">Sedang Verifikasi</option>
+														<option value="diterima">Diterima</option>
+														<option value="ditolak">Ditolak</option>
+													<?php } else if ($listCard->status_ktp == "sedang_verifikasi") { ?>
+														<option value="sedang_verifikasi">Sedang Verifikasi</option>
+														<option value="belum">Belum</option>
+														<option value="diterima">Diterima</option>
+														<option value="ditolak">Ditolak</option>
+													<?php } else if ($listCard->status_ktp == "diterima") { ?>
+														<option value="diterima">Diterima</option>
+														<option value="sedang_verifikasi">Sedang Verifikasi</option>
+														<option value="belum">Belum</option>
+														<option value="ditolak">Ditolak</option>
+													<?php } else if ($listCard->status_ktp == "ditolak") { ?>
+														<option value="ditolak">Ditolak</option>
+														<option value="diterima">Diterima</option>
+														<option value="sedang_verifikasi">Sedang Verifikasi</option>
+														<option value="belum">Belum</option>
+													<?php }
 
-												<img src="<?= base_url('assets/img/product/') . $listProductEdit->gambar_produk ?>" class="card-img" width="100" height="100">
-												<div class="form-group">
-													<div class="col-sm-12">
-														<h4><b>Upload Images</b></h4>
-													</div>
-												</div>
-
-
-												<div class="form-group">
-													<div class="col-sm-4">
-														Product Image<span style="color:red">*</span><input type="file" name="img" id="img">
-													</div>
-													<!--
-												<div class="col-sm-4">
-													Image 2<span style="color:red">*</span><input type="file" name="img2" required>
-												</div>
-												<div class="col-sm-4">
-													Image 3<span style="color:red">*</span><input type="file" name="img3" required>
-												</div>
-														-->
-												</div>
-
-												<!---
-											<div class="form-group">
-												<div class="col-sm-4">
-													Image 4<span style="color:red">*</span><input type="file" name="img4" required>
-												</div>
-												<div class="col-sm-4">
-													Image 5<input type="file" name="img5">
-												</div>
-
+													?>
+												</select>
 											</div>
-														-->
+											<label class="col-sm-2 control-label">KTP<span style="color:red">*</span></label>
+											<div class="col-sm-4">
+												<img src="<?= base_url('assets/img/ktp/') . $listCard->foto_ktp  ?>" class="card-img" width="300" height="200">
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Selfie KTP<span style="color:red">*</span></label>
+												<div class="col-sm-4">
+													<img src="<?= base_url('assets/img/ktp/') . $listCard->foto_selfie_ktp  ?>" class="card-img" width="300" height="200">
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label">Note User<span style="color:red">*</span></label>
+													<div class="col-sm-4">
+														<textarea value="<?= $listCard->note_user ?>" type="text" name="noteuser" id="noteuser" class="form-control">
+														<?= form_error('noteuser', '<small class="text-danger pl-3">', '</small>'); ?>
+													</div>
+
+
+													
+												<?php } ?>
+
+
+
+
 
 												<div class="hr-dashed"></div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+																</div>
 
-							<!--
+								<!--
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
@@ -340,25 +254,25 @@
 
 
 
-							<div class="form-group">
-								<div class="col-sm-8 col-sm-offset-2">
+								<div class="form-group">
+									<div class="col-sm-8 col-sm-offset-2">
 
-									<button class="btn btn-primary" name="submit" type="submit">Save</button>
+										<button class="btn btn-primary" name="submit" type="submit">Save</button>
+									</div>
 								</div>
-							</div>
-						<?php
+							<?php
 						}
-						?>
-						</form>
-						<button class="btn btn-default"><a href="<?php echo base_url() . "admin/kelolaproduk"; ?>">Back</a></button>
+							?>
+							</form>
+							<button class="btn btn-default"><a href="<?php echo base_url() . "admin/kelolaidentity"; ?>">Back</a></button>
+							</div>
 					</div>
 				</div>
 			</div>
+
+
+
 		</div>
-
-
-
-	</div>
 	</div>
 
 

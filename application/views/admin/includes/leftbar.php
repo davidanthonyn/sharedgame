@@ -6,7 +6,7 @@
 							?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 
 			<li class="ts-label">Assets & Resources</li>
-			<li><a href="#"><i class="fa fa-files-o"></i> Brands</a>
+			<li><a><i class="fa fa-files-o"></i> Brands</a>
 				<ul>
 					<li><a href="<?= base_url('admin/tambahbrand');
 									?>">Add Brand</a></li>
@@ -15,7 +15,7 @@
 				</ul>
 			</li>
 
-			<li><a href="#"><i class="fa fa-sitemap"></i> Products</a>
+			<li><a><i class="fa fa-sitemap"></i> Products</a>
 				<ul>
 					<li><a href="<?= base_url('admin/tambahproduk');
 									?>">Post a Product</a></li>
@@ -26,7 +26,7 @@
 
 
 			<li class="ts-label">Orders</li>
-			<li><a href="#"><i class="fa fa-files-o"></i> Rekening Toko</a>
+			<li><a><i class="fa fa-files-o"></i> Rekening Toko</a>
 				<ul>
 					<li><a href="<?= base_url('Rekening/tambahrekening');
 									?>">Add Rekening</a></li>
@@ -71,6 +71,8 @@
 			<li class="ts-label">Humans</li>
 			<li><a href="<?= base_url('admin/kelolauser');
 							?>"><i class="fa fa-users"></i>Users</a></li>
+			<li><a href="<?= base_url('admin/kelolaidentity');
+							?>"><i class="fa fa-users"></i>Identity</a></li>
 			<li><a href="<?= base_url('admin/managecs');
 							?>"><i class="fa fa-users"></i>Customer Service</a></li>
 

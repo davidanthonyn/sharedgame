@@ -943,4 +943,46 @@ class Admin extends CI_Controller
             );
         }
     }
+
+    function kelolaidentity()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola Identitas hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data['title'] = 'Kelola Identitas | SharedGame';
+        $data['smalltitle'] = 'Daftar Identitas';
+        $data['user'] = $this->M_User->getAllIdentity()->result();
+        $this->load->view('admin/reg-identity.php', $data);
+    }
+
+    function reviewidentity($id_user)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data['card'] = $this->db->get_where('usercard', ['id_user' => $id_user])->result();
+        $data['customer'] = $this->M_User->getAnIdentity($id_user)->result();
+
+        $data['title'] = 'Kelola Identitas | SharedGame';
+        $data['smalltitle'] = 'Daftar Identitas';
+        $this->load->view('admin/edit-identity.php', $data);
+    }
 }

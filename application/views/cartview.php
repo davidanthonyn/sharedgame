@@ -591,7 +591,7 @@
             <div class="products">
 
               <?php foreach ($productcart as $cart) { ?>
-                <form class="user" method="POST" id="frm<?= $cart->id_produk ?>" action="<?= base_url('checkout'); ?>">
+                <form class="user" method="POST" id="frm" action="<?= base_url('checkout'); ?>">
 
                   <div class="product">
                     <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
@@ -603,13 +603,14 @@
                       <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                      <p class="product-price price<?= $cart->id_produk ?>">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?> x <?php echo $cart->qty_produk
-                                                                                                                                                ?> =</p>
-                      <h4 class="subtotal subtotal<?= $cart->id_produk ?>"> Rp <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+                      <p class="product-price">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> x <?php echo $cart->qty_produk
+                                                                                                                                                                                                ?> =</p>
 
-                      <p class="product-quantity qty<?= $cart->id_produk ?>">Qty <input type="number" id="myNumber" name="myNumber" onchange="updateproduct(<?= $cart->id_produk ?>)" value="<?php echo $cart->qty_produk
-                                                                                                                                                                                              ?>" min="1" max="<?php echo $cart->jumlah_tersedia
-                                                                                                                                                                                                                ?>" required />
+                      <h4 class="subtotal itotal"> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+
+                      <p class="product-quantity">Qty <input type="number" id="myNumber" name="myNumber" class="iquantity" onchange="subTotal()" value="<?php echo $cart->qty_produk
+                                                                                                                                                        ?>" min="1" max="<?php echo $cart->jumlah_tersedia
+                                                                                                                                                                          ?>" required />
 
                       <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
                           <option value="1">1 Hari</option>
@@ -652,10 +653,6 @@
                         <a class="remove" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Remove</a>
 
 
-                      </p>
-                      <p class="product-update">
-
-                        <a class="update" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Update</a>
                       </p>
                     </div>
 
@@ -777,6 +774,18 @@
             });
           }
         });
+      }
+    </script>
+    <script>
+      var iprice = document.getElementsByClassName('iprice');
+      var iquantity = document.getElementsByClassName('iquantity');
+      var itotal = document.getElementsByClassName('itotal');
+
+      function subTotal() {
+        for (i = 0; i < iprice.length; i++) {
+          itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
+
+        }
       }
     </script>
 
