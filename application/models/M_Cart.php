@@ -113,6 +113,13 @@ class M_Cart extends CI_model
 
         return $data;
     }
+    /*
+    public function custom_tarif_sewa($id_produk)
+    {
+        $data = $this->db->query("SELECT id_produk, tarif_harga, lama_sewa_hari FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE tarifsewa.id_produk = detailcart.id_produk AND id_cart = " . $id_cart . ")");
+
+        return $data;
+    }*/
 
     function delete_record($where, $table)
     {

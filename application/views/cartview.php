@@ -603,9 +603,9 @@
                       <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                      <p class="product-price">Satuan: Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> </p>
+                      <p class="product-price oneproduct">Satuan: Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> </p>
 
-                      <h4 class="subtotal row_total"> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+                      <h4 class="subtotal isubtotal" pprice='<?= $cart->id_tarif_sewa ?>'> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
 
                       <p class="product-quantity">Qty <input type="number" id="myNumber" name="myNumber" class="iquantity" pid='<?= $cart->id_detail_cart ?>' value="<?php echo $cart->qty_produk
                                                                                                                                                                       ?>" min="1" max="<?php echo $cart->jumlah_tersedia
@@ -669,12 +669,12 @@
 
                   <span>Total Price</span>
 
-                  <span class="grandtotal" id="total" name="total"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                  <span class="grandtotal itotal" id="total" name="total"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
                 </p>
 
                 <p>
                   <span>Number of Items</span>
-                  <span><?php echo $totalitem; ?> </span>
+                  <span class="itotalitem"><?php echo $totalitem; ?> </span>
                 </p>
 
                 <p>
@@ -719,58 +719,51 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-      /*
-      function change_time() {
-        var select = document.getElementById('time');
+      /* function change_time() {
+        var select = document.getElementById('sewa');
         var value = select.options[select.selectedIndex].value;
 
         if (value == "1") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[0]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[0]['tarif_harga'];
+                                                        ?>;
         } else
         if (value == "3") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[1]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[1]['tarif_harga'];
+                                                        ?>;
         } else
         if (value == "7") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[2]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[2]['tarif_harga'];
+                                                        ?>;
         } else {
-          document.getElementById('price').value = "";
+          document.getElementById('oneproduct').value = "";
           document.getElementById('div_content').style.display = 'none';
         }
-      }
-
-      function change_quantity() {
-
-      }
-
-      function change_date() {
-
       }*/
     </script>
     <script>
+      $("[type='number']").keypress(function(evt) {
+        evt.preventDefault();
+      });
+
       $(document).ready(function() {
         $(".iquantity").change(function() {
           update_cart($(this));
-        });
-        $(".iquantity").keyup(function() {
-          update_cart($(this));
+          subTotal();
+          numberofitems();
         });
 
         function update_cart(cls) {
           var pid = $(cls).attr("pid");
           var q = $(cls).val();
+          var rowtotal = $(cls).attr("pprice");
 
           $.ajax({
             url: "<?php echo base_url('cart/ubah_qty_keranjang'); ?>",
             type: "post",
             data: {
               id: pid,
-              qty: q
+              qty: q,
+              price: rowtotal
             },
             success: function(res) {
               console.log(res);
@@ -782,6 +775,35 @@
           });
         }
       });
+
+
+
+      function subTotal() {
+        var iprice = document.getElementsByClassName('iprice');
+        var iquantity = document.getElementsByClassName('iquantity');
+        var isubtotal = document.getElementsByClassName('isubtotal');
+        var itotal = document.getElementsByClassName('itotal');
+
+        const format = num =>
+          String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')
+
+        for (i = 0; i < iprice.length; i++) {
+          isubtotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
+        }
+      }
+
+      function numberofitems() {
+        var iquantity = document.getElementsByClassName('iquantity');
+        var itotalitem = document.getElementsByClassName('itotalitem');
+
+        for (i = 0; i < iquantity.length; i++) {
+          itotalitem += iquantity;
+        }
+      }
+
+      function totalPrice() {
+
+      }
     </script>
 
   </body>
