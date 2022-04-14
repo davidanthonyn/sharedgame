@@ -222,21 +222,22 @@ class M_User extends CI_model
                 'verify_peer_name' => false,
                 'allow_self_signed' => false
             ));
+            /*
             if (!$mail->Send()) {
                 echo $mail->ErrorInfo;
             } else {
-            }
+            }*/
         }
 
-        smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
-        /*
+        //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
+
         $this->load->library('email');
         $this->load->model('M_CustomerService');
-        $this->email->initialize($config);
-        $this->email->set_mailtype("html");
-        $this->email->set_newline("\r\n");
+        //$this->email->initialize($config);
+        //$this->email->set_mailtype("html");
+        //$this->email->set_newline("\r\n");
 
-        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');*/
+        // $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to('kontolbinatang@protonmail.com');
 
@@ -250,7 +251,7 @@ class M_User extends CI_model
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
             $html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
-            smtp_mailer(htmlspecialchars($email), 'Verifikasi Akun | SharedGame', $html);
+            echo smtp_mailer(htmlspecialchars($email), 'Verifikasi Akun | SharedGame', $html);
 
             //$this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : 
             //<a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
@@ -262,7 +263,7 @@ class M_User extends CI_model
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
             $html = $this->load->view('emailtemplates/forgot_password.php', $data, TRUE);
-            smtp_mailer(htmlspecialchars($email), 'Lupa Sandi | SharedGame', $html);
+            echo smtp_mailer(htmlspecialchars($email), 'Lupa Sandi | SharedGame', $html);
 
             //$this->email->message('Klik link berikut untuk mereset password Anda : <a href="' . base_url() . 'auth/resetpassword?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>');
         } else if ($type == 'change') {
@@ -273,7 +274,7 @@ class M_User extends CI_model
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
             $html = $this->load->view('emailtemplates/change_email.php', $data, TRUE);
-            smtp_mailer(htmlspecialchars($email), 'Penggantian Email | SharedGame', $html);
+            echo smtp_mailer(htmlspecialchars($email), 'Penggantian Email | SharedGame', $html);
         }
 
         if ($this->email->send()) {
