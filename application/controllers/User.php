@@ -452,8 +452,6 @@ if (!empty($upload_selfie_ktp)) {
     {
         $data['title'] = 'Upgrade Account';
         $data['memberpackage'] = $this->M_User->getMembershipPackage()->result_array();
-        var_dump($data['memberpackage']);
-        die;
         $this->load->view('includes/header.php', $data);
         $this->load->view('vip.php', $data);
         $this->footer();
