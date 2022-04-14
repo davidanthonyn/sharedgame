@@ -152,23 +152,17 @@ class Cart extends CI_Controller
 
     function ubah_keranjang()
     {
-        $cart_info = $_POST['cart'];
-        foreach ($cart_info as $id => $cart) {
-            $rowid = $cart['rowid'];
-            $price = $cart['price'];
-            $gambar = $cart['gambar'];
-            $amount = $price * $cart['qty'];
-            $qty = $cart['qty'];
-            $data = array(
-                'rowid' => $rowid,
-                'price' => $price,
-                'gambar' => $gambar,
-                'amount' => $amount,
-                'qty' => $qty
-            );
-            $this->cart->update($data);
-        }
-        redirect('shopping/tampil_cart');
+        $cart_info = $this->input->post('id_detail_cart');
+        $qty = $this->input->post('qty_produk');
+        $data = array(
+            'qty_produk' => $qty
+        );
+
+        $where = array('id_detail_cart' => $cart_info);
+
+        $this->db->set('qty_produk', $data);
+        $this->db->where('id_detail_cart', $where);
+        $this->db->update('detailcart');
     }
 
     public function proses_order()

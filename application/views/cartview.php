@@ -594,7 +594,7 @@
                 <form class="user" method="POST" id="frm" action="<?= base_url('checkout'); ?>">
 
                   <div class="product">
-                    <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
+                    <input type="hidden" name="rowid" value="<?= $cart->id_detail_cart ?>">
 
                     <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
 
@@ -780,10 +780,26 @@
       var iprice = document.getElementsByClassName('iprice');
       var iquantity = document.getElementsByClassName('iquantity');
       var itotal = document.getElementsByClassName('itotal');
+      var rowid = document.getElementsByClassName('rowid');
 
       function subTotal() {
         for (i = 0; i < iprice.length; i++) {
-          itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
+          $.ajax({
+            url: "<?php echo base_url('cart/ubah_keranjang'); ?>",
+            type: "POST",
+            async: true,
+            data: {
+              id_detail_cart: rowid,
+              qty_produk: iquantity
+            },
+            dataType: "html",
+
+            success: function(data) {
+              itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
+            },
+          });
+
+          //itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
 
         }
       }

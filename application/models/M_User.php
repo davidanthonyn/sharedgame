@@ -411,4 +411,10 @@ class M_User extends CI_model
         $data = $this->db->query("SELECT * FROM user WHERE id_user = " . $id_user);
         return $data;
     }
+
+    public function getMembershipPackage()
+    {
+        $data = $this->db->query("SELECT * FROM membership_package");
+        return $data;
+    }
 }

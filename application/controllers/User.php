@@ -436,6 +436,29 @@ if (!empty($upload_selfie_ktp)) {
         $this->footer();
     }
 
+    public function upgrade($month)
+    {
+        $data = array(
+            'id_user' => $_SESSION['id_user'],
+            'month' => $month,
+            'status' => 'waiting'
+        );
+
+        $this->db->insert('membership_request', $data);
+        redirect('user/vip');
+    }
+
+    public function vip()
+    {
+        $data['title'] = 'Upgrade Account';
+        $data['memberpackage'] = $this->M_User->getMembershipPackage()->result_array();
+        var_dump($data['memberpackage']);
+        die;
+        $this->load->view('includes/header.php', $data);
+        $this->load->view('vip.php', $data);
+        $this->footer();
+    }
+
     public function footer()
     {
         $data['pages'] = $this->M_Page->getAllRowPages()->result();
