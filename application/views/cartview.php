@@ -611,7 +611,7 @@
                                                                                                                                                                       ?>" min="1" max="<?php echo $cart->jumlah_tersedia
                                                                                                                                                                                         ?>" required />
 
-                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
+                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa" psewa="<?= $cart->id_detail_cart ?>" pproduk="<?= $cart->id_produk ?>">
                           <option value="1">1 Hari</option>
                           <option value="3">3 Hari</option>
                           <option value="7">7 Hari</option>
@@ -751,6 +751,26 @@
           subTotal();
           numberofitems();
         });
+
+        $(document).ready(function() {
+          $("#sewa").change(function() {
+            var values = $("#sewa option:selected");
+            // alert(values.text());
+            // change_day(values.val());
+            change_day($(this));
+          });
+        });
+
+        function change_day(hari) {
+          var psewa = $(hari).attr("psewa");
+          var lamasewa = $(hari).val();
+          var pproduk = $(hari).attr("pproduk");
+          console.log(pproduk);
+          // var q = $(hari).val();
+          // var rowtotal = $(cls).attr("pprice");
+
+
+        }
 
         function update_cart(cls) {
           var pid = $(cls).attr("pid");

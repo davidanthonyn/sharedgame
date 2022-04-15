@@ -172,6 +172,10 @@ class Cart extends CI_Controller
         echo json_encode($data);
     }
 
+    function ubah_hari_keranjang()
+    {
+    }
+
     public function proses_order()
     {
         //-------------------------Input data pelanggan--------------------------
@@ -207,7 +211,7 @@ class Cart extends CI_Controller
         $this->load->view('shopping/sukses', $data);
         $this->load->view('themes/footer');
     }
-
+    /*
     public function edit_quantity()
     {
         require "cart.class.php";
@@ -223,7 +227,7 @@ class Cart extends CI_Controller
             'qty_produk'   => $qty
         );
 
-        $this->cart->update($data);*/
+        $this->cart->update($data);
 
 
         $edit_temp_purchase = array(
@@ -238,7 +242,7 @@ class Cart extends CI_Controller
         ];
 
         echo json_encode($result);
-    }
+    }*/
 
     public function getPriceByAjax()
     {
