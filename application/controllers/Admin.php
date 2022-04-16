@@ -14,6 +14,7 @@ class Admin extends CI_Controller
         $this->load->model('M_Page');
         $this->load->model('M_User');
         $this->load->model('Modelproduk');
+        $this->load->model('M_Booking');
         $this->load->library('form_validation');
         $this->load->library('session');
 
@@ -863,6 +864,10 @@ class Admin extends CI_Controller
         if ($data['user']['id_role'] == '1') {
             $data['title'] = 'Performa Sewa Produk | SharedGame';
             $data['smalltitle'] = 'Performa Sewa Produk';
+            $data['produk'] = $this->Modelproduk->GetProduk();
+            $data['transaksi'] = $this->M_Booking->getAllTransactionData()->result_array();
+            // var_dump($data['transaksi']);
+            // die;
             //$data['cs'] = $this->M_CustomerService->tampilkanDataCS()->result();
             $this->load->view('admin/manage-sells.php', $data);
         } else {

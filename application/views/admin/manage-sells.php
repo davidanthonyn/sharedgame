@@ -28,9 +28,12 @@
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/awesome-bootstrap-checkbox.css">
 		<!-- Admin Stye -->
 		<link rel="stylesheet" href="<?php echo base_url() . "assetsadmin/"; ?>css/style.css">
-		<script src="<?php echo base_url() . "chartjs/"; ?>chart.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -72,17 +75,30 @@
 						<div class="col-md-12">
 
 							<h2 class="page-title"><?= $title ?></h2>
+							<?php
+							if ($transaksi != NULL) {
+								foreach ($transaksi as $detailtransaksi) {
+									//$produk[] = $detailtransaksi['nama'];
+									//$jumlah[] = $detailtransaksi['amount'];
+									$chart_data = '';
+
+									$chart_data .= "{ produk:'" . $detailtransaksi["nama"] . "', jumlah:" . $detailtransaksi['amount'] . "}, ";
+
+									$chart_data = substr($chart_data, 0, -2);
+								}
+							}
+							?>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
 								<div class="panel-heading"><?= $smalltitle ?></div>
 								<div class="panel-body">
+									<!--
 									<canvas id="myChart"></canvas>
-
-
+						-->
+									<div id="chart"></div>
 								</div>
 							</div>
-
 
 
 						</div>
@@ -92,70 +108,18 @@
 			</div>
 		</div>
 		<script>
-			let myChart = document.getElementById('myChart').getContext('2d');
-
-			// Global Options
-			Chart.defaults.global.defaultFontFamily = 'Lato';
-			Chart.defaults.global.defaultFontSize = 18;
-			Chart.defaults.global.defaultFontColor = '#777';
-
-			let massPopChart = new Chart(myChart, {
-				type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-				data: {
-					labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-					datasets: [{
-						label: 'Population',
-						data: [
-							617594,
-							181045,
-							153060,
-							106519,
-							105162,
-							95072
-						],
-						//backgroundColor:'green',
-						backgroundColor: [
-							'rgba(255, 99, 132, 0.6)',
-							'rgba(54, 162, 235, 0.6)',
-							'rgba(255, 206, 86, 0.6)',
-							'rgba(75, 192, 192, 0.6)',
-							'rgba(153, 102, 255, 0.6)',
-							'rgba(255, 159, 64, 0.6)',
-							'rgba(255, 99, 132, 0.6)'
-						],
-						borderWidth: 1,
-						borderColor: '#777',
-						hoverBorderWidth: 3,
-						hoverBorderColor: '#000'
-					}]
-				},
-				options: {
-					title: {
-						display: true,
-						text: 'Largest Cities In Massachusetts',
-						fontSize: 25
-					},
-					legend: {
-						display: true,
-						position: 'right',
-						labels: {
-							fontColor: '#000'
-						}
-					},
-					layout: {
-						padding: {
-							left: 50,
-							right: 0,
-							bottom: 0,
-							top: 0
-						}
-					},
-					tooltips: {
-						enabled: true
-					}
-				}
+			Morris.Bar({
+				element: 'chart',
+				data: [<?= $chart_data ?>],
+				xkey: 'produk',
+				ykeys: ['jumlah'],
+				labels: ['Pendapatan'],
+				hideHover: 'auto',
+				stacked: true
 			});
 		</script>
+
+
 		<!-- Loading Scripts -->
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/jquery.min.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/bootstrap-select.min.js"></script>
@@ -166,6 +130,9 @@
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/fileinput.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/chartData.js"></script>
 		<script src="<?php echo base_url() . "assetsadmin/"; ?>js/main.js"></script>
+
+
+
 
 	</body>
 

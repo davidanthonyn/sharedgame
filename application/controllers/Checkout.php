@@ -50,9 +50,31 @@ class Checkout extends CI_Controller
 
     public function shipping()
     {
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert">Mohon login untuk dapat mengakses checkout.</div>');
+            redirect('auth');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
         $data['title'] = 'Pilih Pengiriman | SharedGame';
-        $data['booking'] = $this->M_Booking->getAllDistribution()->result();
+        $data['bookingambil'] = $this->M_Booking->getAllDistributionTakeAway()->row_array();
+        $data['bookingantar'] = $this->M_Booking->getAllDistributionSend($data['user']['id_user'])->row_array();
+
         $this->load->view('checkoutshipping.php', $data);
+    }
+
+    public function pilihshipping()
+    {
+        $distribusi = $this->input->post('distribusi');
+        if ($distribusi == "pilih") {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger" role="alert">Mohon tentukan penerimaan produk yang Anda pesan.</div>');
+            redirect('checkout/shipping');
+        } else {
+            redirect('checkout/bayar');
+        }
     }
 
     public function payment()

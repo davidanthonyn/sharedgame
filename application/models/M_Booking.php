@@ -32,9 +32,21 @@ class M_Booking extends CI_model
         return $this->db->get('detailbooking');
     }
 
-    public function getAllDistribution()
+    public function getAllDistributionTakeAway()
     {
-        $query = $this->db->query("SELECT * FROM rekeningtoko WHERE status_rekening_toko = 'aktif'");
+        $query = $this->db->query("SELECT nama_lengkap FROM customerservice WHERE id_cs = 1");
+        return $query;
+    }
+
+    public function getAllDistributionSend($id_user)
+    {
+        $query = $this->db->query("SELECT alamat_lengkap FROM user WHERE id_user = " . $id_user);
+        return $query;
+    }
+
+    public function getAllTransactionData()
+    {
+        $query = $this->db->query("SELECT nama_produk as nama, SUM(harga_final) as amount FROM detailtransaksi JOIN produk ON detailtransaksi.id_produk = produk.id_produk GROUP BY produk.id_produk");
         return $query;
     }
 }

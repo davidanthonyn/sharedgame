@@ -191,6 +191,11 @@ select::placeholder {
     color: #b9b9b9;
 }
 
+textarea {
+    font-size: 14px;
+    color: #b9b9b9;
+}
+
 input[type="select"]::placeholder {
     font-size: 14px;
     color: #b9b9b9;
@@ -208,6 +213,18 @@ input[type="select"]::placeholder {
 }
 
 input[type="button"] {
+    background-color: #F76D2B;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    height: 50px;
+    padding: 0 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"] {
     background-color: #F76D2B;
     color: white;
     font-weight: 500;
