@@ -34,13 +34,13 @@ class M_Booking extends CI_model
 
     public function getAllDistributionTakeAway()
     {
-        $query = $this->db->query("SELECT nama_lengkap FROM customerservice WHERE id_cs = 1");
+        $query = $this->db->query("SELECT nama_lengkap, number_cs FROM customerservice WHERE id_cs = 1");
         return $query;
     }
 
     public function getAllDistributionSend($id_user)
     {
-        $query = $this->db->query("SELECT alamat_lengkap FROM user WHERE id_user = " . $id_user);
+        $query = $this->db->query("SELECT alamat_lengkap, no_hp, no_hp_dua FROM user WHERE id_user = " . $id_user);
         return $query;
     }
 
