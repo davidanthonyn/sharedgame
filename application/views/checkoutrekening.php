@@ -69,7 +69,7 @@
                 </select>
             </div>
             <input type="submit" value="Lanjutkan"><br>
-            <input type="button" onclick="window.location.href='<?php echo base_url('checkout'); ?>';" value="Back">
+            <input type="button" onclick="window.location.href='<?php echo base_url('checkout/shipping'); ?>';" value="Back">
         </form>
     </div>
     <!--Back to top-->

@@ -90,7 +90,7 @@
       <script src="./checkout.php_files/bootstrap.bundle.min.js.download"></script>
 -->
 
-    <form action="<?php echo base_url('checkout/success'); ?>" method="post" enctype="multipart/form-data">
+    <form action="<?php echo base_url('checkout/selesai'); ?>" method="post" enctype="multipart/form-data">
         <div class="grid-container">
             <br>
             <div class="col-lg-12 billing">
