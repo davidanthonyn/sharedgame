@@ -212,8 +212,8 @@ class M_User extends CI_model
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
             $mail->Username = "noreply@sharedgame.tech";
-            $mail->Password = "Sukamaingam3!";
-            $mail->SetFrom("noreply@sharedgame.tech");
+            $mail->Password = "K%&pnNI+Y(Kv";
+            $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
             $mail->Subject = $subject;
             $mail->Body = $msg;
             $mail->AddAddress($to);
@@ -231,13 +231,13 @@ class M_User extends CI_model
 
         //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
 
-        $this->load->library('email');
+        //$this->load->library('email');
         $this->load->model('M_CustomerService');
         //$this->email->initialize($config);
         //$this->email->set_mailtype("html");
         //$this->email->set_newline("\r\n");
 
-        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+        //$this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to('kontolbinatang@protonmail.com');
 
