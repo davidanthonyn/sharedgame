@@ -199,7 +199,7 @@ class M_User extends CI_model
         require APPPATH . 'smtp/PHPMailerAutoload.php';
         //$this->load->library('Phpmailer_lib');
         $email = $this->input->post('email', true);
-
+        /*
         function smtp_mailer($to, $subject, $msg)
         {
             $mail = new PHPMailer();
@@ -226,15 +226,40 @@ class M_User extends CI_model
             if (!$mail->Send()) {
                 echo $mail->ErrorInfo;
             }
+        }*/
+
+        function smtp_mailer($to, $subject, $msg)
+        {
+            $mail = new PHPMailer();
+            $mail->isSMTP();
+            $mail->Host = 'mail.sharedgame.tech';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'noreply@sharedgame.tech';
+            $mail->Password = 'K%&pnNI+Y(Kv';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 587;
+
+            $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
+            $mail->addReplyTo($to);
+
+            $mail->isHTML(true);
+
+            $mail->Subject = $subject;
+            $mail->Body = $msg;
+            //$mail->addEmbeddedImage('path/to/image_file.jpg', 'image_cid');
+            //$mail->Body = '<img src="cid:image_cid"> Mail body in HTML';
+            //$mail->AltBody = 'This is the plain text version of the email content';
+
+            if (!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            }
         }
 
         //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
 
-        $this->load->library('email');
-
-        $this->email->initialize($config);
-        $this->email->set_mailtype("html");
-        $this->email->set_newline("\r\n");
+        //$this->email->set_mailtype("html");
+        //$this->email->set_newline("\r\n");
         $this->load->model('M_CustomerService');
 
         $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
