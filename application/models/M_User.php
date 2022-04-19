@@ -237,7 +237,7 @@ class M_User extends CI_model
         //$this->email->set_mailtype("html");
         //$this->email->set_newline("\r\n");
 
-        // $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to('kontolbinatang@protonmail.com');
 
