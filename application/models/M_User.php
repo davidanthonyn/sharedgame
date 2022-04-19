@@ -208,7 +208,7 @@ class M_User extends CI_model
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'ssl';
             $mail->Host = "mail.sharedgame.tech";
-            $mail->Port = 465;
+            $mail->Port = 587;
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
             $mail->Username = "noreply@sharedgame.tech";
@@ -222,22 +222,22 @@ class M_User extends CI_model
                 'verify_peer_name' => false,
                 'allow_self_signed' => false
             ));
-            /*
+
             if (!$mail->Send()) {
                 echo $mail->ErrorInfo;
-            } else {
-            }*/
+            }
         }
 
         //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
 
-        //$this->load->library('email');
-        $this->load->model('M_CustomerService');
-        //$this->email->initialize($config);
-        //$this->email->set_mailtype("html");
-        //$this->email->set_newline("\r\n");
+        $this->load->library('email');
 
-        //$this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+        $this->email->initialize($config);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
+        $this->load->model('M_CustomerService');
+
+        $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to('kontolbinatang@protonmail.com');
 
