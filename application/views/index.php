@@ -92,13 +92,14 @@
                   </div>
                   <div class="car-title-m">
                     <h6><a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $produk[$i]['id_produk']; ?>"><?php echo $produk[$i]['nama_produk']; ?></a></h6>
-                    <span class="price">$<?php //harga //echo htmlentities($result->PricePerDay); 
-                                          ?> /Day</span>
+                    <span class="price">Rp <?php echo $produk[$i]['tarif_harga'];
+                                            ?> / Minggu</span>
 
 
                   </div>
                   <div class="inventory_info_m">
-                    <p><?= $produk[$i]['warna_produk']; ?></p>
+                    <span class="dot" style="background-color:<?php echo $produk[$i]['warna_produk'];
+                                                              ?>;"></span>
                   </div>
                 </div>
               </div>

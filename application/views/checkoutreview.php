@@ -178,12 +178,6 @@
                                         </tbody>
                                     </table>
                                     <hr>
-                                    <div class="form-group">
-                                        <input type="hidden" name="id" value="">
-                                        <h4 class="title label">Upload Bukti Pembayaran</h4>
-                                        <small class="text-muted">File yang diperbolehkan hanya file gambar berfomat .png, .jpg, &amp; .jpeg.</small><br>
-                                        <input type="file" class="inputfile" name="bukti" required="required" accept="image/png, image/jpg, image/jpeg"><br>
-                                    </div>
                                 </div>
                             </div>
                         </div>

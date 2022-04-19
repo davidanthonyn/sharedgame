@@ -81,19 +81,19 @@ error_reporting(0);
   </section>
   <!-- /Page Header-->
 
- <!-- /FilterBrand-->
- 
-   </div>
-   <form action="<?php echo base_url() . "product/filter" ?>" id="FormLaporan" method="post"> 
-     <select name="id_brand" id="brand" class="form-control">
+  <!-- /FilterBrand-->
+
+  </div>
+  <form action="<?php echo base_url() . "product/filter" ?>" id="FormLaporan" method="post">
+    <select name="id_brand" id="brand" class="form-control">
       <option value="0">Show All</option>
-        <?php for ($i=0; $i<count($brand); $i++): ?>
-      <option value="<?php echo $brand[$i]['id_brand'] ?>"><?php echo $brand[$i]['nama_brand'] ?></option>
-      <?php endfor;?> 
-     </select>
-     <br>
-     <button type="submit" class="btn btn-primary">Show Data</button>
-    </form> 
+      <?php for ($i = 0; $i < count($brand); $i++) : ?>
+        <option value="<?php echo $brand[$i]['id_brand'] ?>"><?php echo $brand[$i]['nama_brand'] ?></option>
+      <?php endfor; ?>
+    </select>
+    <br>
+    <button type="submit" class="btn btn-primary">Show Data</button>
+  </form>
   <!--Listing-->
   <section class="listing-page">
     <div class="container">
@@ -102,7 +102,7 @@ error_reporting(0);
           <div class="result-sorting-wrapper">
             <div class="sorting-count">
 
-              <?php for ($i = 0; $i < count($produk); $i++) : ?>
+              <?php for ($i = 0; $i < count($produk); $i++) { ?>
                 <div class="box">
                   <img src="<?php echo base_url() . "assets/img/product/" . $produk[$i]['gambar_produk']; ?>" alt="" width="200" height="100">
 
@@ -116,18 +116,17 @@ error_reporting(0);
                       <i class="fas fa-star" style="color:orange"></i>
                     </div>
                     <h3> <a href="<?php echo base_url() . 'product/detail' ?>/<?php echo $produk[$i]['id_produk']; ?>"> <?php echo $produk[$i]['nama_produk']; ?></a> </h3>
-                    <span class="dot" style="background-color:<?php echo $produk[$i]['warna_produk']
+                    <span class="dot" style="background-color:<?php echo $produk[$i]['warna_produk'];
                                                               ?>;"></span>
-                    <div class="price"><?php echo $produk[$i]['warna_produk']; ?> <span> </span> </div>
-
+                    <div class="price">Rp <?php echo $produk[$i]['tarif_harga']; ?> / minggu <span> </span> </div>
                     <a> Available </a>
                   </div>
                 </div>
                 <br>
                 <br>
-                
-              <?php endfor; ?>
-              
+
+              <?php } ?>
+
 
 
               <!--Side-Bar-->

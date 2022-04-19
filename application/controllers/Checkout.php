@@ -300,13 +300,12 @@ class Checkout extends CI_Controller
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
         $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->result();
-        //var_dump($data['detailkeranjangrow']);
-        //die;
+
         $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
         $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
         $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
         $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
-        $data['tarifsewa'] = $this->M_Cart->get_tarif_sewa($data['detailkeranjangrow']['id_cart'])->result();
+        //$data['tarifsewa'] = $this->M_Cart->get_tarif_sewa($data['detailkeranjangrow']['id_cart'])->result();
         $totalpricestring = implode(" ", $data['totalprice']);
 
         //Set waktu untuk created at dan updated at
@@ -322,7 +321,7 @@ class Checkout extends CI_Controller
             'waktu_buat_transaksi' => $now,
             'waktu_pembayaran' => NULL,
             'kode_unik_pembayaran' =>  $data['number'],
-            'jumlah_pembayaran' => $data['totalprice'],
+            'jumlah_pembayaran' => $totalpricestring,
             'total_pembayaran' => $totalandcode,
             'status_pembayaran' => "pending",
             'bukti_pembayaran' => NULL,
@@ -338,10 +337,10 @@ class Checkout extends CI_Controller
 
         $sql = "INSERT INTO detailtransaksi (id_transaksi, id_produk, harga_final, qty, lama_sewa_hari, startrent, finishrent) SELECT";
         $rows = [];
-        foreach ($data['detailkeranjangrow'] as $item) {
-            $rows[] = "('{$insertId}','{$item["id_produk"]}','{$item["id_tarif_sewa"]}','{$item["qty_produk"]}','{$item["start_plan"]}','{$item["finish_plan"]}')";
+        foreach ($data['productcart'] as $item) {
+            $rows[] = "('{$insertId}','{$item->id_produk}','{$item->id_tarif_sewa}','{$item->qty_produk}','{$item->lama_sewa_hari}'','{$item->start_plan}','{$item->finish_plan}')";
         }
-        $sql .= "FROM transaksi, produk, tarifsewa, detailcart WHERE id_cart = " . $data['keranjangrow']['id_cart'];
+        $sql .= " FROM transaksi, produk, tarifsewa, detailcart WHERE id_cart = " . $data['keranjangrow']['id_cart'];
         $sql .= implode(",", $rows);
         $this->db->query($sql);
 
@@ -373,7 +372,7 @@ $dataproduk=[];*/
         );
 
         $id_transfer = "x";*/
-        redirect('checkout/transfer' . $id_transfer);
+        redirect('checkout/transfer');
     }
 
 
@@ -396,7 +395,7 @@ $dataproduk=[];*/
     //$this->load->view('VRandom_number.php', $data);
 
 
-    public function transfer($id_transfer)
+    public function transfer()
     {
         if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert 
