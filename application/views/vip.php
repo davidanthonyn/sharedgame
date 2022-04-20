@@ -67,11 +67,11 @@
     <div class="container">
       <div class="page-header_wrap">
         <div class="page-heading">
-          <h1>Membership</h1>
+          <h1>Upgrade Account</h1>
         </div>
         <ul class="coustom-breadcrumb">
           <li><a href="<?php echo base_url(); ?>">Home</a></li>
-          <li>Membership</li>
+          <li>VIP</li>
         </ul>
       </div>
     </div>
@@ -81,40 +81,33 @@
   <!-- /Page Header-->
 
   <section class="inner_pages">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5" style="background-color: #eaeaea; height: 300px;">
-          <div style="height: 25px; width: 100%; background-color: grey;"></div>
-          <h3 class="text-center">WELCOME BACK!</h3>
-          <h3 class="text-center"><?= $_SESSION['nama_lengkap'] ?></h3>
-          <u>your Account</u>
-          <p>&emsp;<?= $_SESSION['nama_lengkap'] ?></p>
-          <p>&emsp;<?= $_SESSION['alamat_lengkap'] ?></p>
-          <u>Your Membership : </u>
-          <p style="display: inline;"><?= $_SESSION['membership'] ?></p>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-6" style="background-color: #eaeaea;">
-          <?php foreach ($memberpackage as $paket) { ?>
-            <p style="background: grey; color: white;">Upgrade Your VIP Member</p>
-            <a href="<?php echo base_url() . 'user/upgrade/1' ?>" style="margin-bottom: 30px;">
-              <h3>1 Month <span Style="display: inline-block; width: 300px;"></span>IDR 0.000</h3>
-            </a>
-            <a href="<?php echo base_url() . 'user/upgrade/6' ?>" style="margin-bottom: 30px;">
-              <h3>6 Month <span Style="display: inline-block; width: 300px;"></span>IDR 0.000</h3>
-            </a>
-            <a href="<?php echo base_url() . 'user/upgrade/12' ?>" style="margin-bottom: 30px;">
-              <h3>12 Month <span Style="display: inline-block; width: 285px;"></span>IDR 0.000</h3>
-            </a>
-
-
-            <a href="<?php echo base_url() . 'user/upgrade/' . $paket->month; ?>" style="margin-bottom: 30px;">
-              <h3><?php echo $paket->month; ?> Month <span Style="display: inline-block; width: 300px;"></span>IDR <?php echo $paket->price; ?></h3>
-            </a>
-          <?php } ?>
-        </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-5" style="background-color: #eaeaea; height: 300px;">
+                <div style="height: 25px; width: 100%; background-color: grey;"></div>
+                <h3 class="text-center">WELCOME BACK!</h3>
+                <h3 class="text-center"><?= $_SESSION['nama_lengkap'] ?></h3>
+                <u>your Account</u>
+                <p>&emsp;<?= $_SESSION['nama_lengkap'] ?></p>
+                <p>&emsp;<?= $_SESSION['alamat_lengkap'] ?></p>
+                <u>Your Membership : </u>
+                <p style="display: inline;"><?= $_SESSION['membership'] ?></p>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-6" style="background-color: #eaeaea;">
+                  <p style="background: grey; color: white;">Upgrade Your VIP Member</p>
+                  <a href="<?php echo base_url() . 'user/upgrade/1' ?>" style="margin-bottom: 30px;">
+                    <h3>1 Month <span Style="display: inline-block; width: 300px;"></span>IDR 0.000</h3>
+                  </a>
+                  <a href="<?php echo base_url() . 'user/upgrade/6' ?>" style="margin-bottom: 30px;">
+                    <h3>6 Month <span Style="display: inline-block; width: 300px;"></span>IDR 0.000</h3>
+                  </a>
+                  <a href="<?php echo base_url() . 'user/upgrade/12' ?>" style="margin-bottom: 30px;">
+                    <h3>12 Month <span Style="display: inline-block; width: 285px;"></span>IDR 0.000</h3>
+                  </a>
+              </div>
+          </div>
       </div>
-    </div>
   </section>
   <!--/Profile-setting-->
 

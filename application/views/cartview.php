@@ -612,9 +612,19 @@
                                                                                                                                                                                         ?>" required />
 
                       <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa" psewa="<?= $cart->id_detail_cart ?>" pproduk="<?= $cart->id_produk ?>">
-                          <option value="1">1 Hari</option>
-                          <option value="3">3 Hari</option>
-                          <option value="7">7 Hari</option>
+                          <?php if ($cart->lama_sewa_hari == 1) { ?>
+                            <option value="1">1 Hari</option>
+                            <option value="3">3 Hari</option>
+                            <option value="7">7 Hari</option>
+                          <?php } else if ($cart->lama_sewa_hari == 3) { ?>
+                            <option value="3">3 Hari</option>
+                            <option value="7">7 Hari</option>
+                            <option value="1">1 Hari</option>
+                          <?php } else if ($cart->lama_sewa_hari == 7) { ?>
+                            <option value="7">7 Hari</option>
+                            <option value="3">3 Hari</option>
+                            <option value="1">1 Hari</option>
+                          <?php } ?>
                         </select>
                       </p>
                       <p class="plan-date">Tanggal Sewa <input class="form-control white_bg" value="<?= $cart->start_plan ?>" name="plandate" id="plandate">
