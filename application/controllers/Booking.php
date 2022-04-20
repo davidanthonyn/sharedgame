@@ -28,7 +28,7 @@ class Booking extends CI_Controller
         if ($data['user']['id_role'] == '1') {
       //      $this->load->model('M_Booking');
             $data['title'] = 'Kelola Booking | SharedGame';
-            $data['booking'] = $this->M_Booking->DetailBooking()->result();
+            $data['booking'] = $this->M_Booking->getdetailbooking()->result_array();
             $this->load->view('admin/detail-bookings', $data);
         } else {
             redirect('');
@@ -49,7 +49,7 @@ class Booking extends CI_Controller
         if ($data['user']['id_role'] == '1') {
       //      $this->load->model('M_Booking');
             $data['title'] = 'Kelola Booking | SharedGame';
-            $data['booking'] = $this->M_Booking->AllBooking()->result();
+            $data['booking'] = $this->M_Booking->getbooking()->result_array();
             $this->load->view('admin/bookings', $data);
         } else {
             redirect('');

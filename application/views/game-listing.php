@@ -84,7 +84,13 @@ error_reporting(0);
  <!-- /FilterBrand-->
  
    </div>
-   <form action="<?php echo base_url() . "product/filter" ?>" id="FormLaporan" method="post"> 
+   
+  <!--Listing-->
+  <section class="listing-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+        <form action="<?php echo base_url() . "product/filter" ?>" id="FormLaporan" method="post"> 
      <select name="id_brand" id="brand" class="form-control">
       <option value="0">Show All</option>
         <?php for ($i=0; $i<count($brand); $i++): ?>
@@ -94,11 +100,8 @@ error_reporting(0);
      <br>
      <button type="submit" class="btn btn-primary">Show Data</button>
     </form> 
-  <!--Listing-->
-  <section class="listing-page">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9 col-md-push-3">
+        </div>
+        <div class="col-md-9">
           <div class="result-sorting-wrapper">
             <div class="sorting-count">
 

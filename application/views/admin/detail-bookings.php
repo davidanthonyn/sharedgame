@@ -86,9 +86,10 @@
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
 											<tr>
-												<th>#</th>
+												<th>NO</th>
+												<th>nama user</th>
 												<th>id booking</th>
-												<th>id_produk</th>
+												<th> nama produk </th>
 												<th>qty produk</th>
 												<th>tgl jam awal sewa</th>
 												<th>tgl jam akhir sewa</th>
@@ -99,13 +100,13 @@
 										</thead>
 										<tfoot>
 											<tr>
-											<th>#</th>
+											<th>NO</th>
+												<th>nama user</th>
 												<th>id booking</th>
-												<th>id_produk</th>
+												<th> nama produk </th>
 												<th>qty produk</th>
 												<th>tgl jam awal sewa</th>
 												<th>tgl jam akhir sewa</th>
-
 												<th>Action</th>
 											</tr>
 											</tr>
@@ -113,17 +114,18 @@
 										<tbody>
 
 											<?php
-											foreach ($booking as $listbooking) { ?>
+											for ($i=0;$i<count($booking); $i++) { ?>
 												<tr>
-													<td><?php echo $listbooking->id_detail_booking ?></td>
-													<td><?php echo $listbooking->id_booking ?></td>
+													<td><?php echo $i+1 ?></td>
+													<td><?php echo $booking[$i]["nama_lengkap"] ?></td>
+													<td><?php echo $booking[$i]["id_booking"] ?></td>
 
-													<td><?php echo $listbooking->id_produk ?></td>
-                                                    <td><?php echo $listbooking->qty_produk ?></td>
-													<td><?php echo $listbooking->tgl_jam_awal_sewa ?></td>
-                                                    <td><?php echo $listbooking->tgl_jam_akhir_sewa ?></td>
+													<td><?php echo $booking[$i]["nama_produk"] ?></td>
+                                                    <td><?php echo $booking[$i]["qty_produk"] ?></td>
+													<td><?php echo $booking[$i]["tgl_jam_awal_sewa"] ?></td>
+                                                    <td><?php echo $booking[$i]["tgl_jam_akhir_sewa"] ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'booking/deletedetail_booking/' . $listbooking->id_detail_booking; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'booking/deletedetail_booking/' . $booking[$i]["id_detail_booking"] ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php

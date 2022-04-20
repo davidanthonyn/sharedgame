@@ -86,21 +86,20 @@
 									<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 										<thead>
 											<tr>
-												<th>id booking</th>
+												<th>NO</th>
+												<th>nama user</th>
 												<th>id transaksi</th>
-												<th>id user</th>
+												<th>id booking</th>
 												<th>created at</th>
-												
-											
-
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tfoot>
 											<tr>
-												<th>id booking</th>
+												<th>NO</th>
+												<th>nama user</th>
 												<th>id transaksi</th>
-												<th>id user</th>
+												<th>id booking</th>
 												<th>created at</th>
 												<th>Action</th>
 											</tr>
@@ -109,15 +108,16 @@
 										<tbody>
 
 											<?php
-											foreach ($booking as $listbooking) { ?>
+											for ($i=0;$i<count($booking); $i++) { ?>
 												<tr>
-													<td><?php echo $listbooking->id_booking ?></td>
-													<td><?php echo $listbooking->id_transaksi ?></td>
+													<td><?php echo $i+1 ?></td>
+													<td><?php echo $booking[$i]["nama_lengkap"] ?></td>
+													<td><?php echo $booking[$i]["id_transaksi"] ?></td>
 
-													<td><?php echo $listbooking->id_user ?></td>
-                                                    <td><?php echo $listbooking->created_at ?></td>
+													<td><?php echo $booking[$i]["id_booking"] ?></td>
+                                                    <td><?php echo $booking[$i]["created_at"] ?></td>
 													<td>
-														<a href="<?php echo base_url() . 'booking/deletebooking/' . $listbooking->id_booking; ?>">Hapus</a>
+														<a href="<?php echo base_url() . 'booking/deletebooking/' . $booking[$i]["id_booking"] ?>">Hapus</a>
 													</td>
 												</tr>
 											<?php
