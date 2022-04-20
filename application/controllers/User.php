@@ -509,13 +509,25 @@ if (!empty($upload_selfie_ktp)) {
 
         if ($this->form_validation->run() == false) {
             if ($data['usercard']['status_ktp'] != "ditolak") {
-                $this->session->set_flashdata('messagefailed', 'Anda harus menolak KTP' . $data['user']['nama_lengkap'] . ' terlebih  dahulu untuk memberi catatan');
+                $this->session->set_flashdata('messagefailed', 'Anda harus menolak KTP ' . $data['user']['nama_lengkap'] . ' terlebih  dahulu untuk memberi catatan');
                 redirect('admin/kelolaidentity');
             } else {
                 $this->load->view('admin/note-identity', $data);
             }
         } else {
-            $data = array();
+            $note = $this->input->post('note');
+            $data = array(
+                "note_user" => $note
+            );
+
+            $where = array(
+                "id_user" => $id_user
+            );
+
+            $this->M_User->update_record($where, $data, 'usercard');
+
+            $this->session->set_flashdata('messagesuccess', 'Anda berhasil memberi catatan kepada KTP milik ' . $data['user']['nama_lengkap'] . '.');
+            redirect('admin/kelolaidentity');
         }
     }
 }

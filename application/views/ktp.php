@@ -144,21 +144,25 @@
                 <?php } ?>
               </div>
 
+              <?php if ($identity['status_ktp'] == "ditolak" && ($identity['note_user'] != NULL || $identity['note_user'] != "")) { ?>
+                <label class="control-label">Mohon Maaf KTP Anda ditolak, dengan alasan : <?php echo $identity['note_user']; ?></label><br>
+              <?php } ?><br>
               <div class="form-group row">
                 <label class="control-label">KTP</label><br>
                 <div class="col-sm-1">
                   <div class="row">
                     <div class="col-sm-3">
-                      <?php if ($identity['foto_selfie_ktp'] != NULL) { ?>
+                      <?php if ($identity['foto_ktp'] != NULL) { ?>
                         <img src="<?= base_url('assets/img/ktp/') . $identity['foto_ktp']; ?>" class="card-img" width="200" height="200">
                     </div>
                   <?php } ?>
                   </div class="col-sm-1">
                   <div class="custom-file">
                     <br>
-                    <input type="file" class="custom-file-input" id="ktp" name="ktp">
-                    <label class="custom-file-label" for="ktp"></label>
-
+                    <?php if ($identity['status_ktp'] != "diterima") { ?>
+                      <input type="file" class="custom-file-input" id="ktp" name="ktp">
+                      <label class="custom-file-label" for="ktp"></label>
+                    <?php } ?>
 
 
                   </div>
@@ -178,9 +182,10 @@
                       </div class="col-sm-1">
                       <div class="custom-file">
                         <br>
-
-                        <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
-                        <label class="custom-file-label" for="selfiektp"></label>
+                        <?php if ($identity['status_ktp'] != "diterima") { ?>
+                          <input type="file" class="custom-file-input" id="selfiektp" name="selfiektp">
+                          <label class="custom-file-label" for="selfiektp"></label>
+                        <?php } ?>
                         <!--
                     <label class="control-label">Anda hanya dapat mengupload satu kali, setelah menekan Save Changes.</label>
 
@@ -200,7 +205,9 @@
                   <br><br>
 
                   <div class="form-group">
-                    <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                    <?php if ($identity['status_ktp'] != "diterima") { ?>
+                      <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                    <?php } ?>
                   </div>
                   </form>
 

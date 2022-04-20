@@ -14,6 +14,12 @@ class M_User extends CI_model
         return $query;
     }
 
+    function update_record($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
+
     public function tambahDataCustomer()
     {
         //Set waktu untuk created at dan updated at

@@ -81,7 +81,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">Catatan</div>
 										<div class="panel-body">
-											<?= form_open_multipart('admin/noteidentity/' . $usercard['id_user']); ?>
+											<?= form_open_multipart('user/noteidentity/' . $usercard['id_user']); ?>
 											<div class="form-group">
 												<label class="col-sm-4 control-label">KTP</label>
 												<div class="col-sm-8">
