@@ -8,6 +8,12 @@ class M_User extends CI_model
         return $query;
     }
 
+    public function getAllIdentity()
+    {
+        $query = $this->db->query('SELECT * FROM usercard JOIN user ON user.id_user = usercard.id_user');
+        return $query;
+    }
+
     public function tambahDataCustomer()
     {
         //Set waktu untuk created at dan updated at
@@ -190,95 +196,110 @@ class M_User extends CI_model
 
     private function _sendEmail($token, $type)
     {
-        require APPPATH . 'smtp\PHPMailerAutoload.php';
-        $this->load->library('Phpmailer_lib');
+        require APPPATH . 'smtp/PHPMailerAutoload.php';
+        //$this->load->library('Phpmailer_lib');
         $email = $this->input->post('email', true);
         /*
-        $mail = new PHPMailer();
-        $mail->SMTPDebug  = 2;
-        $mail->IsSMTP();
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = 'ssl';
-        $mail->Host = "usvip4.noc401.com";
-        $mail->Port = 465;
-        $mail->IsHTML(true);
-        $mail->CharSet = 'UTF-8';
-        $mail->Username = "noreply@sharedgame.tech";
-        $mail->Password = "Sukamaingam3!";
-        $mail->SetFrom("noreply@sharedgame.tech");*/
+        function smtp_mailer($to, $subject, $msg)
+        {
+            $mail = new PHPMailer();
+            $mail->SMTPDebug  = 2;
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Host = "mail.sharedgame.tech";
+            $mail->Port = 587;
+            $mail->IsHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Username = "noreply@sharedgame.tech";
+            $mail->Password = "K%&pnNI+Y(Kv";
+            $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
+            $mail->Subject = $subject;
+            $mail->Body = $msg;
+            $mail->AddAddress($to);
+            $mail->SMTPOptions = array('ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => false
+            ));
 
-        //Config gmail
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'mail.sharedgame.tech',
-            'smtp_user' => 'noreply@sharedgame.tech',
-            'smtp_pass' => 'Sukamaingam3!',
-            'smtp_port' => 465,
-            //'mail_type' => 'html',
-            'charset' => 'iso-8859-1'
-        ];
+            if (!$mail->Send()) {
+                echo $mail->ErrorInfo;
+            }
+        }*/
 
+        function smtp_mailer($to, $subject, $msg)
+        {
+            $mail = new PHPMailer();
+            $mail->isSMTP();
+            $mail->Host = 'mail.sharedgame.tech';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'noreply@sharedgame.tech';
+            $mail->Password = 'K%&pnNI+Y(Kv';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 587;
 
-        /*
-        //Config 000WebHost
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ns02.000webhost.com',
-            'smtp_user' => 'noreply@sharedgame.tech',
-            'smtp_pass' => 'qmSgTyH6',
-            'smtp_port' => 587,
-            'mail_type' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        ];
-        */
+            $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
+            $mail->addReplyTo($to);
 
-        $this->load->library('email');
+            $mail->isHTML(true);
+
+            $mail->Subject = $subject;
+            $mail->Body = $msg;
+            //$mail->addEmbeddedImage('path/to/image_file.jpg', 'image_cid');
+            //$mail->Body = '<img src="cid:image_cid"> Mail body in HTML';
+            //$mail->AltBody = 'This is the plain text version of the email content';
+
+            if (!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            }
+        }
+
+        //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
+
+        //$this->email->set_mailtype("html");
+        //$this->email->set_newline("\r\n");
         $this->load->model('M_CustomerService');
-        $this->email->initialize($config);
-        $this->email->set_mailtype("html");
-        $this->email->set_newline("\r\n");
 
         $this->email->from('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
 
         //$this->email->to('kontolbinatang@protonmail.com');
 
-        $this->email->to($email);
+        //$this->email->to($email);
 
         //Jika tipe nya adalah verifikasi akun
         if ($type == 'verify') {
-            $this->email->subject('Verifikasi Akun | SharedGame');
-
             //$this->email->message('Klik link berikut untuk memverifikasi akun anda : <a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . urlencode($token) . '">Aktivasi Akun</a>');
             $data['email'] = $email;
             $data['token'] = $token;
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
-            $message = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
-            $this->email->message($message);
+            $html = $this->load->view('emailtemplates/confirm_account.php', $data, TRUE);
+            echo smtp_mailer(htmlspecialchars($email), 'Verifikasi Akun | SharedGame', $html);
 
             //$this->email->message('<html><head></head><body>Klik link berikut untuk memverifikasi akun anda : 
             //<a href="' . base_url() . 'auth/verify?email=' . $email . '&token=' . $token . '">Aktivasi Akun</a></body><html>');
         } else if ($type == 'forgot') {
             //Jika tipe nya lupa password
-            $this->email->subject('Reset Password | SharedGame');
+            // $this->email->subject('Reset Password | SharedGame');
             $data['email'] = $email;
             $data['token'] = $token;
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
-            $message = $this->load->view('emailtemplates/forgot_password.php', $data, TRUE);
-            $this->email->message($message);
+            $html = $this->load->view('emailtemplates/forgot_password.php', $data, TRUE);
+            echo smtp_mailer(htmlspecialchars($email), 'Lupa Sandi | SharedGame', $html);
 
             //$this->email->message('Klik link berikut untuk mereset password Anda : <a href="' . base_url() . 'auth/resetpassword?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>');
         } else if ($type == 'change') {
-            //Jika tipe nya lupa password
+            //Jika tipe nya ganti email
             $this->email->subject('Ganti Email | SharedGame');
             $data['email'] = $email;
             $data['token'] = $token;
             //Model M_CustomerService pada fungsi index(panggil data CS dari database)
             $data['cs'] = $this->M_CustomerService->index()->result();
-            $message = $this->load->view('emailtemplates/change_email.php', $data, TRUE);
-            $this->email->message($message);
+            $html = $this->load->view('emailtemplates/change_email.php', $data, TRUE);
+            echo smtp_mailer(htmlspecialchars($email), 'Penggantian Email | SharedGame', $html);
         }
 
         if ($this->email->send()) {
@@ -407,6 +428,18 @@ class M_User extends CI_model
            WHERE detailtransaksi.id_transaksi = " . $id_transaction . "
            ORDER BY detailtransaksi.startrent DESC");
 
+        return $data;
+    }
+
+    public function getAnIdentity($id_user)
+    {
+        $data = $this->db->query("SELECT * FROM user WHERE id_user = " . $id_user);
+        return $data;
+    }
+
+    public function getMembershipPackage()
+    {
+        $data = $this->db->query("SELECT * FROM membership_package");
         return $data;
     }
 }

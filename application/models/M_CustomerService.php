@@ -57,4 +57,11 @@ class M_CustomerService extends CI_Model
     {
         return $this->db->get_where($table, $where);
     }
+
+
+    function update_record($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
 }

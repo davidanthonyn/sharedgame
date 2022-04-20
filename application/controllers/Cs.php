@@ -42,8 +42,11 @@ class Cs extends CI_Controller
 
         if ($data['user']['id_role'] == '1' || $data['user']['id_role'] == '2') {
             //$this->load->model('M_Rekening');
+            $data = array(
+                'status' => 'ignored'
+            );
             $where = array('id_cs' => $id_cs);
-            $this->M_CustomerService->delete_record($where, 'customerservice');
+            $this->M_CustomerService->update_record($where, $data, 'customerservice');
             redirect('admin/managecs');
         } else {
             redirect('');

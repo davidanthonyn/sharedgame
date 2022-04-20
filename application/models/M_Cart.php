@@ -113,6 +113,13 @@ class M_Cart extends CI_model
 
         return $data;
     }
+    /*
+    public function custom_tarif_sewa($id_produk)
+    {
+        $data = $this->db->query("SELECT id_produk, tarif_harga, lama_sewa_hari FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE tarifsewa.id_produk = detailcart.id_produk AND id_cart = " . $id_cart . ")");
+
+        return $data;
+    }*/
 
     function delete_record($where, $table)
     {
@@ -153,14 +160,14 @@ class M_Cart extends CI_model
         return $this->cart->contents();
     }
 
-    function get_price_by_ajax($where)
+    function get_new_qty_by_ajax($where)
     {
-        $query = $this->db->get_where('tarifsewa', $where);
+        $query = $this->db->get_where('detailcart', $where);
 
         foreach ($query->result() as $data) {
             $output = array(
                 //'page_name' => $data->page_name,
-                'tarif_harga' => $data->tarif_harga
+                'qty_produk' => $data->qty_produk
             );
         }
         return $output;

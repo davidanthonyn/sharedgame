@@ -14,6 +14,7 @@ class Admin extends CI_Controller
         $this->load->model('M_Page');
         $this->load->model('M_User');
         $this->load->model('Modelproduk');
+        $this->load->model('M_Booking');
         $this->load->library('form_validation');
         $this->load->library('session');
 
@@ -863,6 +864,10 @@ class Admin extends CI_Controller
         if ($data['user']['id_role'] == '1') {
             $data['title'] = 'Performa Sewa Produk | SharedGame';
             $data['smalltitle'] = 'Performa Sewa Produk';
+            $data['produk'] = $this->Modelproduk->GetProduk();
+            $data['transaksi'] = $this->M_Booking->getAllTransactionData()->result_array();
+            // var_dump($data['transaksi']);
+            // die;
             //$data['cs'] = $this->M_CustomerService->tampilkanDataCS()->result();
             $this->load->view('admin/manage-sells.php', $data);
         } else {
@@ -942,5 +947,47 @@ class Admin extends CI_Controller
                 $val->jumlah_tersedia
             );
         }
+    }
+
+    function kelolaidentity()
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola Identitas hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data['title'] = 'Kelola Identitas | SharedGame';
+        $data['smalltitle'] = 'Daftar Identitas';
+        $data['user'] = $this->M_User->getAllIdentity()->result();
+        $this->load->view('admin/reg-identity.php', $data);
+    }
+
+    function reviewidentity($id_user)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data['card'] = $this->db->get_where('usercard', ['id_user' => $id_user])->result();
+        $data['customer'] = $this->M_User->getAnIdentity($id_user)->result();
+
+        $data['title'] = 'Kelola Identitas | SharedGame';
+        $data['smalltitle'] = 'Daftar Identitas';
+        $this->load->view('admin/edit-identity.php', $data);
     }
 }

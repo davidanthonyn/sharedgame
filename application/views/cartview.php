@@ -591,10 +591,10 @@
             <div class="products">
 
               <?php foreach ($productcart as $cart) { ?>
-                <form class="user" method="POST" id="frm<?= $cart->id_produk ?>" action="<?= base_url('checkout'); ?>">
+                <form class="user" method="POST" id="frm" action="<?= base_url('checkout'); ?>">
 
                   <div class="product">
-                    <input type="hidden" name="rowid" value="<?= $cart->id_produk ?>">
+                    <input type="hidden" name="rowid" value="<?= $cart->id_detail_cart ?>">
 
                     <img src="<?= base_url() . "assets/img/product/" ?><?= $cart->gambar_produk ?>">
 
@@ -603,15 +603,15 @@
                       <h3 class="product-name"><?= $cart->nama_produk ?></h3>
 
 
-                      <p class="product-price price<?= $cart->id_produk ?>">Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?> x <?php echo $cart->qty_produk
-                                                                                                                                                ?> =</p>
-                      <h4 class="subtotal subtotal<?= $cart->id_produk ?>"> Rp <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
+                      <p class="product-price oneproduct">Satuan: Rp <?php echo number_format($cart->tarif_harga, 0, ',', '.'); ?><input type='hidden' class='iprice' value='<?php echo $cart->tarif_harga; ?>'> </p>
 
-                      <p class="product-quantity qty<?= $cart->id_produk ?>">Qty <input type="number" id="myNumber" name="myNumber" onchange="updateproduct(<?= $cart->id_produk ?>)" value="<?php echo $cart->qty_produk
-                                                                                                                                                                                              ?>" min="1" max="<?php echo $cart->jumlah_tersedia
-                                                                                                                                                                                                                ?>" required />
+                      <h4 class="subtotal isubtotal" pprice='<?= $cart->id_tarif_sewa ?>'> <?php echo number_format($cart->tarif_harga *  $cart->qty_produk, 0, ',', '.'); ?></h4>
 
-                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa">
+                      <p class="product-quantity">Qty <input type="number" id="myNumber" name="myNumber" class="iquantity" pid='<?= $cart->id_detail_cart ?>' value="<?php echo $cart->qty_produk
+                                                                                                                                                                      ?>" min="1" max="<?php echo $cart->jumlah_tersedia
+                                                                                                                                                                                        ?>" required />
+
+                      <p class="product-offer">Jangka Waktu <select id="sewa" name="sewa" psewa="<?= $cart->id_detail_cart ?>" pproduk="<?= $cart->id_produk ?>">
                           <option value="1">1 Hari</option>
                           <option value="3">3 Hari</option>
                           <option value="7">7 Hari</option>
@@ -653,10 +653,6 @@
 
 
                       </p>
-                      <p class="product-update">
-
-                        <a class="update" href="<?php echo base_url() . 'cart/delete_cart/' . $cart->id_detail_cart; ?>">Update</a>
-                      </p>
                     </div>
 
                   </div>
@@ -673,12 +669,12 @@
 
                   <span>Total Price</span>
 
-                  <span class="grandtotal" id="totalharga" name="totalharga"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
+                  <span class="grandtotal itotal" id="total" name="total"> Rp <?php echo number_format($total, 0, ',', '.'); ?></span>
                 </p>
 
                 <p>
                   <span>Number of Items</span>
-                  <span><?php echo $totalitem; ?> </span>
+                  <span class="itotalitem"><?php echo $totalitem; ?> </span>
                 </p>
 
                 <p>
@@ -723,60 +719,110 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-      /*
-      function change_time() {
-        var select = document.getElementById('time');
+      /* function change_time() {
+        var select = document.getElementById('sewa');
         var value = select.options[select.selectedIndex].value;
 
         if (value == "1") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[0]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[0]['tarif_harga'];
+                                                        ?>;
         } else
         if (value == "3") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[1]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[1]['tarif_harga'];
+                                                        ?>;
         } else
         if (value == "7") {
-          document.getElementById('price').value = <?php //echo $tarifsewa[2]['tarif_harga']; 
-                                                    ?>;
-          document.getElementById('div_content').style.display = 'block';
+          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[2]['tarif_harga'];
+                                                        ?>;
         } else {
-          document.getElementById('price').value = "";
+          document.getElementById('oneproduct').value = "";
           document.getElementById('div_content').style.display = 'none';
         }
-      }
-
-      function change_quantity() {
-
-      }
-
-      function change_date() {
-
       }*/
     </script>
     <script>
-      function updateproduct(rowid) {
-        var qty = $('.qty' + rowid).val();
-        var price = $('.price' + rowid).text();
-        var subtotal = $('.subtotal' + rowid).text();
-        console.log(qty);
-        console.log(price);
-        console.log(subtotal);
+      $("[type='number']").keypress(function(evt) {
+        evt.preventDefault();
+      });
 
-        $.ajax({
-          type: "POST",
-          url: "<?php echo base_url('cart/edit_quantity'); ?>",
-          data: "rowid=" + rowid + "&qty=" + qty,
-          success: function(response) {
-            $('.subtotal' + rowid).text(response);
-            $('.subtotal').each(function() {
-              total += parseInt($(this).text());
-              $('.grandtotal').text(total);
-            });
-          }
+      $(document).ready(function() {
+        $(".iquantity").change(function() {
+          update_cart($(this));
+          subTotal();
+          numberofitems();
         });
+
+        $(document).ready(function() {
+          $("#sewa").change(function() {
+            var values = $("#sewa option:selected");
+            // alert(values.text());
+            // change_day(values.val());
+            change_day($(this));
+          });
+        });
+
+        function change_day(hari) {
+          var psewa = $(hari).attr("psewa");
+          var lamasewa = $(hari).val();
+          var pproduk = $(hari).attr("pproduk");
+          console.log(pproduk);
+          // var q = $(hari).val();
+          // var rowtotal = $(cls).attr("pprice");
+
+
+        }
+
+        function update_cart(cls) {
+          var pid = $(cls).attr("pid");
+          var q = $(cls).val();
+          var rowtotal = $(cls).attr("pprice");
+
+          $.ajax({
+            url: "<?php echo base_url('cart/ubah_qty_keranjang'); ?>",
+            type: "post",
+            data: {
+              id: pid,
+              qty: q,
+              price: rowtotal
+            },
+            success: function(res) {
+              console.log(res);
+
+              var a = JSON.parse(res);
+              $("#total").text(a.total);
+              $(cls).closest("tr").find(".row_total").text(a.row_total);
+            }
+          });
+        }
+      });
+
+
+
+      function subTotal() {
+        var iprice = document.getElementsByClassName('iprice');
+        var iquantity = document.getElementsByClassName('iquantity');
+        var isubtotal = document.getElementsByClassName('isubtotal');
+        var itotal = document.getElementsByClassName('itotal');
+
+        const format = num =>
+          String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')
+
+        for (i = 0; i < iprice.length; i++) {
+          isubtotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
+        }
+      }
+
+      function numberofitems() {
+        var iquantity = document.getElementsByClassName('iquantity');
+        var itotalitem = document.getElementsByClassName('itotalitem');
+
+        for (i = 0; i < iquantity.length; i++) {
+          itotalitem += iquantity;
+        }
+      }
+
+      function totalPrice() {
+
       }
     </script>
 

@@ -5,7 +5,7 @@ class Modelproduk extends CI_Model
 {
     public function GetProduk()
     {
-        $data = $this->db->query("SELECT * FROM produk");
+        $data = $this->db->query("SELECT *, tarifsewa.tarif_harga FROM produk INNER JOIN tarifsewa ON produk.id_produk = tarifsewa.id_produk WHERE tarifsewa.lama_sewa_hari = '7'");
         return $data->result_array();
     }
 

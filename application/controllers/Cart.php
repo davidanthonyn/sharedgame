@@ -52,12 +52,14 @@ class Cart extends CI_Controller
             $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+            $data['tarifsewa'] = $this->M_Cart->custom_tarif_sewa($data['detailkeranjangrow']['id_tarif_sewa'])->row_array();
         } else if ($data['keranjangrow'] != NULL) {
             $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->row_array();
             $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
             $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
+            $data['tarifsewa'] = $this->M_Cart->get_tarif_sewa($data['detailkeranjangrow']['id_cart'])->result();
         }
 
 
@@ -150,25 +152,28 @@ class Cart extends CI_Controller
         redirect('shopping/tampil_cart');
     }
 
-    function ubah_keranjang()
+    function ubah_qty_keranjang()
     {
-        $cart_info = $_POST['cart'];
-        foreach ($cart_info as $id => $cart) {
-            $rowid = $cart['rowid'];
-            $price = $cart['price'];
-            $gambar = $cart['gambar'];
-            $amount = $price * $cart['qty'];
-            $qty = $cart['qty'];
-            $data = array(
-                'rowid' => $rowid,
-                'price' => $price,
-                'gambar' => $gambar,
-                'amount' => $amount,
-                'qty' => $qty
-            );
-            $this->cart->update($data);
-        }
-        redirect('shopping/tampil_cart');
+        $cart_info = $this->input->post('id');
+        $qty = $this->input->post('qty');
+        $price = $this->input->post('price');
+
+        $data = array(
+            'qty_produk' => $qty
+        );
+
+        $where = array('id_detail_cart' => $cart_info);
+
+        $this->db->set('qty_produk', $qty);
+        $this->db->where('id_detail_cart', $cart_info);
+        $this->db->update('detailcart');
+
+        $data = $this->M_Cart->get_new_qty_by_ajax($where);
+        echo json_encode($data);
+    }
+
+    function ubah_hari_keranjang()
+    {
     }
 
     public function proses_order()
@@ -206,18 +211,38 @@ class Cart extends CI_Controller
         $this->load->view('shopping/sukses', $data);
         $this->load->view('themes/footer');
     }
-
+    /*
     public function edit_quantity()
     {
-        $rowid = $_POST['rowid'];
-        $qty = $_POST['qty'];
+        require "cart.class.php";
+        $cart = new Cart();
+
+        $id = $this->input->post('id');
+        $qty = $this->input->post('qty');
+
+        $cart->update_cart(["id" => $id, "qty" => $qty]);
+
+        /*$data = array(
+            'id_detail_cart' => $id,
+            'qty_produk'   => $qty
+        );
+
+        $this->cart->update($data);
+
 
         $edit_temp_purchase = array(
             'qty_produk' => $qty
         );
 
-        $this->db->update('detailcart', $edit_temp_purchase, ['id_produk' => $rowid]);
-    }
+        $this->db->update('detailcart', $edit_temp_purchase, ['id_detail_cart' => $id]);
+
+        $result = [
+            "row_total" => $cart->get_item($id)["total"],
+            "total" => $cart->get_cart_total(),
+        ];
+
+        echo json_encode($result);
+    }*/
 
     public function getPriceByAjax()
     {
@@ -274,8 +299,7 @@ class Cart extends CI_Controller
             alert-danger" role="alert" style="text-align:center;">Mohon maaf, namun identitas anda ditolak, mohon <a href="user/identity">periksa</a>  kembali.</div>');
             redirect('cart');
         } else if ($data['ktp']['status_ktp'] == "diterima") {
-            echo "berhasil";
-            //redirect('checkout');
+            redirect('checkout');
         }
     }
 }
