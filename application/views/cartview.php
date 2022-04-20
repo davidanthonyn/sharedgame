@@ -729,26 +729,26 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-      /* function change_time() {
+      function change_time() {
         var select = document.getElementById('sewa');
         var value = select.options[select.selectedIndex].value;
 
         if (value == "1") {
-          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[0]['tarif_harga'];
-                                                        ?>;
+          //document.getElementById('oneproduct').value = <?php //echo $tarifsewa[0]['tarif_harga']; 
+                                                          ?>;
         } else
         if (value == "3") {
-          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[1]['tarif_harga'];
-                                                        ?>;
+          //document.getElementById('oneproduct').value = <?php //echo $tarifsewa[1]['tarif_harga'];
+                                                          ?>;
         } else
         if (value == "7") {
-          document.getElementById('oneproduct').value = <?php //echo $tarifsewa[2]['tarif_harga'];
-                                                        ?>;
+          //document.getElementById('oneproduct').value = <?php //echo $tarifsewa[2]['tarif_harga'];
+                                                          ?>;
         } else {
-          document.getElementById('oneproduct').value = "";
-          document.getElementById('div_content').style.display = 'none';
+          //document.getElementById('oneproduct').value = "";
+          //document.getElementById('div_content').style.display = 'none';
         }
-      }*/
+      }
     </script>
     <script>
       $("[type='number']").keypress(function(evt) {
