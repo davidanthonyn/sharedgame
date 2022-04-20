@@ -119,7 +119,8 @@
 													<td><img src="<?= base_url('assets/img/ktp/') . $listUser->foto_selfie_ktp  ?>" class="card-img" width="300" height="200"></td>
 													<td><?php echo $listUser->status_ktp ?></td>
 													<td><?php echo $listUser->note_user ?></td>
-													<td><a href="<?php echo base_url() . 'Admin/reviewidentity/' . $listUser->id_user; ?>">Review</a>
+													<td><a href="<?php echo base_url() . 'user/terimaidentity/' . $listUser->id_user; ?>">Terima</a> || <a href="<?php echo base_url() . 'user/tolakidentity/' . $listUser->id_user; ?>">Tolak</a> ||
+														<a href="<?php echo base_url() . 'user/noteidentity/' . $listUser->id_user; ?>">Beri Catatan</a>
 													</td>
 												</tr>
 										<?php //$id_user = $id_user + 1;
