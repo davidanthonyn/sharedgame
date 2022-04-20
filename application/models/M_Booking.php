@@ -34,7 +34,7 @@ class M_Booking extends CI_model
 
     public function getAllDistributionTakeAway()
     {
-        $query = $this->db->query("SELECT nama_lengkap FROM customerservice WHERE id_cs = 1");
+        $query = $this->db->query("SELECT * FROM customerservice WHERE id_cs = 1");
         return $query;
     }
 
