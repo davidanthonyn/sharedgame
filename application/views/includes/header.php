@@ -57,6 +57,7 @@
                     ?>
 
                     <li><a href="<?php echo base_url() . 'user/edit' ?>">Profile Settings</a></li>
+                    <li><a href="<?php echo base_url() . 'user/vip' ?>">Upgrade Account</a></li>
                     <li><a href="<?= base_url('user/changepassword'); ?>">Update Password</a></li>
                     <li><a href="my-booking.php">My Booking</a></li>
                     <!---
