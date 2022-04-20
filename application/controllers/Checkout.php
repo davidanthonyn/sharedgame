@@ -254,6 +254,14 @@ class Checkout extends CI_Controller
             redirect('checkout/bayar');
         }
 
+        if ($data['checkout']['shipping'] == 1) {
+            $data['bookingambil'] = $this->M_Booking->getAllDistributionTakeAway()->row_array();
+            $data['bookingantar'] = NULL;
+        } else if ($data['checkout']['shipping'] == 2) {
+            $data['bookingantar'] = $this->M_Booking->getAllDistributionSend($this->session->userdata('id_user'))->row_array();
+            $data['bookingambil'] = NULL;
+        }
+
         $data['rekening'] = $this->db->get_where('rekeningtoko', ['id_rekening_toko' => $data['checkout']['id_rekening_toko']])->row_array();
         $data['title'] = 'Review Pesanan | SharedGame';
         $data['keranjangrow'] = $this->db->get_where('cart', ['id_user' => $this->session->userdata('id_user')])->row_array();
