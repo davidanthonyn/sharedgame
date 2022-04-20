@@ -462,4 +462,60 @@ if (!empty($upload_selfie_ktp)) {
         $data['pages'] = $this->M_Page->getAllRowPages()->result();
         $this->load->view('includes/footer.php', $data);
     }
+
+    public function terimaidentity($id_user)
+    {
+        $data['user'] = $this->db->get_where('user', ['id_user' => $id_user])->row_array();
+        $data['usercard'] = $this->db->get_where('usercard', ['id_user' => $id_user])->row_array();
+
+        if ($data['usercard']['status_ktp'] == "diterima") {
+            $this->session->set_flashdata('messagefailed', 'KTP milik ' . $data['user']['nama_lengkap'] . ' sudah diterima');
+            redirect('admin/kelolaidentity');
+        } else {
+            $this->db->set('status_ktp', 'diterima');
+            $this->db->where('id_user', $id_user);
+            $this->db->update('usercard');
+
+            $this->session->set_flashdata('messagesuccess', 'KTP milik ' . $data['user']['nama_lengkap'] . ' berhasil diterima');
+            redirect('admin/kelolaidentity');
+        }
+    }
+
+    public function tolakidentity($id_user)
+    {
+        $data['user'] = $this->db->get_where('user', ['id_user' => $id_user])->row_array();
+        $data['usercard'] = $this->db->get_where('usercard', ['id_user' => $id_user])->row_array();
+
+        if ($data['usercard']['status_ktp'] == "ditolak") {
+            $this->session->set_flashdata('messagefailed', 'KTP milik ' . $data['user']['nama_lengkap'] . ' sudah ditolak');
+            redirect('admin/kelolaidentity');
+        } else {
+            $this->db->set('status_ktp', 'ditolak');
+            $this->db->where('id_user', $id_user);
+            $this->db->update('usercard');
+
+            $this->session->set_flashdata('messagesuccess', 'KTP milik ' . $data['user']['nama_lengkap'] . ' berhasil ditolak. Jangan lupa memberi alasan penolakan di catatan.');
+            redirect('admin/kelolaidentity');
+        }
+    }
+
+    public function noteidentity($id_user)
+    {
+        $data['user'] = $this->db->get_where('user', ['id_user' => $id_user])->row_array();
+        $data['usercard'] = $this->db->get_where('usercard', ['id_user' => $id_user])->row_array();
+        $data['title'] = 'Catatan Customer Identity | SharedGame';
+
+        $this->form_validation->set_rules('note', 'Catatan', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            if ($data['usercard']['status_ktp'] != "ditolak") {
+                $this->session->set_flashdata('messagefailed', 'Anda harus menolak KTP' . $data['user']['nama_lengkap'] . ' terlebih  dahulu untuk memberi catatan');
+                redirect('admin/kelolaidentity');
+            } else {
+                $this->load->view('admin/note-identity', $data);
+            }
+        } else {
+            $data = array();
+        }
+    }
 }

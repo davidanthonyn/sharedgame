@@ -240,7 +240,7 @@ class M_User extends CI_model
             $mail->Port = 587;
 
             $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
-            $mail->addReplyTo($to);
+            $mail->AddAddress($to);
 
             $mail->isHTML(true);
 

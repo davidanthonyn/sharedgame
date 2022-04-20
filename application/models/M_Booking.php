@@ -32,6 +32,35 @@ class M_Booking extends CI_model
         return $this->db->get('detailbooking');
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function getAllDistributionTakeAway()
     {
         $query = $this->db->query("SELECT nama_lengkap, number_cs FROM customerservice WHERE id_cs = 1");
