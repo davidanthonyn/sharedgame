@@ -799,6 +799,60 @@ class Admin extends CI_Controller
         $this->load->view('admin/reg-users.php', $data);
     }
 
+    function suspendUser($id_user)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data = array(
+            'is_active' => 'off_by_admin'
+        );
+
+        $this->db->where('id_user', $id_user);
+        $this->db->update('user', $data);
+
+        $this->session->set_flashdata('messagesuccess', 'User berhasil di suspend');
+        redirect('admin/kelolaUser');
+    }
+
+    function activateUser($id_user)
+    {
+        if (!$this->session->userdata('email')) {
+            redirect('');
+        } else {
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        }
+
+        if ($data['user']['id_role'] == '2') {
+            //Title Dashboard Admin saat halaman dibuka
+            $this->session->set_flashdata('messagefailed', 'Fitur Kelola User hanya bisa diakses oleh admin!');
+            redirect('admin');
+        } else if ($data['user']['id_role'] == '3') {
+            redirect('');
+        }
+
+        $data = array(
+            'is_active' => 'yes'
+        );
+
+        $this->db->where('id_user', $id_user);
+        $this->db->update('user', $data);
+
+        $this->session->set_flashdata('messagesuccess', 'User berhasil diaktifkan');
+        redirect('admin/kelolaUser');
+    }
+
     function getAdminByAjax()
     {
         $id_page = $this->input->post('id_page');

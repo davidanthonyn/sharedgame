@@ -772,12 +772,29 @@
         });
 
         function change_day(hari) {
-          var psewa = $(hari).attr("psewa");
-          var lamasewa = $(hari).val();
-          var pproduk = $(hari).attr("pproduk");
-          console.log(pproduk);
+          var psewa = $(hari).attr("psewa"); // id detail cart
+          var lamasewa = $(hari).val(); // lama sewa(1,3,7)
+          var pproduk = $(hari).attr("pproduk"); //id produk
+          //console.log(pproduk);
           // var q = $(hari).val();
           // var rowtotal = $(cls).attr("pprice");
+
+          $.ajax({
+            url: "<?php echo base_url('cart/ubah_hari_keranjang'); ?>",
+            type: "post",
+            data: {
+              id: psewa,
+              sewa: lamasewa,
+              idproduct: pproduk
+            },
+            success: function(res) {
+              console.log(res);
+
+              var a = JSON.parse(res);
+              $("#total").text(a.total);
+              $(cls).closest("tr").find(".row_total").text(a.row_total);
+            }
+          });
 
 
         }

@@ -128,7 +128,8 @@
 													<td><?php echo $listUser->is_active ?></td>
 													<td><?php echo $listUser->created_at ?></td>
 													<td><?php echo $listUser->updated_at ?></td>
-													<td>Edit</td>
+													<td><a href="<?php echo base_url() . 'admin/activateuser/' . $listUser->id_user; ?>">Aktifkan</a> || <a href="<?php echo base_url() . 'admin/suspenduser/' . $listUser->id_user; ?>">Suspend</a>
+													</td>
 												</tr>
 										<?php //$id_user = $id_user + 1;
 												//}

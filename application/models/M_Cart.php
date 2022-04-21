@@ -107,9 +107,16 @@ class M_Cart extends CI_model
         return $data;
     }
 
-    public function get_tarif_sewa($id_detail_cart, $lama_sewa_hari)
+    public function get_tarif_sewa($id_detail_cart)
     {
-        $data = $this->db->query("SELECT id_produk, tarif_harga, lama_sewa_hari FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE tarifsewa.id_produk = detailcart.id_produk AND id_detail_cart = " . $id_detail_cart . " AND lama_sewa_hari = " . $lama_sewa_hari . ")");
+        $data = $this->db->query("SELECT id_produk, tarif_harga, lama_sewa_hari FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE tarifsewa.id_produk = detailcart.id_produk AND id_detail_cart = " . $id_detail_cart . ")");
+
+        return $data;
+    }
+
+    public function get_id_tarif_sewa($id_detail_cart, $durasi, $produk)
+    {
+        $data = $this->db->query("SELECT id_tarif_sewa FROM tarifsewa WHERE EXISTS (SELECT * FROM detailcart WHERE id_detail_cart = " . $id_detail_cart . " AND lama_sewa_hari = " . $durasi . " AND id_produk = " . $produk . " AND tarifsewa.id_produk = detailcart.id_produk AND id_detail_cart = " . $id_detail_cart . ")");
 
         return $data;
     }
@@ -173,13 +180,14 @@ class M_Cart extends CI_model
         return $output;
     }
 
-    function get_new_price_day_by_ajax($where)
+    function get_new_price_day_by_ajax($cart_info, $lama, $produk)
     {
-        $query = $this->db->get_where('tarifsewa', $where);
+        $this->db->where('id_produk', $produk);
+        $this->db->and_where('lama_sewa_hari', $lama);
+        $query = $this->db->get('tarifsewa');
 
         foreach ($query->result() as $data) {
             $output = array(
-                'id_tarif_sewa' => $data->id_tarif_sewa,
                 'tarif_harga' => $data->tarif_harga
             );
         }
