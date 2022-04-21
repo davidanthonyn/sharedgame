@@ -52,14 +52,14 @@ class Cart extends CI_Controller
             $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
-            $data['tarifsewa'] = $this->M_Cart->custom_tarif_sewa($data['detailkeranjangrow']['id_tarif_sewa'])->row_array();
+            //$data['tarifsewa'] = $this->M_Cart->custom_tarif_sewa($data['detailkeranjangrow']['id_tarif_sewa'])->row_array();
         } else if ($data['keranjangrow'] != NULL) {
             $data['detailkeranjangrow'] = $this->db->get_where('detailcart', ['id_cart' => $data['keranjangrow']['id_cart']])->row_array();
             $data['productcart'] = $this->M_Cart->get_detail_cart($data['keranjangrow']['id_cart'])->result();
             $data['totalitem'] = $this->M_Cart->get_row_cart($data['keranjangrow']['id_cart']);
             $data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
             $data['totalprice'] = $this->M_Cart->get_total_price_cart($data['keranjangrow']['id_cart'])->row_array();
-            $data['tarifsewa'] = $this->M_Cart->get_tarif_sewa($data['detailkeranjangrow']['id_cart'])->result();
+            //$data['tarifsewa'] = $this->M_Cart->get_tarif_sewa($data['detailkeranjangrow']['id_cart'])->result();
         }
 
 
