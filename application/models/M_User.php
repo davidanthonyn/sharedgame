@@ -202,9 +202,13 @@ class M_User extends CI_model
 
     private function _sendEmail($token, $type)
     {
-        require APPPATH . 'phpmailertiga/src/Exception.php';
-        require APPPATH . 'phpmailertiga/src/PHPMailer.php';
-        require APPPATH . 'phpmailertiga/src/SMTP.php';
+        // require APPPATH . 'phpmailertiga/src/Exception.php';
+        //require APPPATH . 'phpmailertiga/src/PHPMailer.php';
+        //require APPPATH . 'phpmailertiga/src/SMTP.php';
+        require APPPATH . 'smtp/class.phpmailer.php';
+        require APPPATH . 'smtp/PHPMailerAutoload.php';
+
+        //$mail = new PHPMailer\PHPMailer\PHPMailer();
 
         //$this->load->library('Phpmailer_lib');
         $email = $this->input->post('email', true);
@@ -246,9 +250,16 @@ class M_User extends CI_model
             $mail->Host       = 'mail.sharedgame.tech';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'noreply@sharedgame.tech';                     //SMTP username
-            $mail->Password   = 'K%&pnNI+Y(Kv';                               //SMTP password
+            $mail->Password   = htmlspecialchars('K%&pnNI+Y(Kv');                               //SMTP password
             //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 587;
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );                             //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');

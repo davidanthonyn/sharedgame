@@ -108,16 +108,17 @@
                 <div class="timeline">
                   <ul>
                     <li>
-                      <?php if ($transaction != NULL) { ?>
-                        <p class="date">20 Mei 2010</p>
-                        <h1>Heading 1</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tempora ab laudantium voluptatibus aut eos placeat laborum, quibusdam exercitationem labore.</p>
+                      <?php if ($transactions != NULL) {
+                        foreach ($transactions as $transaction) { ?>
+                          <p class="date"><?= $transaction->waktu_buat_transaksi ?></p>
+                          <h1>Heading 1</h1>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tempora ab laudantium voluptatibus aut eos placeat laborum, quibusdam exercitationem labore.</p>
 
-                      <?php } else { ?>
-                        <p class="date">21 Mei 2010</p>
-                        <h1>Heading 1</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tempora ab laudantium voluptatibus aut eos placeat laborum, quibusdam exercitationem labore.</p>
-                      <?php } ?>
+                        <?php  }
+                      } else { ?>
+                        <p>Anda belum memiliki transaksi</p>
+                      <?php }
+                      ?>
                     </li>
                     <hr>
                     </li>
