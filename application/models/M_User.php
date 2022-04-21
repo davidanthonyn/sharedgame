@@ -202,7 +202,10 @@ class M_User extends CI_model
 
     private function _sendEmail($token, $type)
     {
-        require APPPATH . 'smtp/PHPMailerAutoload.php';
+        require APPPATH . 'phpmailertiga/src/Exception.php';
+        require APPPATH . 'phpmailertiga/src/PHPMailer.php';
+        require APPPATH . 'phpmailertiga/src/SMTP.php';
+
         //$this->load->library('Phpmailer_lib');
         $email = $this->input->post('email', true);
         /*
@@ -228,38 +231,44 @@ class M_User extends CI_model
                 'verify_peer_name' => false,
                 'allow_self_signed' => false
             ));
-
+            /*
             if (!$mail->Send()) {
                 echo $mail->ErrorInfo;
-            }
-        }*/
+            }*/
 
         function smtp_mailer($to, $subject, $msg)
         {
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = 'mail.sharedgame.tech';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'noreply@sharedgame.tech';
-            $mail->Password = 'K%&pnNI+Y(Kv';
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 587;
+            //Create an instance; passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'mail.sharedgame.tech';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'noreply@sharedgame.tech';                     //SMTP username
+            $mail->Password   = 'K%&pnNI+Y(Kv';                               //SMTP password
+            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-            $mail->SetFrom("noreply@sharedgame.tech", "SharedGame | Do Not Reply");
-            $mail->AddAddress($to);
+            //Recipients
+            $mail->setFrom('noreply@sharedgame.tech', 'SharedGame | Do Not Reply');
+            $mail->AddAddress($to);     //Add a recipient
+            //$mail->addAddress('ellen@example.com');               //Name is optional
+            //$mail->addReplyTo('info@example.com', 'Information');
+            // $mail->addCC('cc@example.com');
+            //$mail->addBCC('bcc@example.com');
 
-            $mail->isHTML(true);
+            //Attachments
+            //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body = $msg;
-            //$mail->addEmbeddedImage('path/to/image_file.jpg', 'image_cid');
-            //$mail->Body = '<img src="cid:image_cid"> Mail body in HTML';
-            //$mail->AltBody = 'This is the plain text version of the email content';
+            //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            if (!$mail->send()) {
-                echo 'Message could not be sent.';
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
-            }
+            $mail->send();
         }
 
         //smtp_mailer(htmlspecialchars($email), 'Test Email', $html);
