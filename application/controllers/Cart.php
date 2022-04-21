@@ -174,6 +174,24 @@ class Cart extends CI_Controller
 
     function ubah_hari_keranjang()
     {
+        $cart_info = $this->input->post('id');
+        $product_info = $this->input->post('productid');
+        $sewa = $this->input->post('sewa');
+
+        $data = array(
+            'lama_sewa_hari' => $sewa
+        );
+
+        $where = array('id_detail_cart' => $cart_info);
+
+        //$data['pricechange'] = $this->M_Cart->get_tarif_sewa($data['keranjangrow']['id_cart'])->result();
+
+        $this->db->set('id_tarif_sewa', $sewa);
+        $this->db->where('id_detail_cart', $cart_info);
+        $this->db->update('detailcart');
+
+        $data = $this->M_Cart->get_new_price_day_by_ajax($where, $sewa);
+        echo json_encode($data);
     }
 
     public function proses_order()

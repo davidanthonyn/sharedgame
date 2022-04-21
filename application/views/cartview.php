@@ -806,6 +806,29 @@
         }
       });
 
+      function update_day(cls) {
+        var pid = $(cls).attr("pid");
+        var q = $(cls).val();
+        var rowtotal = $(cls).attr("pprice");
+
+        $.ajax({
+          url: "<?php echo base_url('cart/ubah_hari_keranjang'); ?>",
+          type: "post",
+          data: {
+            id: pid,
+            qty: q,
+            price: rowtotal
+          },
+          success: function(res) {
+            console.log(res);
+
+            var a = JSON.parse(res);
+            $("#total").text(a.total);
+            $(cls).closest("tr").find(".row_total").text(a.row_total);
+          }
+        });
+      }
+
 
 
       function subTotal() {
